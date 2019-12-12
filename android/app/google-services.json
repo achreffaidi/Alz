@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "714872311251",
+    "firebase_url": "https://iremember-693df.firebaseio.com",
+    "project_id": "iremember-693df",
+    "storage_bucket": "iremember-693df.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714872311251:android:c7d1e9177c2df4c268b326",
+        "android_client_info": {
+          "package_name": "com.example.alz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "714872311251-hu9rv4fe7ku0a8nbm2b0csco8m8jnkdt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.alz",
+            "certificate_hash": "0e0687c3878fcb37dfee01aeff52ad2f9cb4c9d7"
+          }
+        },
+        {
+          "client_id": "714872311251-remrfbs4npb1el7uohj4g3gcoae9b061.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWEkAIKRAhwUqS0eh-Mg--dyfzg5Drd7I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "714872311251-remrfbs4npb1el7uohj4g3gcoae9b061.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
