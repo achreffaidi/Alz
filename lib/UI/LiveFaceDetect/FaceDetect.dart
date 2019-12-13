@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:alz/Constant/Strings.dart';
 import 'package:alz/tools/Images.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_camera_ml_vision/flutter_camera_ml_vision.dart';
@@ -11,6 +12,8 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_camera_ml_vision/const.dart';
 import 'package:toast/toast.dart';
+import 'package:progress_dialog/progress_dialog.dart';
+
 
 class FaceDetect extends StatefulWidget {
   @override
@@ -18,6 +21,9 @@ class FaceDetect extends StatefulWidget {
 }
 
 class _FaceDetectState extends State<FaceDetect> {
+
+  ProgressDialog pr  ;
+  AudioPlayer audioPlayer ;
   File file;
   List<Face> _faces = [];
   final _scanKey = GlobalKey<CameraMlVisionState>();
@@ -29,6 +35,22 @@ class _FaceDetectState extends State<FaceDetect> {
   ));
   String name = "";
 
+
+  @override
+  void initState() {
+    pr =new ProgressDialog(this.context,type: ProgressDialogType.Normal);
+    pr.update(message:"Getting Infos ... ");
+    canStartTheProccess = true ;
+
+    AudioPlayer.logEnabled = true;
+     audioPlayer = AudioPlayer();
+
+    audioPlayer.onPlayerCompletion.listen((object){
+      canStartTheProccess = true;
+      canTakePicture = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,55 +59,53 @@ class _FaceDetectState extends State<FaceDetect> {
       ),
       body: Column(
         children: <Widget>[
-          CameraMlVision<List<Face>>(
-            key: _scanKey,
-            cameraLensDirection: cameraLensDirection,
-            detector: detector.processImage,
-            overlayBuilder: (c) {
-              return CustomPaint(
-                painter: FaceDetectorPainter(
-                    _scanKey.currentState.cameraValue.previewSize.flipped,
-                    _faces,
-                    reflection:
-                        cameraLensDirection == CameraLensDirection.front),
-              );
-            },
-            onResult: (faces) {
-              if (faces == null || faces.isEmpty || !mounted) {
-                return;
-              }
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: CameraMlVision<List<Face>>(
+              key: _scanKey,
+              cameraLensDirection: cameraLensDirection,
+              detector: detector.processImage,
+              overlayBuilder: (c) {
+                return CustomPaint(
+                  painter: FaceDetectorPainter(
+                      _scanKey.currentState.cameraValue.previewSize.flipped,
+                      _faces,
+                      reflection:
+                          cameraLensDirection == CameraLensDirection.front),
+                );
+              },
+              onResult: (faces) {
+                if (faces == null || faces.isEmpty || !mounted) {
+                  return;
+                }
 
-              startSendingPicture(context);
+                if(canStartTheProccess)startSendingPicture(context);
 
-              setState(() {
-                _faces = []..addAll(faces);
-              });
-            },
-            onDispose: () {
-              detector.close();
-            },
+                setState(() {
+                  _faces = []..addAll(faces);
+                });
+              },
+              onDispose: () {
+                detector.close();
+              },
+            ),
           ),
-          RaisedButton(
-            child: Text("Picture"),
-            onPressed: () {
-              canStartTheProccess = !canStartTheProccess;
-            },
+
+          Container(
+            margin: EdgeInsets.all(30),
+            child: Center(
+              child: Text(
+                name,
+
+                style: TextStyle(fontSize: 40),
+              ),
+            ),
           ),
-          RaisedButton(
-            child: Text("Try Reco"),
-            onPressed: () {
-              uploadImage(context);
-            },
-          ),
-          Text(
-            name,
-            style: TextStyle(fontSize: 40),
-          ),
-          file == null
+         /* file == null
               ? Container(
                   child: Text("No IMAGE"),
                 )
-              : Image.memory(myImage)
+              : Image.memory(myImage)*/
         ],
       ),
     );
@@ -97,55 +117,77 @@ class _FaceDetectState extends State<FaceDetect> {
     // print("can Proccess Picture  : " + canStartTheProccess.toString());
     if (canStartTheProccess) {
       canTakePicture = true;
+
       print("Proccessing the image ");
       canStartTheProccess = false;
-      file = File.fromRawPath(myImage);
-
+      file =  File.fromRawPath(myImage);
       print("Picture saved successfully");
+      await new Future.delayed(const Duration(milliseconds: 500));
 
-
-      await new Future.delayed(const Duration(seconds: 1));
       uploadImage(context) ;
-      await new Future.delayed(const Duration(seconds: 5));
-      canStartTheProccess = true;
+      setState(() {
+
+      });
     }
   }
 
   void uploadImage(BuildContext context) async {
+    pr.show();
+
     var uri = Uri.parse(baseUrl + "achref");
     print(uri);
     var request = new MultipartRequest("POST", uri);
+
 
     request.files.add(new MultipartFile.fromBytes("file", myImage,
         filename: DateTime.now().toIso8601String()));
 
     var response = await request.send();
 
+  pr.hide();
     print(response.headers);
     Toast.show(
         "StateCode : " +
-            response.statusCode.toString() +
-            " , headers : " +
-            response.headers.toString(),
+            response.statusCode.toString(),
         context);
     switch (response.statusCode) {
       case 200:
-        name = response.headers["name"];
+        name = response.headers["name"] + "\n" +response.headers["userdata"];
         print(response.headers["name"] + "|" + response.headers["userdata"]);
-        setState(() {});
+
+      await  play(response.headers["voice"]);
+
+
         break;
       case 300:
         print("Unable To Detect Any Face| ");
         name = "Unable To Detect Any Face";
+        canStartTheProccess = true;
+        canTakePicture = true;
         setState(() {});
         break;
       case 301:
         print("Unable To Recongnize The Face | ");
         name = "Unable To Recongnize The Face";
+        canStartTheProccess = true;
+        canTakePicture = true;
         setState(() {});
         break;
     }
   }
+
+  play(String url ) async {
+
+    await new Future.delayed(const Duration(seconds:1 ));
+    int result = await audioPlayer.play(url);
+
+
+    if (result == 1) {
+      // success
+    }
+  }
+
+
 }
 
 class FaceDetectorPainter extends CustomPainter {
