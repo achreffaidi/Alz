@@ -1,1 +1,2 @@
-String baseUrl ="http://192.168.43.254:3000/";
+String baseUrl ="https://i-remember2.azurewebsites.net/";
+List dictionary = ["knife",'car','house','flower','lion','zebra','bird','chair','table','television','laptop','cow','carpet','key','moon','fish','egg','crocodile','dinosaure',];

@@ -1,8 +1,10 @@
 import 'package:alz/Api/tasks.dart';
+import 'package:alz/Api/tasksByDay.dart';
 import 'package:alz/Constant/Strings.dart';
 import 'package:alz/Constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 
 class TasksUI extends StatefulWidget {
@@ -13,13 +15,13 @@ class TasksUI extends StatefulWidget {
 
 class _TasksUIState extends State<TasksUI> {
 
-  Tasks tasks ;
+  List<ListByDay> tasks ;
 
 
   int  getDone(){
     if(tasks==null)return 0 ;
      int count = 0 ;
-     for(Task task in tasks.tasks) if(!task.done)count++;
+     for(ListByDay task in tasks) if(!task.done)count++;
      return count  ;
   }
   @override
@@ -84,9 +86,13 @@ class _TasksUIState extends State<TasksUI> {
   }
 
   Widget _getHeader(){
+    var now = new DateTime.now();
+    var formatter = new DateFormat('EEEE, d MMM y');
+    String formatted = formatter.format(now);
+
     return Container(
       height: 200,
-      child: Center(child: Text("Sunday, December 8, 2019",style: TextStyle(fontSize: 30 , color: Colors.white , fontWeight: FontWeight.bold), )),
+      child: Center(child: Text(formatted,style: TextStyle(fontSize: 30 , color: Colors.white , fontWeight: FontWeight.bold), )),
     );
   }
 
@@ -96,18 +102,18 @@ class _TasksUIState extends State<TasksUI> {
       height:MediaQuery.of(context).size.height-400 ,
         child : new ListView.builder
           (
-            itemCount: tasks.tasks.length,
+            itemCount: tasks.length,
 
             itemBuilder: (BuildContext ctxt, int index) {
               return  GestureDetector(
                 onTap: (){
 
-                    if(tasks.tasks[index].done){
-                      setUnDone(tasks.tasks[index].id);
+                    if(tasks[index].done){
+                      setUnDone(tasks.elementAt(index).id.toString());
                     }else
-                      setDone(tasks.tasks[index].id);
+                      setDone(tasks.elementAt(index).id.toString());
                 },
-                child: getItem(tasks.tasks[index].title ,tasks.tasks[index].time, tasks.tasks[index].done,index==0),
+                child: getItem(tasks.elementAt(index).title ,tasks.elementAt(index).time, tasks.elementAt(index).done,index==0),
               );
             }
 
@@ -155,9 +161,9 @@ elevation: isElevated?10:2,
     print(baseUrl+"getbyday/"+DateTime.now().weekday.toString());
     http.get(baseUrl+"getbyday/"+(DateTime.now().weekday-1).toString()).then((http.Response response){
 
-      tasks = Tasks.fromJson(response.body);
+      tasks = TasksByDay.fromJson(response.body).listByDay;
       print(response.body) ;
-      tasks.tasks.sort((Task item1,Task item2){
+      tasks.sort((ListByDay item1,ListByDay item2){
         if(item1.done==item2.done)return 0 ;
         if(item1.done&!item2.done)return 1 ;
         return -1 ;

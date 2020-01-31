@@ -71,7 +71,7 @@ class _MemoryDetailState extends State<MemoryDetail> {
   Widget _getHeader(){
     return Container(
       height: headerSize,
-      child: Center(child: Text("Storage",style: TextStyle(fontSize: 30 , color: Colors.white , fontWeight: FontWeight.bold), )),
+      child: Center(child: Text("Memory Details",style: TextStyle(fontSize: 30 , color: Colors.white , fontWeight: FontWeight.bold), )),
     );
   }
 

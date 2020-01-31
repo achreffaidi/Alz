@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:alz/Constant/Strings.dart';
+import 'package:alz/Constant/colors.dart';
 import 'package:alz/tools/Images.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:camera/camera.dart';
@@ -55,7 +56,8 @@ class _FaceDetectState extends State<FaceDetect> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("LiveDetection"),
+        backgroundColor: c1,
+        title: Text("Live Face Recognition "),
       ),
       body: Column(
         children: <Widget>[
@@ -97,7 +99,7 @@ class _FaceDetectState extends State<FaceDetect> {
               child: Text(
                 name,
 
-                style: TextStyle(fontSize: 40),
+                style: TextStyle(fontSize: 40  , fontWeight: FontWeight.bold , color: c1), textAlign: TextAlign.center,
               ),
             ),
           ),
@@ -153,6 +155,9 @@ class _FaceDetectState extends State<FaceDetect> {
     switch (response.statusCode) {
       case 200:
         name = response.headers["name"] + "\n" +response.headers["userdata"];
+        setState(() {
+
+        });
         print(response.headers["name"] + "|" + response.headers["userdata"]);
 
       await  play(response.headers["voice"]);
