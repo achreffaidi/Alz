@@ -18,6 +18,7 @@ import 'Face/FaceReco.dart';
 import 'LiveFaceDetect/FaceDetect.dart';
 import 'Memories/MemoryDetails.dart';
 import 'MemoryGame/MemoryGame.dart';
+import 'Settings/SettingsUI.dart';
 import 'Storage/Storage.dart';
 import 'Tasks/tasksUI.dart';
 class HomeScreen extends StatefulWidget {
@@ -92,9 +93,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _getHeader(){
-    return Container(
-      height: headerSize,
-      child: Center(child: Text("Hello\nMr. Ben",style: TextStyle(fontSize: 40 , color: Colors.white , fontWeight: FontWeight.bold),textAlign: TextAlign.center, )),
+    return GestureDetector(
+      child: Container(
+        height: headerSize,
+        child: Center(child: Text("Hello\nMr. Ben",style: TextStyle(fontSize: 40 , color: Colors.white , fontWeight: FontWeight.bold),textAlign: TextAlign.center, )),
+      ),
+      onTap: (){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SettingsUI()),
+        );
+
+      },
     );
   }
 

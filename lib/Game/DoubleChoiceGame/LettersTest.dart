@@ -21,9 +21,9 @@ class LettersTest extends Test {
   @override
   void generateAnswerString() {
     if(correct==1)
-    question = "Which Letter is the Letter ."+ l1 ;
+    question = "Which Letter is the Letter "+ l1 ;
     else
-    question = "Which Letter is the Letter ."+ l2 ;
+    question = "Which Letter is the Letter "+ l2 ;
   }
 
 
