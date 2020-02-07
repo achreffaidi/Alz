@@ -4,6 +4,7 @@ import 'package:alz/Api/memories.dart';
 import 'package:alz/Constant/Strings.dart';
 import 'package:alz/Constant/colors.dart';
 import 'package:alz/Constant/images.dart';
+import 'package:alz/Game/DoubleChoiceGame/DoubleChoiceGame.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -162,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
           GestureDetector(child: Container( child: getMenuItem(Image.asset("assets/storage.png",fit: BoxFit.fill,), height/3)) , onTap: (){
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MemoryGame()),
+              MaterialPageRoute(builder: (context) => DoubleChoiceGame()),
             );
           },),
           GestureDetector(child: Container(child: getMenuItem(Image.asset("assets/contacts.png",fit: BoxFit.fill,), height/3)) , onTap: (){
