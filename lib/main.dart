@@ -1,12 +1,16 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:alz/tools/CameraController.dart';
 import 'package:alz/tools/Images.dart';
+import 'package:battery/battery.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
+import 'Constant/Strings.dart';
 import 'UI/HomeScreen.dart';
 
 void main() => runApp(MyApp());
@@ -54,8 +58,15 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  final dur = const Duration(seconds:30);
 
 
+  @override
+  void initState() {
+    _sendState();
+    new Timer.periodic(dur, (Timer t) => _sendState());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +91,31 @@ class _MyHomePageState extends State<MyHomePage> {
       )*/,
        // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  void _sendState() async {
+    var _battery = Battery();
+
+    _battery.batteryLevel.then((level) {
+      this.setState(() {
+        http.get(baseUrl+"setPhoneState",headers: {
+          "battery": level.round().toString()
+        }).then((http.Response response){
+
+        });
+      });
+    });
+/*
+    await battery.batteryLevel.then((value){
+      http.get("setPhoneState",headers: {
+      "battery": value.round().toString()
+      }).then((http.Response response){
+
+      });
+    });
+*/
+
+
   }
 
 

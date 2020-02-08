@@ -41,6 +41,8 @@ dependencies:
   charts_flutter: ^0.8.1
   flutter_fluid_slider: ^1.0.2
   shared_preferences: ^0.5.4
+  battery: ^0.2.2
+
 
 
   # The following adds the Cupertino Icons font to your application.

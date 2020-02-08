@@ -34,3 +34,12 @@ lib/generated_plugin_registrant.dart
 
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+android/app/src/profile/gen/com/example/alz/Manifest.java
+android/app/src/profile/gen/com/example/alz/R.java
+android/app/src/debug/gen/com/example/alz/BuildConfig.java
+android/app/src/debug/gen/com/example/alz/Manifest.java
+android/app/src/debug/gen/com/example/alz/R.java
+android/app/src/main/gen/com/example/alz/BuildConfig.java
+android/app/src/main/gen/com/example/alz/Manifest.java
+android/app/src/main/gen/com/example/alz/R.java
+android/app/src/profile/gen/com/example/alz/BuildConfig.java
