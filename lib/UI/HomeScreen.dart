@@ -265,14 +265,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void sendLocation() async {
     Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     var data = {
-      "longitude" : position.longitude.toString() ,
-    "latitude" : position.latitude.toString()
+      "lang" : position.longitude.toString() ,
+    "lat" : position.latitude.toString()
     } ;
     print("sending location ") ;
-    http.post(baseUrl+"location", body: jsonEncode(data), headers: {
-      "Content-Type":"application/json"
-    }).then((http.Response response){
-    print(json.encode(data) +"sending Location Code " + response.statusCode.toString()) ;
+    http.get(baseUrl+"setPosition",  headers: data).then((http.Response response){
     });
   }
 
