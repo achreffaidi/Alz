@@ -21,6 +21,8 @@ import 'MemoryGame/MemoryGame.dart';
 import 'Settings/SettingsUI.dart';
 import 'Storage/Storage.dart';
 import 'Tasks/tasksUI.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -31,10 +33,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
 
-
-
-
-
+  double _textSizeValue = 20 ;
   List<ImageProvider> images = new List();
   Memories memories ;
 
@@ -96,13 +95,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return GestureDetector(
       child: Container(
         height: headerSize,
-        child: Center(child: Text("Hello\nMr. Ben",style: TextStyle(fontSize: 40 , color: Colors.white , fontWeight: FontWeight.bold),textAlign: TextAlign.center, )),
+        child: Center(child: Text("Hello\nMr. Ben",style: TextStyle(fontSize: _textSizeValue+20 , color: Colors.white , fontWeight: FontWeight.bold),textAlign: TextAlign.center, )),
       ),
       onTap: (){
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => SettingsUI()),
-        );
+        ).then(_loadTextSize());
 
       },
     );
@@ -135,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Container(child: Text("Memories",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold,color: Colors.grey),),),
+          Container(child: Text("Memories",style: TextStyle(fontSize: _textSizeValue+10,fontWeight: FontWeight.bold,color: Colors.grey),),),
          getCarsoulet(),
         ],
       ),
@@ -258,6 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     loadPicture();
     sendLocation();
+    _loadTextSize();
   }
 
 
@@ -271,6 +271,17 @@ class _HomeScreenState extends State<HomeScreen> {
     print("sending location ") ;
     http.get(baseUrl+"setPosition",  headers: data).then((http.Response response){
     });
+  }
+
+  dynamic _loadTextSize()async{
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _textSizeValue = ( prefs.getDouble("textSize")??20 ) ;
+    print("loaded value = "+_textSizeValue.toString()) ;
+    setState(() {
+
+    });
+
   }
 
 }

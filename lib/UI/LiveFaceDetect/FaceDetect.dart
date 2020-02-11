@@ -14,6 +14,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter_camera_ml_vision/const.dart';
 import 'package:toast/toast.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 
 class FaceDetect extends StatefulWidget {
@@ -23,6 +25,7 @@ class FaceDetect extends StatefulWidget {
 
 class _FaceDetectState extends State<FaceDetect> {
 
+  double _textSizeValue = 20 ;
   ProgressDialog pr  ;
   AudioPlayer audioPlayer ;
   File file;
@@ -45,6 +48,8 @@ class _FaceDetectState extends State<FaceDetect> {
 
     AudioPlayer.logEnabled = true;
      audioPlayer = AudioPlayer();
+
+    _loadTextSize();
 
     audioPlayer.onPlayerCompletion.listen((object){
       canStartTheProccess = true;
@@ -99,7 +104,7 @@ class _FaceDetectState extends State<FaceDetect> {
               child: Text(
                 name,
 
-                style: TextStyle(fontSize: 40  , fontWeight: FontWeight.bold , color: c1), textAlign: TextAlign.center,
+                style: TextStyle(fontSize: _textSizeValue+20  , fontWeight: FontWeight.bold , color: c1), textAlign: TextAlign.center,
               ),
             ),
           ),
@@ -192,6 +197,16 @@ class _FaceDetectState extends State<FaceDetect> {
     }
   }
 
+  void _loadTextSize()async{
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _textSizeValue = ( prefs.getDouble("textSize")??20 ) ;
+    print("loaded value = "+_textSizeValue.toString()) ;
+    setState(() {
+
+    });
+
+  }
 
 }
 

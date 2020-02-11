@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_text_to_speech/flutter_text_to_speech.dart';
 import 'package:http/http.dart' as http;
 import 'package:toast/toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class MemoryGame extends StatefulWidget {
   @override
@@ -18,12 +20,18 @@ class MemoryGame extends StatefulWidget {
 
 class _MemoryGameState extends State<MemoryGame> {
 
-
+  double _textSizeValue = 20 ;
   Widget content = Container();
   double CardHeight;
   int current = 0;
   int correct = 0, wrong = 0;
   bool isPaying = false;
+
+  void initState()
+  {
+    _loadTextSize();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     CardHeight = MediaQuery.of(context).size.width * 0.8;
@@ -73,13 +81,13 @@ class _MemoryGameState extends State<MemoryGame> {
                   Text(
                     "Correct",
                     style: TextStyle(
-                        fontSize: 25,
+                        fontSize: _textSizeValue+5,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
                   ),
                   Text(correct.toString(),
                       style: TextStyle(
-                          fontSize: 25,
+                          fontSize: _textSizeValue+5,
                           color: Colors.white,
                           fontWeight: FontWeight.bold))
                 ],
@@ -89,12 +97,12 @@ class _MemoryGameState extends State<MemoryGame> {
                 children: <Widget>[
                   Text("Wrong",
                       style: TextStyle(
-                          fontSize: 25,
+                          fontSize: _textSizeValue+5,
                           color: Colors.white,
                           fontWeight: FontWeight.bold)),
                   Text(wrong.toString(),
                       style: TextStyle(
-                          fontSize: 25,
+                          fontSize: _textSizeValue+5,
                           color: Colors.white,
                           fontWeight: FontWeight.bold))
                 ],
@@ -130,7 +138,7 @@ class _MemoryGameState extends State<MemoryGame> {
                       child: Center(
                           child: Text("RESET",
                               style: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: _textSizeValue+5,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold)))),
                   onPressed: () {
@@ -153,7 +161,7 @@ class _MemoryGameState extends State<MemoryGame> {
                       child: Center(
                           child: Text("EXIT",
                               style: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: _textSizeValue+5,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold)))),
                   onPressed: () {
@@ -173,7 +181,7 @@ class _MemoryGameState extends State<MemoryGame> {
                   child: Center(
                       child: Text("  Start  ",
                           style: TextStyle(
-                              fontSize: 25,
+                              fontSize: _textSizeValue+5,
                               color: Colors.white,
                               fontWeight: FontWeight.bold)))),
               onPressed: () {
@@ -285,7 +293,7 @@ class _MemoryGameState extends State<MemoryGame> {
         Text(
           name,
           style: TextStyle(
-              fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
+              fontSize: _textSizeValue+10, color: Colors.white, fontWeight: FontWeight.bold),
         ),
         Container(
           margin: EdgeInsets.all(10),
@@ -359,7 +367,16 @@ class _MemoryGameState extends State<MemoryGame> {
       fetchImages();
     });
   }
+  void _loadTextSize()async{
 
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _textSizeValue = ( prefs.getDouble("textSize")??20 ) ;
+    print("loaded value = "+_textSizeValue.toString()) ;
+    setState(() {
+
+    });
+
+  }
 
 
 }

@@ -2,6 +2,8 @@ import 'package:alz/Constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sms/flutter_sms.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class Emergency extends StatefulWidget {
   @override
@@ -10,14 +12,17 @@ class Emergency extends StatefulWidget {
 
 class _EmergencyState extends State<Emergency> {
 
-
+  double _textSizeValue = 20 ;
   double headerSize = 100 ;
   String messageLost = "Hello , It's Me Ben , I am lost !";
   String messagePain = "Hello , It's Me Ben , I feed Pain !";
   String messageHelp = "Hello , It's Me Ben , I need Help !";
   List<String> recipents = ["40968660", "53799311"];
 
-
+  void initState(){
+    _loadTextSize();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +76,7 @@ class _EmergencyState extends State<Emergency> {
   Widget _getHeader(){
     return Container(
       height: headerSize,
-      child: Center(child: Text("Emergency",style: TextStyle(fontSize: 30 , color: Colors.white , fontWeight: FontWeight.bold), )),
+      child: Center(child: Text("Emergency",style: TextStyle(fontSize: _textSizeValue+10 , color: Colors.white , fontWeight: FontWeight.bold), )),
     );
   }
 
@@ -137,6 +142,17 @@ class _EmergencyState extends State<Emergency> {
       print(onError);
     });
     print(_result);
+  }
+
+  void _loadTextSize()async{
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _textSizeValue = ( prefs.getDouble("textSize")??20 ) ;
+    print("loaded value = "+_textSizeValue.toString()) ;
+    setState(() {
+
+    });
+
   }
 
 }

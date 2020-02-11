@@ -10,6 +10,8 @@ import '../../Constant/colors.dart';
 import 'LettersTest.dart';
 import 'Test.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 
 
@@ -34,6 +36,8 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
   int current = 0;
   int correct = 0, wrong = 0;
   bool isPaying = false;
+
+  double _textSizeValue = 20 ;
 
   @override
   void initState() {
@@ -91,13 +95,13 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                   Text(
                     "Correct",
                     style: TextStyle(
-                        fontSize: 25,
+                        fontSize: _textSizeValue+5,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
                   ),
                   Text(correct.toString(),
                       style: TextStyle(
-                          fontSize: 25,
+                          fontSize: _textSizeValue+5,
                           color: Colors.white,
                           fontWeight: FontWeight.bold))
                 ],
@@ -107,12 +111,12 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                 children: <Widget>[
                   Text("Wrong",
                       style: TextStyle(
-                          fontSize: 25,
+                          fontSize: _textSizeValue+5,
                           color: Colors.white,
                           fontWeight: FontWeight.bold)),
                   Text(wrong.toString(),
                       style: TextStyle(
-                          fontSize: 25,
+                          fontSize: _textSizeValue+5,
                           color: Colors.white,
                           fontWeight: FontWeight.bold))
                 ],
@@ -148,7 +152,7 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                       child: Center(
                           child: Text("RESET",
                               style: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: _textSizeValue+5,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold)))),
                   onPressed: () {
@@ -171,7 +175,7 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                       child: Center(
                           child: Text("EXIT",
                               style: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: _textSizeValue+5,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold)))),
                   onPressed: () {
@@ -191,7 +195,7 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                   child: Center(
                       child: Text("  Start  ",
                           style: TextStyle(
-                              fontSize: 25,
+                              fontSize: _textSizeValue+5,
                               color: Colors.white,
                               fontWeight: FontWeight.bold)))),
               onPressed: () {
@@ -233,7 +237,7 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
           children: <Widget>[
             Container(
               margin: EdgeInsets.all(20),
-              child: Text(x.question , style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30 , color: Colors.white),),) ,
+              child: Text(x.question , style: TextStyle(fontWeight: FontWeight.bold, fontSize: _textSizeValue+10 , color: Colors.white),),) ,
             GestureDetector(child:
               x.getFirstChoice(),
             onTap: (){
@@ -297,4 +301,14 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
     }
   }
 
+  void _loadTextSize()async{
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _textSizeValue = ( prefs.getDouble("textSize")??20 ) ;
+    print("loaded value = "+_textSizeValue.toString()) ;
+    setState(() {
+
+    });
+
+  }
 }
