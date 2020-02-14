@@ -25,7 +25,7 @@ class _ContactUIState extends State<ContactUI> {
   ];
   @override
   void initState() {
-
+    _loadTextSize();
     List<Contact> list = new List();
     list.add(new Contact("Marshall Melany", "52005985", "Daughter", "https://reductress.com/wp-content/uploads/2016/10/woman-outside-serious-820x500.jpg")) ;
     list.add(new Contact("Marshall John", "52005985", "Son", "https://www.schwarzkopf.fr/content/dam/schwarzkopf/fr/fr/brands/Men-perfect/home/thumbnails/men_perfect_de_thumbnails_home_pack_400x400.jpg")) ;
@@ -48,7 +48,7 @@ class _ContactUIState extends State<ContactUI> {
 
     }
 
-    _loadTextSize();
+
 
   }
 
