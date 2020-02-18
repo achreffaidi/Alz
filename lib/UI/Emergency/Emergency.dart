@@ -28,13 +28,11 @@ class _EmergencyState extends State<Emergency> {
   @override
   void initState() {
     _loadEmergencyNumber() ;
-    super.initState();
-  }
-
-  void initState(){
     _loadTextSize();
     super.initState();
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

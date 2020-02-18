@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:convert';
 
+import 'package:alz/Api/ImagesLinks.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
@@ -30,11 +31,11 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
   static const int STATE_PLAYING = 1 ;
   int score = 0  ;
   int state = STATE_LOADING ;
-  List<String> categoriesList=new List();
+  List<CategoriesList> categoriesList;
   List<String> labelsList=new List();
 
   List<Test> tests = new List() ;
-
+  Random random ;
 
   Widget content = Container();
   double CardHeight;
@@ -166,8 +167,10 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                     setState(() {
                       correct = 0;
                       wrong = 0;
+                      tests = null ;
+                      _loadTests();
                     });
-                    generateTest();
+
                   },
                 ),
                 RaisedButton.icon(
@@ -220,85 +223,140 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
 
 
   void _loadTests()  async {
-     _loadGameCategory().then((liste){
-       List<String> x=new List();
-       categoriesList.clear();
-       for(int i =0 ; i<liste.length;i++) categoriesList.add(liste.elementAt(i).category);
+    tests = new List();
+   await  _loadGameCategory().then((list) async{
+       categoriesList = list ;
 
-       int r=Random().nextInt(categoriesList.length);
-       switch(categoriesList[r])
-       {
-         case "animals":{
-           labelsList=["cow","mouse","cat","dog","butterfly","horse","rabbit","camel"];
-           int rand1,rand2;
-           tests.clear();
-           for(int i=0;i<15;i++){
-             rand1=Random().nextInt(labelsList.length);
-             rand2=Random().nextInt(labelsList.length);
-             while(rand2 == rand1)
-               rand2=Random().nextInt(labelsList.length);
-             tests.add(AnimalsTest(Random().nextInt(2)+1, labelsList[rand1], labelsList[rand2], context));
-           }
-         } break;
-         case "maths":{
-           labelsList=["+","-","*"];
-           int rand1;
-           tests.clear();
-           for(int i=0;i<15;i++){
-             rand1=Random().nextInt(labelsList.length);
-             tests.add(MathsTest(Random().nextInt(2)+1, Random().nextInt(10)+1, labelsList[rand1], Random().nextInt(10)+1, context));
-           }
-         } break;
-         case "colors":{
-           int rand1,rand2;
-           labelsList=["red","blue","green","pink","black","white"];
-           List<Color> colorLabels=[Colors.red,Colors.blue,Colors.green,Colors.pink,Colors.black,Colors.white];
-           for(int i=0;i<15;i++){
-             rand1=Random().nextInt(labelsList.length);
-             rand2=Random().nextInt(labelsList.length);
-             while(rand2 == rand1)
-               rand2=Random().nextInt(labelsList.length);
-             tests.add(ColorsTest(Random().nextInt(2)+1, labelsList[rand1], colorLabels[rand1], labelsList[rand2], colorLabels[rand2], context));
-           }
-         } break;
-         case "letters":{
+       for(int i = 0  ; i<15 ; i++){
 
-           int rand1,rand2;
-           tests.clear();
-           for(int i=0;i<15;i++){
-             rand1=Random().nextInt(27);
-             rand2=Random().nextInt(27);
-             while(rand2 == rand1)
-               rand2=Random().nextInt(27);
-             tests.add(LettersTest(Random().nextInt(2)+1, String.fromCharCode(rand1+97), String.fromCharCode(rand2+97), context));
-           }
-         } break;
+        await addTest(i % list.length);
        }
+
+
+
      });
 
   }
 
+
+  Future<void> addTest(int r) async {
+
+    switch(categoriesList[r].category) {
+      case "animals":{
+        labelsList=categoriesList[r].labels;
+        int rand1,rand2;
+
+        for(int i=0;i<15;i++){
+          rand1=Random().nextInt(labelsList.length);
+          rand2=Random().nextInt(labelsList.length);
+
+            rand2=labelsList.length - rand1-1 ;
+            String l1 = labelsList[rand1] ;
+          String l2 = labelsList[rand2] ;
+
+          loadImages(l1,l2).then((value){
+            if(value!=null){
+              tests.add(AnimalsTest(Random().nextInt(2)+1, l1, l2,value.link1,value.link2, context));
+             // tests = shuffle(tests);
+            }
+          });
+
+
+        }
+      } break;
+      case "maths":{
+        labelsList=["+","-","*"];
+        int rand1;
+
+
+          rand1=Random().nextInt(labelsList.length);
+          tests.add(MathsTest(Random().nextInt(2)+1, Random().nextInt(10)+1, labelsList[rand1], Random().nextInt(10)+1, context));
+
+      } break;
+      case "colors":{
+        int rand1,rand2;
+        labelsList=["red","blue","green","pink","black","white"];
+        List<Color> colorLabels=[Colors.red,Colors.blue,Colors.green,Colors.pink,Colors.black,Colors.white];
+
+          rand1=Random().nextInt(labelsList.length);
+          rand2=Random().nextInt(labelsList.length);
+          while(rand2 == rand1)
+            rand2=Random().nextInt(labelsList.length);
+          tests.add(ColorsTest(Random().nextInt(2)+1, labelsList[rand1], colorLabels[rand1], labelsList[rand2], colorLabels[rand2], context));
+
+      } break;
+      case "Letters":{
+
+        int rand1,rand2;
+
+
+          rand1=Random().nextInt(27);
+          rand2=Random().nextInt(27);
+          while(rand2 == rand1)
+            rand2=Random().nextInt(27);
+          tests.add(LettersTest(Random().nextInt(2)+1, String.fromCharCode(rand1+97), String.fromCharCode(rand2+97), context));
+
+      } break;
+    }
+  }
+
+
+  List shuffle(List items) {
+    var random = new Random();
+
+    // Go through all elements.
+    for (var i = items.length - 1; i > 0; i--) {
+
+      // Pick a pseudorandom number according to the list length
+      var n = random.nextInt(i + 1);
+
+      var temp = items[i];
+      items[i] = items[n];
+      items[n] = temp;
+    }
+
+    return items;
+  }
+
  void generateTest(){
+       print("last : "+tests.length.toString()) ;
       Test x = tests.last ;
       sayIt(x.question);
       tests.removeLast() ;
       content = Container(
         height: 500,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Container(
+              height: 100,
               margin: EdgeInsets.all(20),
               child: Text(x.question , style: TextStyle(fontWeight: FontWeight.bold, fontSize: _textSizeValue+10 , color: Colors.white),),) ,
-            GestureDetector(child:
-              x.getFirstChoice(),
-            onTap: (){
-              commitAnswer(x.correct==1) ;
-            },) ,
-            GestureDetector(child:
-              x.getSecondChoice(),
-            onTap: (){
-              commitAnswer(x.correct==2) ;
-            },) ,
+            Container(
+              height: 250,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Container(
+width: 200,
+
+                    child: GestureDetector(child:
+                      x.getFirstChoice(),
+                    onTap: (){
+                      commitAnswer(x.correct==1) ;
+                    },),
+                  ) ,
+                  Container(
+width: 200,
+                    child: GestureDetector(child:
+                      x.getSecondChoice(),
+                    onTap: (){
+                      commitAnswer(x.correct==2) ;
+                    },),
+                  ),
+                ],
+              ),
+            ) ,
           ],
         ),
 
@@ -317,6 +375,7 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
     }
     Toast.show(correct?"True":"False", context );
     generateTest();
+    addTest(random.nextInt(categoriesList.length)) ;
  }
 
 
@@ -371,10 +430,26 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
 
         GameCategories categories = GameCategories.fromJson(response.body);
         liste= categories.categoriesList;
+        random = Random();
       }
 
     });
     return liste;
+  }
+
+  Future<Links> loadImages(String v1,String v2) async
+  {
+    ImagesLinks link;
+    await http.get(baseUrl+"photosGame/game", headers: {
+      "image1": v1,
+      "image2": v2
+    }).then((http.Response response){
+      print("Loading Images : "+response.body);
+      link= imagesLinksFromJson(response.body);
+      if(response.statusCode==200){
+
+      }});
+    return (link==null)?null:link.links;
   }
 
 }

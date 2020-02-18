@@ -28,6 +28,7 @@ class Links {
   String link1;
   String link2;
 
+
   Links({
     this.link1,
     this.link2,

@@ -9,11 +9,10 @@ import 'Test.dart';
 
 class AnimalsTest extends Test {
   String l1,l2,link1,link2;
-  AnimalsTest(int answer , String v1 , String v2 , BuildContext context) :l1=v1,l2=v2, super(answer,context) {
-   loadImages(v1, v2).then((link){
-     firstChoice = generateAnswer(link.link1) ;
-     secondChoice = generateAnswer(link.link2) ;
-   });
+  AnimalsTest(int answer , String v1 , String v2 ,String link1 , String link2 ,  BuildContext context) :l1=v1,l2=v2, super(answer,context) {
+
+       firstChoice = generateAnswer(link1) ;
+       secondChoice = generateAnswer(link2) ;
 
     generateAnswerString();
   }
@@ -21,7 +20,14 @@ class AnimalsTest extends Test {
   @override
   Widget generateAnswer(link)  {
     Widget x;
-    x = Center(child: Image.network(link),);
+    x = Container(
+
+      child:Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(image : Image.network(link,fit: BoxFit.cover).image,fit: BoxFit.cover)
+        ),
+      ) );
+      // child: );
     return getBox(x);
   }
 
@@ -33,18 +39,6 @@ class AnimalsTest extends Test {
       question = "Which one is the image of the "+ l2;
   }
 
-  Future<Links> loadImages(String v1,String v2) async
-  {
-    ImagesLinks link;
-     await http.get(baseUrl+"photosGame/game", headers: {
-      "image1": v1,
-      "image2": v2
-    }).then((http.Response response){
-      print("Loading Images : "+response.statusCode.toString());
-      if(response.statusCode==200){
-         link= imagesLinksFromJson(response.body);
-      }});
-    return link.links;
-  }
+
 
 }

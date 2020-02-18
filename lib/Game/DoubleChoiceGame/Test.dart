@@ -6,7 +6,7 @@ abstract class Test{
   Test(int s , BuildContext context){
     this.context = context;
     correct = s ;
-    _boxSize = 200 ;
+    _boxSize = 300 ;
   }
 
   BuildContext context ;
