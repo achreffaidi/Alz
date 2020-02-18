@@ -116,7 +116,7 @@ class _TasksUIState extends State<TasksUI> {
                     }else
                       setDone(tasks.elementAt(index).id.toString());
                 },
-                child: getItem(tasks.elementAt(index).title ,tasks.elementAt(index).time, tasks.elementAt(index).done,index==0),
+                child: getItem(tasks.elementAt(index).title ,tasks.elementAt(index).time ,tasks.elementAt(index).description,tasks.elementAt(index).image , tasks.elementAt(index).done,index==0),
               );
             }
 
@@ -125,9 +125,8 @@ class _TasksUIState extends State<TasksUI> {
   }
 
 
-  Widget getItem(String name,String time,bool isDone , isElevated){
+  Widget getItem(String name,String time , String desc , String img,bool isDone , isElevated){
     return Container(
-      height: 150,
       margin: EdgeInsets.symmetric(horizontal:isElevated? 20 : 30),
       child:
     Card(
@@ -137,22 +136,37 @@ elevation: isElevated?10:2,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
-              color: c2,
-              width: 3,
-              height: 100,
+            Row(
+
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                  color: c2,
+                  width: 8,
+                  height: 150,
+                ),
+                Checkbox(value: isDone,onChanged: (value){
+
+                },) ,
+                Text(time??"",style: TextStyle(color: Colors.grey ,fontSize: 20),),
+
+
+              ],
             ) ,
 
           Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
+
               Text(name,style: TextStyle(fontSize: _textSizeValue+5 ,decoration: isDone? TextDecoration.lineThrough : TextDecoration.none , color: isDone? Colors.grey: Colors.black ),),
               Text(time,style: TextStyle(color: Colors.grey ,fontSize: _textSizeValue+5),)
+
             ],
           ),
-            Checkbox(value: isDone,onChanged: (value){
-
-            },) ,
+            Container(
+                height: 200,
+                width: 200,
+                child: Image.network(img))
           ],),
       ),
     )

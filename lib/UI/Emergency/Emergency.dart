@@ -1,8 +1,13 @@
+import 'dart:convert';
+
+import 'package:alz/Constant/Strings.dart';
 import 'package:alz/Constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sms/flutter_sms.dart';
 import 'package:geolocator/geolocator.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 
 class Emergency extends StatefulWidget {
@@ -17,7 +22,14 @@ class _EmergencyState extends State<Emergency> {
   String messageLost = "Hello , It's Me Ben , I am lost !";
   String messagePain = "Hello , It's Me Ben , I feed Pain !";
   String messageHelp = "Hello , It's Me Ben , I need Help !";
-  List<String> recipents = ["40968660", "53799311"];
+  List<String> recipents  = new List();
+
+
+  @override
+  void initState() {
+    _loadEmergencyNumber() ;
+    super.initState();
+  }
 
   void initState(){
     _loadTextSize();
@@ -40,6 +52,17 @@ class _EmergencyState extends State<Emergency> {
   }
 
 
+  void _loadEmergencyNumber() async {
+
+    http.get(baseUrl+"getEmergencyNumber").then((http.Response response){
+
+      var parsedJson = json.decode(response.body);
+      recipents.add(parsedJson["number"] ) ;
+
+
+    });
+
+  }
 
   Widget _getBody() {
     return Container(
