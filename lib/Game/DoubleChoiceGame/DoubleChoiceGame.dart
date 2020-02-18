@@ -290,10 +290,10 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
         int rand1,rand2;
 
 
-          rand1=Random().nextInt(27);
-          rand2=Random().nextInt(27);
+          rand1=Random().nextInt(26);
+          rand2=Random().nextInt(26);
           while(rand2 == rand1)
-            rand2=Random().nextInt(27);
+            rand2=Random().nextInt(26);
           tests.add(LettersTest(Random().nextInt(2)+1, String.fromCharCode(rand1+97), String.fromCharCode(rand2+97), context));
 
       } break;
@@ -391,7 +391,7 @@ width: 200,
       print(response.statusCode);
       print(response.headers);
       if(response.headers.containsKey("voice")) play(response.headers["voice"]) ;
-      print("voice") ;
+
     });
 
   }
