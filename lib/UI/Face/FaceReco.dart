@@ -7,6 +7,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class FaceReco extends StatefulWidget {
   @override
@@ -15,6 +17,7 @@ class FaceReco extends StatefulWidget {
 
 class _FaceRecoState extends State<FaceReco> {
 
+  double _textSizeValue = 20 ;
   String name ="" ;
   String data ="" ;
   double headerSize = 100 ;
@@ -25,6 +28,8 @@ class _FaceRecoState extends State<FaceReco> {
   void initState() {
     pr =new ProgressDialog(context,type: ProgressDialogType.Normal);
     pr.update(message:"Getting Infos ... ");
+
+    _loadTextSize();
   }
 
   @override
@@ -72,10 +77,10 @@ class _FaceRecoState extends State<FaceReco> {
              Container(height: 100,),
               _getChild() ,
               Container(margin: EdgeInsets.only(top: 60),
-              child: Text(name,style: TextStyle(fontSize: 40 ,fontWeight: FontWeight.bold),)
+              child: Text(name,style: TextStyle(fontSize: _textSizeValue+20 ,fontWeight: FontWeight.bold),)
                 ,),
              Container(margin: EdgeInsets.only(top: 40,left: 30,right: 30),
-               child: Text(data,style: TextStyle(fontSize: 30,),textAlign: TextAlign.center,)
+               child: Text(data,style: TextStyle(fontSize: _textSizeValue+10),textAlign: TextAlign.center,)
                ,)
 
 
@@ -87,7 +92,7 @@ class _FaceRecoState extends State<FaceReco> {
   Widget _getHeader(){
     return Container(
       height: headerSize,
-      child: Center(child: Text("Face Recognition",style: TextStyle(fontSize: 30 , color: Colors.white , fontWeight: FontWeight.bold), )),
+      child: Center(child: Text("Face Recognition",style: TextStyle(fontSize: _textSizeValue+10 , color: Colors.white , fontWeight: FontWeight.bold), )),
     );
   }
 
@@ -154,6 +159,15 @@ class _FaceRecoState extends State<FaceReco> {
   }
 
 
+  void _loadTextSize()async{
 
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _textSizeValue = ( prefs.getDouble("textSize")??20 ) ;
+    print("loaded value = "+_textSizeValue.toString()) ;
+    setState(() {
+
+    });
+
+  }
 
 }

@@ -5,6 +5,8 @@ import 'package:alz/Constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 
 class TasksUI extends StatefulWidget {
@@ -16,6 +18,7 @@ class TasksUI extends StatefulWidget {
 class _TasksUIState extends State<TasksUI> {
 
   List<ListByDay> tasks ;
+  double _textSizeValue = 20 ;
 
 
   int  getDone(){
@@ -27,8 +30,8 @@ class _TasksUIState extends State<TasksUI> {
   @override
   void initState() {
 
-
     loadTask();
+    _loadTextSize();
 
   }
 
@@ -74,7 +77,7 @@ class _TasksUIState extends State<TasksUI> {
 
          Container(
            margin: EdgeInsets.only(left: 20 ,top: 60),
-           child:  Text("Undone Tasks : "+getDone().toString()+(getDone()==0?"":" tasks"),style: TextStyle(fontSize: 30),),
+           child:  Text("Undone Tasks : "+getDone().toString()+(getDone()==0?"":" tasks"),style: TextStyle(fontSize: _textSizeValue+10),),
          ),
           getList(),
 
@@ -92,7 +95,7 @@ class _TasksUIState extends State<TasksUI> {
 
     return Container(
       height: 200,
-      child: Center(child: Text(formatted,style: TextStyle(fontSize: 30 , color: Colors.white , fontWeight: FontWeight.bold), )),
+      child: Center(child: Text(formatted,style: TextStyle(fontSize: _textSizeValue+10 , color: Colors.white , fontWeight: FontWeight.bold), )),
     );
   }
 
@@ -154,8 +157,9 @@ elevation: isElevated?10:2,
           Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text(name,style: TextStyle(fontSize: 25 ,decoration: isDone? TextDecoration.lineThrough : TextDecoration.none , color: isDone? Colors.grey: Colors.black ),),
-              Text(desc??"",style: TextStyle(fontSize: 18 ,decoration: isDone? TextDecoration.lineThrough : TextDecoration.none , color:  Colors.grey),),
+
+              Text(name,style: TextStyle(fontSize: _textSizeValue+5 ,decoration: isDone? TextDecoration.lineThrough : TextDecoration.none , color: isDone? Colors.grey: Colors.black ),),
+              Text(time,style: TextStyle(color: Colors.grey ,fontSize: _textSizeValue+5),)
 
             ],
           ),
@@ -204,6 +208,15 @@ elevation: isElevated?10:2,
 
 
   }
+  void _loadTextSize()async{
 
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _textSizeValue = ( prefs.getDouble("textSize")??20 ) ;
+    print("loaded value = "+_textSizeValue.toString()) ;
+    setState(() {
+
+    });
+
+  }
 
 }

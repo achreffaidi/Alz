@@ -2,6 +2,8 @@ import 'package:alz/Constant/colors.dart';
 import 'package:alz/Model/Stuff.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class Storage extends StatefulWidget {
   @override
@@ -10,7 +12,7 @@ class Storage extends StatefulWidget {
 
 class _StorageState extends State<Storage> {
 
-
+  double _textSizeValue = 20 ;
   List<Stuff> list = new List() ;
   String pattern ="";
   @override
@@ -19,6 +21,8 @@ class _StorageState extends State<Storage> {
     list.add(new Stuff("Medicaments", "In the medicine cabinet , in the bathroom", "https://www.containerstore.com/catalogimages/354039/HowToOrganizeYourMedicineCabinet_120.jpg?width=1200&height=1200&align=center")) ;
     list.add(new Stuff("Glasses", "In the night stand , in my bedroom", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJKIzoJLvYuV80gMUjpiiP_O11xASwMafY01i3JUP4XsZef5Be&s")) ;
     list.add(new Stuff("Clothes", "In my bedroom closet", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4lSA8Xpm0RKLpKzc7MuumgmMU4CubQG5XUx_TFlkuW3LWmlzE&s")) ;
+    _loadTextSize();
+
   }
 
 
@@ -90,7 +94,7 @@ class _StorageState extends State<Storage> {
                 child: TypeAheadField(
                   textFieldConfiguration: TextFieldConfiguration(
                       autofocus: true,
-                      style: TextStyle(fontSize: 30),
+                      style: TextStyle(fontSize: _textSizeValue+10),
                       decoration: InputDecoration(
                           border: OutlineInputBorder()
                       )
@@ -123,7 +127,7 @@ class _StorageState extends State<Storage> {
   Widget _getHeader(){
     return Container(
       height: headerSize,
-      child: Center(child: Text("Storage",style: TextStyle(fontSize: 30 , color: Colors.white , fontWeight: FontWeight.bold), )),
+      child: Center(child: Text("Storage",style: TextStyle(fontSize: _textSizeValue+10 , color: Colors.white , fontWeight: FontWeight.bold), )),
     );
   }
 
@@ -174,7 +178,7 @@ class _StorageState extends State<Storage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Text(stuff.name , style: TextStyle(fontSize: 20),textWidthBasis: TextWidthBasis.parent,),
+                    Text(stuff.name , style: TextStyle(fontSize: _textSizeValue),textWidthBasis: TextWidthBasis.parent,),
                     Text(stuff.position),
                   ],
                 ),
@@ -187,5 +191,15 @@ class _StorageState extends State<Storage> {
 
   }
 
+  void _loadTextSize()async{
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _textSizeValue = ( prefs.getDouble("textSize")??20 ) ;
+    print("loaded value = "+_textSizeValue.toString()) ;
+    setState(() {
+
+    });
+
+  }
 
 }

@@ -4,12 +4,18 @@ import 'dart:convert';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
-
 import '../../Constant/Strings.dart';
 import '../../Constant/colors.dart';
 import 'LettersTest.dart';
 import 'Test.dart';
+import 'package:alz/Api/GameCategories.dart';
+import 'ColorsTest.dart';
+import 'MathsTest.dart';
+import 'AnimalsTest.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:math';
+
 
 
 
@@ -24,7 +30,8 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
   static const int STATE_PLAYING = 1 ;
   int score = 0  ;
   int state = STATE_LOADING ;
-
+  List<String> categoriesList=new List();
+  List<String> labelsList=new List();
 
   List<Test> tests = new List() ;
 
@@ -35,10 +42,14 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
   int correct = 0, wrong = 0;
   bool isPaying = false;
 
+  double _textSizeValue = 20 ;
+
   @override
   void initState() {
     _loadTests();
+    _loadTextSize();
     super.initState();
+
   }
 
 
@@ -91,13 +102,13 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                   Text(
                     "Correct",
                     style: TextStyle(
-                        fontSize: 25,
+                        fontSize: _textSizeValue+5,
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
                   ),
                   Text(correct.toString(),
                       style: TextStyle(
-                          fontSize: 25,
+                          fontSize: _textSizeValue+5,
                           color: Colors.white,
                           fontWeight: FontWeight.bold))
                 ],
@@ -107,12 +118,12 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                 children: <Widget>[
                   Text("Wrong",
                       style: TextStyle(
-                          fontSize: 25,
+                          fontSize: _textSizeValue+5,
                           color: Colors.white,
                           fontWeight: FontWeight.bold)),
                   Text(wrong.toString(),
                       style: TextStyle(
-                          fontSize: 25,
+                          fontSize: _textSizeValue+5,
                           color: Colors.white,
                           fontWeight: FontWeight.bold))
                 ],
@@ -148,7 +159,7 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                       child: Center(
                           child: Text("RESET",
                               style: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: _textSizeValue+5,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold)))),
                   onPressed: () {
@@ -171,7 +182,7 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                       child: Center(
                           child: Text("EXIT",
                               style: TextStyle(
-                                  fontSize: 25,
+                                  fontSize: _textSizeValue+5,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold)))),
                   onPressed: () {
@@ -191,7 +202,7 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                   child: Center(
                       child: Text("  Start  ",
                           style: TextStyle(
-                              fontSize: 25,
+                              fontSize: _textSizeValue+5,
                               color: Colors.white,
                               fontWeight: FontWeight.bold)))),
               onPressed: () {
@@ -208,19 +219,63 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
   }
 
 
-  void _loadTests(){
-    tests.add(LettersTest(1,"a","b",context)) ;
-    tests.add(LettersTest(2,"c","d",context)) ;
-    tests.add(LettersTest(1,"e","f",context)) ;
-    tests.add(LettersTest(2,"h","g",context)) ;
-    tests.add(LettersTest(1,"a","b",context)) ;
-    tests.add(LettersTest(2,"c","d",context)) ;
-    tests.add(LettersTest(1,"e","f",context)) ;
-    tests.add(LettersTest(2,"h","g",context)) ;
-    tests.add(LettersTest(1,"a","b",context)) ;
-    tests.add(LettersTest(2,"c","d",context)) ;
-    tests.add(LettersTest(1,"e","f",context)) ;
-    tests.add(LettersTest(2,"h","g",context)) ;
+  void _loadTests()  async {
+     _loadGameCategory().then((liste){
+       List<String> x=new List();
+       categoriesList.clear();
+       for(int i =0 ; i<liste.length;i++) categoriesList.add(liste.elementAt(i).category);
+
+       int r=Random().nextInt(categoriesList.length);
+       switch(categoriesList[r])
+       {
+         case "animals":{
+           labelsList=["cow","mouse","cat","dog","butterfly","horse","rabbit","camel"];
+           int rand1,rand2;
+           tests.clear();
+           for(int i=0;i<15;i++){
+             rand1=Random().nextInt(labelsList.length);
+             rand2=Random().nextInt(labelsList.length);
+             while(rand2 == rand1)
+               rand2=Random().nextInt(labelsList.length);
+             tests.add(AnimalsTest(Random().nextInt(2)+1, labelsList[rand1], labelsList[rand2], context));
+           }
+         } break;
+         case "maths":{
+           labelsList=["+","-","*"];
+           int rand1;
+           tests.clear();
+           for(int i=0;i<15;i++){
+             rand1=Random().nextInt(labelsList.length);
+             tests.add(MathsTest(Random().nextInt(2)+1, Random().nextInt(10)+1, labelsList[rand1], Random().nextInt(10)+1, context));
+           }
+         } break;
+         case "colors":{
+           int rand1,rand2;
+           labelsList=["red","blue","green","pink","black","white"];
+           List<Color> colorLabels=[Colors.red,Colors.blue,Colors.green,Colors.pink,Colors.black,Colors.white];
+           for(int i=0;i<15;i++){
+             rand1=Random().nextInt(labelsList.length);
+             rand2=Random().nextInt(labelsList.length);
+             while(rand2 == rand1)
+               rand2=Random().nextInt(labelsList.length);
+             tests.add(ColorsTest(Random().nextInt(2)+1, labelsList[rand1], colorLabels[rand1], labelsList[rand2], colorLabels[rand2], context));
+           }
+         } break;
+         case "letters":{
+
+           int rand1,rand2;
+           tests.clear();
+           for(int i=0;i<15;i++){
+             rand1=Random().nextInt(27);
+             rand2=Random().nextInt(27);
+             while(rand2 == rand1)
+               rand2=Random().nextInt(27);
+             tests.add(LettersTest(Random().nextInt(2)+1, String.fromCharCode(rand1+97), String.fromCharCode(rand2+97), context));
+           }
+         } break;
+       }
+     });
+
   }
 
  void generateTest(){
@@ -233,7 +288,7 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
           children: <Widget>[
             Container(
               margin: EdgeInsets.all(20),
-              child: Text(x.question , style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30 , color: Colors.white),),) ,
+              child: Text(x.question , style: TextStyle(fontWeight: FontWeight.bold, fontSize: _textSizeValue+10 , color: Colors.white),),) ,
             GestureDetector(child:
               x.getFirstChoice(),
             onTap: (){
@@ -295,6 +350,31 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
     if (result == 1) {
       // success
     }
+  }
+
+  void _loadTextSize()async{
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _textSizeValue = ( prefs.getDouble("textSize")??20 ) ;
+    print("loaded value = "+_textSizeValue.toString()) ;
+    setState(() {
+
+    });
+
+  }
+
+  Future<List<CategoriesList>> _loadGameCategory() async{
+    List<CategoriesList> liste;
+    await http.get(baseUrl+"photosGame/getCategories").then((http.Response response){
+
+      if(response.statusCode==200){
+
+        GameCategories categories = GameCategories.fromJson(response.body);
+        liste= categories.categoriesList;
+      }
+
+    });
+    return liste;
   }
 
 }

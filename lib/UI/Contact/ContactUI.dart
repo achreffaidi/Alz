@@ -3,6 +3,8 @@ import 'package:alz/Model/Contact.dart';
 import 'package:flutter/material.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class ContactUI extends StatefulWidget {
   @override
@@ -17,12 +19,13 @@ class ContactUI extends StatefulWidget {
 class _ContactUIState extends State<ContactUI> {
 
   double headerSize = 100 ;
+  double _textSizeValue = 20 ;
 
   List<TimelineModel> items = [
   ];
   @override
   void initState() {
-
+    _loadTextSize();
     List<Contact> list = new List();
     list.add(new Contact("Marshall Melany", "52005985", "Daughter", "https://reductress.com/wp-content/uploads/2016/10/woman-outside-serious-820x500.jpg")) ;
     list.add(new Contact("Marshall John", "52005985", "Son", "https://www.schwarzkopf.fr/content/dam/schwarzkopf/fr/fr/brands/Men-perfect/home/thumbnails/men_perfect_de_thumbnails_home_pack_400x400.jpg")) ;
@@ -44,6 +47,8 @@ class _ContactUIState extends State<ContactUI> {
             icon: Icon(Icons.person_pin,color: Colors.white,)) );
 
     }
+
+
 
   }
 
@@ -93,7 +98,7 @@ class _ContactUIState extends State<ContactUI> {
   Widget _getHeader(){
     return Container(
       height: headerSize,
-      child: Center(child: Text("Contacts",style: TextStyle(fontSize: 30 , color: Colors.white , fontWeight: FontWeight.bold), )),
+      child: Center(child: Text("Contacts",style: TextStyle(fontSize: _textSizeValue+10 , color: Colors.white , fontWeight: FontWeight.bold), )),
     );
   }
 
@@ -116,8 +121,8 @@ class _ContactUIState extends State<ContactUI> {
               height: 200,
               width: 200,
             ),
-            Container( margin : EdgeInsets.symmetric(vertical: 10),child: Text(contact.name , style: TextStyle(fontSize: 25),),),
-            Container(child: Text("("+contact.desc+")", style: TextStyle(fontSize: 18)),),
+            Container( margin : EdgeInsets.symmetric(vertical: 10),child: Text(contact.name , style: TextStyle(fontSize: _textSizeValue+5),),),
+            Container(child: Text("("+contact.desc+")", style: TextStyle(fontSize: _textSizeValue)),),
             Container( child: RaisedButton.icon(
                 onPressed:(){
               _call(contact.phoneNumber);
@@ -131,5 +136,14 @@ class _ContactUIState extends State<ContactUI> {
 
   _call(String phoneNumber) {}
 
+  void _loadTextSize()async{
 
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _textSizeValue = ( prefs.getDouble("textSize")??20 ) ;
+    print("loaded value = "+_textSizeValue.toString()) ;
+    setState(() {
+
+    });
+
+  }
 }

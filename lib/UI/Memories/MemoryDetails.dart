@@ -1,6 +1,8 @@
 import 'package:alz/Api/memories.dart';
 import 'package:alz/Constant/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class MemoryDetail extends StatefulWidget {
 
@@ -15,6 +17,12 @@ class MemoryDetail extends StatefulWidget {
 
 class _MemoryDetailState extends State<MemoryDetail> {
   double headerSize = 100 ;
+  double _textSizeValue = 20 ;
+
+  void initState(){
+    _loadTextSize();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +79,7 @@ class _MemoryDetailState extends State<MemoryDetail> {
   Widget _getHeader(){
     return Container(
       height: headerSize,
-      child: Center(child: Text("Memory Details",style: TextStyle(fontSize: 30 , color: Colors.white , fontWeight: FontWeight.bold), )),
+      child: Center(child: Text("Memory Details",style: TextStyle(fontSize: _textSizeValue+10 , color: Colors.white , fontWeight: FontWeight.bold), )),
     );
   }
 
@@ -79,7 +87,7 @@ class _MemoryDetailState extends State<MemoryDetail> {
 
   return Container(
     margin: EdgeInsets.symmetric(horizontal: 50),
-    child: Text(desc ,style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+    child: Text(desc ,style: TextStyle(fontSize: _textSizeValue, fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
   );
   }
 
@@ -87,7 +95,7 @@ class _MemoryDetailState extends State<MemoryDetail> {
 
   return Container(
     margin: EdgeInsets.only(top: 20 , bottom: 30),
-    child: Text(title,style: TextStyle(fontSize: 30 , color: c2 , fontWeight: FontWeight.bold)),
+    child: Text(title,style: TextStyle(fontSize: _textSizeValue+10 , color: c2 , fontWeight: FontWeight.bold)),
   );
   }
 
@@ -95,7 +103,7 @@ class _MemoryDetailState extends State<MemoryDetail> {
 
   return Container(
     margin: EdgeInsets.only(top: 50),
-    child: Text(date,style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+    child: Text(date,style: TextStyle(fontSize: _textSizeValue, fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
   );
   }
 
@@ -116,6 +124,17 @@ class _MemoryDetailState extends State<MemoryDetail> {
           )
       ),
     ) ;
+
+  }
+
+  void _loadTextSize()async{
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _textSizeValue = ( prefs.getDouble("textSize")??20 ) ;
+    print("loaded value = "+_textSizeValue.toString()) ;
+    setState(() {
+
+    });
 
   }
 }
