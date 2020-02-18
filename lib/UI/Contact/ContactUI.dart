@@ -54,17 +54,24 @@ class _ContactUIState extends State<ContactUI> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        color: c1,
-        child:  Column(
-          children: <Widget>[
-            _getHeader(),
-            _getBody()
-          ],
-        ),
-      ) ,
-    );
+    Widget build(BuildContext context) {
+      return Scaffold(
+          body: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/Group 14.png"),
+                  fit: BoxFit.cover,
+                  alignment: Alignment(0, 0),
+                ),
+              ),
+              child: Column(
+                children: <Widget>[
+                  Text("hoooo")
+                ],
+              )
+          )
+      );
+    }
   }
 
 
