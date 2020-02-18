@@ -64,10 +64,10 @@ class _FaceDetectState extends State<FaceDetect> {
         backgroundColor: c1,
         title: Text("Live Face Recognition "),
       ),
-      body: Column(
+      body: Row(
         children: <Widget>[
           SizedBox(
-            width: MediaQuery.of(context).size.width,
+            width: MediaQuery.of(context).size.width/2.2,
             child: CameraMlVision<List<Face>>(
               key: _scanKey,
               cameraLensDirection: cameraLensDirection,

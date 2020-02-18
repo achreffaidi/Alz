@@ -44,12 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Container(
         color: c1,
-        child:  Column(
-          children: <Widget>[
-            _getHeader(),
-            _getBody()
-          ],
-        ),
+        child:   _getBody(),
       ) ,
     );
   }
@@ -76,15 +71,17 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],),
       child: Container(
+
         margin: EdgeInsets.only(top: 40),
-          height: MediaQuery.of(context).size.height-headerSize-40,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+         height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Container(
+
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 getCarsoulet(),
-                getMenu(500)
-                ,Container(height: 200,)
+                getMenu()
               ],),
           )
       ),
@@ -119,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child : Column(
             children: <Widget>[
              // getMemories() ,
-              getMenu(400)
+              getMenu()
             ],
           )
       ) ,
@@ -132,6 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget getMemories(){
     return Container(
+      height: MediaQuery.of(context).size.height-headerSize-40,
       margin: EdgeInsets.symmetric(vertical: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -147,13 +145,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
-  Widget getMenu(double height){
+  Widget getMenu(){
 
     return Container(
+      width: MediaQuery.of(context).size.height/2.2,
+
       margin: EdgeInsets.symmetric(vertical: 30 ),
       child: Column(
         children: <Widget>[
-      GestureDetector(child:  getMenuItem(Image.asset("assets/face.png",fit: BoxFit.fill,), height/3) , onTap: (){
+      GestureDetector(child:  getMenuItem(Image.asset("assets/face.png",fit: BoxFit.fill,)) , onTap: (){
 
 
       Navigator.push(
@@ -165,25 +165,25 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       });
       },),
-          GestureDetector(child:  getMenuItem(Image.asset("assets/tasks.png",fit: BoxFit.fill,), height/3) , onTap: (){
+          GestureDetector(child:  getMenuItem(Image.asset("assets/tasks.png",fit: BoxFit.fill,)) , onTap: (){
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => TasksUI()),
             );
           },),
-          GestureDetector(child: Container( child: getMenuItem(Image.asset("assets/storage.png",fit: BoxFit.fill,), height/3)) , onTap: (){
+          GestureDetector(child: Container( child: getMenuItem(Image.asset("assets/storage.png",fit: BoxFit.fill,))) , onTap: (){
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => DoubleChoiceGame()),
             );
           },),
-          GestureDetector(child: Container(child: getMenuItem(Image.asset("assets/contacts.png",fit: BoxFit.fill,), height/3)) , onTap: (){
+          GestureDetector(child: Container(child: getMenuItem(Image.asset("assets/contacts.png",fit: BoxFit.fill,))) , onTap: (){
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => ContactUI()),
             );
           },),
-          GestureDetector(child: Container(child: getMenuItem(Image.asset("assets/emergency.png",fit: BoxFit.fill,), height/3)) , onTap: (){
+          GestureDetector(child: Container(child: getMenuItem(Image.asset("assets/emergency.png",fit: BoxFit.fill,))) , onTap: (){
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Emergency()),
@@ -197,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     ) ;
   }
-  Widget getMenuItem(image , height ){
+  Widget getMenuItem(image  ){
 
     return
 
@@ -212,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )
             ,
            ),
-          height: height*0.7,
+
           child: Container(
             child: image,
           ),
@@ -239,7 +239,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget getCarsoulet(){
     return images.isEmpty?Container():Container(
       margin: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
-      height: 300,
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width/2.2,
 
       child: Carousel(
         dotColor: c2,
