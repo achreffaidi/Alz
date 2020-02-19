@@ -44,8 +44,8 @@ class _TasksUIState extends State<TasksUI> {
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/Group 14.png"),
-            fit: BoxFit.cover,
+            image: AssetImage("assets/background3.png"),
+            fit: BoxFit.fill,
           ),
         ),
         child: Column(
@@ -77,14 +77,29 @@ class _TasksUIState extends State<TasksUI> {
 
     return Container(
       height: 120,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-      Center(child: Text("Tasks",style: TextStyle(fontSize: _textSizeValue+10 , color: Colors.white , fontWeight: FontWeight.bold), )),
-        Center(child: Text(formatted,style: TextStyle(fontSize: _textSizeValue+10 , color: Colors.white , fontWeight: FontWeight.bold), )),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+      GestureDetector(child: Container(width: MediaQuery.of(context).size.width*0.1,
+      height: 120,
+      child: Icon(Icons.arrow_back,color: Colors.white,size: _textSizeValue+20,),
+    ),
+    onTap: (){
+    Navigator.pop(context);
+    },),
+            Container(
+              width: MediaQuery.of(context).size.width-150,
+                child:Column(
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
+    children: <Widget>[
+    Center(child: Text("Tasks",style: TextStyle(fontSize: _textSizeValue+10 , color: Colors.white , fontWeight: FontWeight.bold), )),
+    Center(child: Text(formatted,style: TextStyle(fontSize: _textSizeValue+10 , color: Colors.white , fontWeight: FontWeight.bold), )),
 
-      ],
-      )
+    ],
+    ))
+    ]
+      ),
+
     );
   }
 
@@ -92,7 +107,7 @@ class _TasksUIState extends State<TasksUI> {
   Widget getList(){
     return tasks==null?Container():Container(
       height:MediaQuery.of(context).size.height-120 ,
-        padding: EdgeInsets.symmetric(horizontal: 40,vertical: 30),
+        padding: EdgeInsets.symmetric(horizontal: 40,vertical: 20),
         child : new ListView.builder
           (
             itemCount: tasks.length,
@@ -121,7 +136,7 @@ Widget getItem(ListByDay task)
   double x=50;
   return Container(
     margin: EdgeInsets.only(top: 30,right: 15,left: 15,bottom: 15),
-    height: 200,
+    height: 180,
     decoration: BoxDecoration(
         shape: BoxShape.rectangle,
         color: Colors.white,
@@ -129,7 +144,7 @@ Widget getItem(ListByDay task)
     ),
     child: Row(
 
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      //crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Container(
           height: 90,
@@ -150,14 +165,10 @@ Widget getItem(ListByDay task)
               ),
           //highlightColor: Colors.white,
           onPressed:(){
-            if(x==0)
-              x=50;
-            else
-              x=0;
+            task.done? setUnDone(task.id):setDone(task.id);
             setState(() {
 
             });
-
           },
           color: Colors.white,
           child: Container(
@@ -170,7 +181,7 @@ Widget getItem(ListByDay task)
                   border: Border.all(color: c1,style: BorderStyle.solid,width: 3)
               ),
               child: Center(
-                  child: Icon(Icons.check,color: c1,size: x,)
+                  child: Icon(Icons.check,color: c1,size: task.done? 50:0,)
               )
           ),
         )),
@@ -183,8 +194,14 @@ Widget getItem(ListByDay task)
   child: Center(child:Text(task.title,style: TextStyle(fontSize:_textSizeValue+10,fontWeight: FontWeight.bold))),
   ),
         Container(
-
-          child: task.imageUrl!=null ?Image.network(task.imageUrl,width: 140,height: 200,):Container(),
+          height: 140,
+          width: 140,
+          child: task.imageUrl!=null ?ClipRRect(
+            borderRadius: BorderRadius.all(
+                Radius.circular(40)
+            ),
+            child: Image.network(task.imageUrl,height: 140,width: 140,),
+          ):Container(),
         )
 
       ],
@@ -192,55 +209,6 @@ Widget getItem(ListByDay task)
     ),
   );
 }
-  Widget getItem1(String name,String time , String desc , String img,bool isDone , isElevated){
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal:isElevated? 20 : 30),
-      padding: EdgeInsets.all(10),
-      child:
-    Card(
-elevation: isElevated?10:2,
-      child: Padding(
-        padding: const EdgeInsets.all(5.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Row(
-
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Container(
-                  color: c2,
-                  width: 8,
-                  height: 150,
-                ),
-                Checkbox(value: isDone,onChanged: (value){
-
-                },) ,
-                Text(time??"",style: TextStyle(color: Colors.grey ,fontSize: 20),),
-
-
-              ],
-            ) ,
-
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-
-              Text(name,style: TextStyle(fontSize: _textSizeValue+5 ,decoration: isDone? TextDecoration.lineThrough : TextDecoration.none , color: isDone? Colors.grey: Colors.black ),),
-              Text(time,style: TextStyle(color: Colors.grey ,fontSize: _textSizeValue+5),)
-
-            ],
-          ),
-            Container(
-                height: 200,
-                width: 200,
-                child: Image.network(img))
-          ],),
-      ),
-    )
-      ,);
-
-  }
 
   void loadTask() async {
     print(baseUrl+"getbyday/"+DateTime.now().weekday.toString());
@@ -248,11 +216,11 @@ elevation: isElevated?10:2,
 
       tasks = tasksByDayFromJson(response.body).listByDay;
       print(response.body) ;
-      tasks.sort((ListByDay item1,ListByDay item2){
-        if(item1.done==item2.done)return 0 ;
-        if(item1.done&!item2.done)return 1 ;
-        return -1 ;
-      });
+//      tasks.sort((ListByDay item1,ListByDay item2){
+//        if(item1.done==item2.done)return 0 ;
+//        if(item1.done&!item2.done)return 1 ;
+//        return -1 ;
+//      });
       setState(() {
 
       });
@@ -261,7 +229,7 @@ elevation: isElevated?10:2,
   }
 
   void setDone(String id) async {
-    http.get(baseUrl+"setdone/"+id).then((http.Response response){
+    http.get(baseUrl+"setDone/"+id).then((http.Response response){
       loadTask();
       print(response.statusCode);
     });
@@ -269,7 +237,7 @@ elevation: isElevated?10:2,
 
   }
   void setUnDone(String id) async {
-    http.get(baseUrl+"setundone/"+id).then((http.Response response){
+    http.get(baseUrl+"setUndone/"+id).then((http.Response response){
       loadTask();
       print(response.statusCode);
     });

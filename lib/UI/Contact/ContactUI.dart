@@ -36,8 +36,8 @@ class _ContactUIState extends State<ContactUI> {
             width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/Group 14.png"),
-                  fit: BoxFit.cover,
+                  image: AssetImage("assets/background3.png"),
+                  fit: BoxFit.fill,
                 ),
               ),
               child: Column(
@@ -89,7 +89,7 @@ class _ContactUIState extends State<ContactUI> {
 
   Widget getList(){
     return contacts==null?Container():Container(
-      padding: EdgeInsets.all(20),
+      margin: EdgeInsets.symmetric(horizontal: 20.5,vertical: 20),
        // height:MediaQuery.of(context).size.height-400 ,
         child :GridView.count(
           crossAxisSpacing: 30,

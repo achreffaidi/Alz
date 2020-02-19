@@ -59,12 +59,16 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
     CardHeight = MediaQuery.of(context).size.width * 0.8;
     return Scaffold(
       body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/background2.png"),
+            fit: BoxFit.fill,
+          ),
+        ),
         child: Column(
-          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            Container(
-              height: 50,
-            ),
             getScoreBar(),
             getBody(),
             getFooter()
@@ -79,8 +83,7 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
       child: Container(
         margin: EdgeInsets.all(10),
         width: MediaQuery.of(context).size.width,
-        child: Card(
-          color: c2,
+        child: Container(
           child: content,
         ),
       ),
@@ -89,58 +92,67 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
 
   Widget getScoreBar() {
     return Container(
-      margin: EdgeInsets.all(10),
-      child: Card(
-        color: c1,
-        child: Container(
-          height: 100,
-          child: Row(
+      margin: EdgeInsets.only(top: 10,left: 10,right: 10),
+      child: Container(
+        height: 122,
+        child: Row(
+          children: <Widget>[
+            GestureDetector(child: Container(width: MediaQuery.of(context).size.width*0.1,
+              height: 122,
+              child: Icon(Icons.arrow_back,color: Colors.white,size: _textSizeValue+20,),
+            ),
+              onTap: (){
+                Navigator.pop(context);
+              },),
+            Container(
+            width: 500,
+            child:Column(
+
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text(
-                    "Correct",
+            Text(
+            "Correct",
+            style: TextStyle(
+            fontSize: _textSizeValue+5,
+            color: Colors.white,
+            fontWeight: FontWeight.bold),
+            ),
+            Text(correct.toString(),
+            style: TextStyle(
+            fontSize: _textSizeValue+5,
+            color: Colors.white,
+            fontWeight: FontWeight.bold))
+            ],
+            ),),
+            Container(
+              width: 500,
+                child:Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Text("Wrong",
                     style: TextStyle(
                         fontSize: _textSizeValue+5,
                         color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(correct.toString(),
-                      style: TextStyle(
-                          fontSize: _textSizeValue+5,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold))
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Text("Wrong",
-                      style: TextStyle(
-                          fontSize: _textSizeValue+5,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold)),
-                  Text(wrong.toString(),
-                      style: TextStyle(
-                          fontSize: _textSizeValue+5,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold))
-                ],
-              )
-            ],
-          ),
+                        fontWeight: FontWeight.bold)),
+                Text(wrong.toString(),
+                    style: TextStyle(
+                        fontSize: _textSizeValue+5,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold))
+              ],
+            )),
+
+          ],
         ),
-      ),
+      )
     );
   }
 
   Widget getFooter() {
     return Container(
       margin: EdgeInsets.all(10),
-      child: Card(
-        color: c1,
+      child: Container(
+
         child: Container(
           height: 100,
           width: MediaQuery.of(context).size.width,
@@ -148,53 +160,69 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
             child: isPaying?  Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                RaisedButton.icon(
-                  color: Colors.green,
-                  icon: Icon(
-                    Icons.refresh,
-                    color: Colors.white,
-                    size: 25,
-                  ),
-                  label: Container(
-                      height: 80,
-                      child: Center(
-                          child: Text("RESET",
-                              style: TextStyle(
-                                  fontSize: _textSizeValue+5,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)))),
-                  onPressed: () {
-                    setState(() {
-                      correct = 0;
-                      wrong = 0;
-                      tests = null ;
-                      _loadTests();
-                    });
+                Container(
+                  child:ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  child: RaisedButton.icon(
+                    elevation: 0.5,
+                    color: Color.fromRGBO(200, 0, 200, 0),
+                    icon: Icon(
+                      Icons.refresh,
+                      color: Colors.white,
+                      size: 25,
+                    ),
+                    label: Container(
+                        height: 80,
+                        child: Center(
+                            child: Text("RESET",
+                                style: TextStyle(
+                                    fontSize: _textSizeValue+5,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)))),
+                    onPressed: () {
+                      setState(() {
+                        correct = 0;
+                        wrong = 0;
+                        tests = null ;
+                        _loadTests();
+                      });
 
-                  },
-                ),
-                RaisedButton.icon(
-                  color: Colors.black,
-                  icon: Icon(
-                    Icons.exit_to_app,
-                    color: Colors.white,
-                    size: 25,
+                    },
                   ),
-                  label: Container(
-                      height: 80,
-                      child: Center(
-                          child: Text("EXIT",
-                              style: TextStyle(
-                                  fontSize: _textSizeValue+5,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)))),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
+                  )
+                  ,),
+                Container(
+                    child:ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                  child:RaisedButton.icon(
+                    elevation: 0.5,
+                    color: Color.fromRGBO(250, 10, 250, 0),
+                    icon: Icon(
+                      Icons.exit_to_app,
+                      color: Colors.white,
+                      size: 25,
+                    ),
+                    label: Container(
+                        height: 80,
+                        child: Center(
+                            child: Text("EXIT",
+                                style: TextStyle(
+                                    fontSize: _textSizeValue+5,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)))),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                )),
+
               ],
-            ) :  RaisedButton.icon(
-              color: Colors.green,
+            ) :  Container(
+                child:ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  child:RaisedButton.icon(
+                    elevation: 0.1,
+              color: Color.fromRGBO(100, 0, 100, 0),
               icon: Icon(
                 Icons.play_arrow,
                 color: Colors.white,
@@ -214,7 +242,7 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                 });
                 generateTest();
               },
-            ),
+            ),)),
           ),
         ),
       ),
@@ -330,8 +358,8 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
           children: <Widget>[
             Container(
               height: 100,
-              margin: EdgeInsets.all(20),
-              child: Text(x.question , style: TextStyle(fontWeight: FontWeight.bold, fontSize: _textSizeValue+10 , color: Colors.white),),) ,
+              margin: EdgeInsets.only(bottom: 20 ,left: 20,right: 20),
+              child: Center(child:Text(x.question , style: TextStyle(fontWeight: FontWeight.bold, fontSize: _textSizeValue+10 , color: Colors.black),),) ,),
             Container(
               height: 250,
               child: Row(
