@@ -28,131 +28,266 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-
-
 class _HomeScreenState extends State<HomeScreen> {
-
-
-  double _textSizeValue = 20 ;
+  double _textSizeValue = 20;
   List<ImageProvider> images = new List();
-  Memories memories ;
+  Memories memories;
 
-  double headerSize = 200 ;
+  double headerSize = 100;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.red,
       body: Container(
-        color: c1,
-        child:   _getBody(),
-      ) ,
+        padding: EdgeInsets.all(0),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: Image.asset(
+                "assets/background1.png",
+              ).image,
+              fit: BoxFit.fill),
+        ),
+        child: _getBody(),
+      ),
     );
   }
-
-
 
   Widget _getBody() {
     return Container(
-
-
-      decoration: new BoxDecoration(
-        color: Colors.white,
-        borderRadius: new BorderRadius.only(
-            topLeft:   Radius.circular(70.0)
-
-        )
-        ,
-        boxShadow: [
-          new BoxShadow(
-            color: Colors.grey,
-            blurRadius: 5,
-            spreadRadius:0.2,
-            offset: new Offset(-3, -2.0),
-          )
-        ],),
       child: Container(
-
-        margin: EdgeInsets.only(top: 40),
-         height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Container(
-
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                getCarsoulet(),
-                getMenu()
-              ],),
-          )
-      ),
+                Container(
+                    width: MediaQuery.of(context).size.width / 2 - 20,
+                    child: getMemories()),
+                Container(
+                    width: MediaQuery.of(context).size.width / 2,
+                    child: getPanel())
+              ],
+            ),
+          )),
     );
   }
 
-  Widget _getHeader(){
+  Widget _getHeader() {
     return GestureDetector(
       child: Container(
         height: headerSize,
-        child: Center(child: Text("Hello\nMr. Ben",style: TextStyle(fontSize: _textSizeValue+20 , color: Colors.white , fontWeight: FontWeight.bold),textAlign: TextAlign.center, )),
+        child: Center(
+            child: Text(
+          "Hello\nMr. Ben",
+          style: TextStyle(
+              fontSize: _textSizeValue + 20,
+              color: Colors.white,
+              fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+        )),
       ),
-      onTap: (){
+      onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => SettingsUI()),
-
         ).then(_loadTextSize());
-
-
       },
     );
   }
 
-
-
-
-  Widget getBody(){
-
-    return SingleChildScrollView(
-      child: Container(
-          child : Column(
-            children: <Widget>[
-             // getMemories() ,
-              getMenu()
-            ],
-          )
-      ) ,
-    );
-
-
-  }
-
-
-
-  Widget getMemories(){
+  Widget getPanel() {
+    var h = 340.0;
+    var w = 270.0;
+    var d = 220.0;
+    var lableStyle =
+        TextStyle(fontWeight: FontWeight.bold, fontSize: _textSizeValue + 20);
     return Container(
-      height: MediaQuery.of(context).size.height-headerSize-40,
-      margin: EdgeInsets.symmetric(vertical: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: <Widget>[
-          Container(child: Text("Memories",style: TextStyle(fontSize: _textSizeValue+10,fontWeight: FontWeight.bold,color: Colors.grey),),),
-         getCarsoulet(),
+          Padding(
+            padding: const EdgeInsets.only(right: 25.0, left: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => TasksUI()),
+                          ).then((value) {
+                            setState(() {});
+                          });
+                        } , child :Container(
+                      color: Colors.transparent,
+
+                      width: w,
+                      height: h,
+                      child: Center(
+                          child: Text(
+                        "Tasks",
+                        style: lableStyle,
+                      )),
+                    )),
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => DoubleChoiceGame()),
+                          ).then((value) {
+                            setState(() {});
+                          });
+                        } , child :Container(
+                      color: Colors.transparent,
+
+                      width: w,
+                      height: h,
+                      child: Center(child: Text("Game", style: lableStyle)),
+                    ))
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => FaceDetect()),
+                        ).then((value) {
+                          setState(() {});
+                        });
+                      },
+                      child: Container(
+                        color: Colors.transparent,
+
+                        width: w,
+                        height: h,
+                        child: Center(child: Text("Faces", style: lableStyle)),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ContactUI()),
+                        ).then((value) {
+                          setState(() {});
+                        });
+                      },
+                      child: Container(
+                        color: Colors.transparent,
+                        width: w,
+                        height: h,
+                        child: Center(child: Text("Contacts", style: lableStyle)),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 15.0),
+            child: Center(
+              child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Emergency()),
+                    ).then((value) {
+                      setState(() {});
+                    });
+                  } , child :Container(
+
+                height: d,
+                width: d,
+                decoration: BoxDecoration(
+                    color: Colors.transparent,
+
+                    shape: BoxShape.circle),
+                child: Center(child: Text("HELP", style: lableStyle)),
+              )),
+            ),
+          )
         ],
       ),
     );
-
   }
 
+  Widget getBody() {
+    return SingleChildScrollView(
+      child: Container(
+          child: Column(
+        children: <Widget>[
+          // getMemories() ,
+          getMenu()
+        ],
+      )),
+    );
+  }
 
+  Widget getMemories() {
+    return images.isEmpty
+        ? Container()
+        : Container(
+            margin: EdgeInsets.only(left: 20, top: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                    height: MediaQuery.of(context).size.height / 2,
+                    child: getCarsoulet()),
+                Container(
+                  height: MediaQuery.of(context).size.height / 2 - 70,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Container(
+                          child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(memories.pictures[currentImage].title,
+                            style: TextStyle(
+                                fontSize: _textSizeValue + 25,
+                                fontWeight: FontWeight.bold,
+                                color: c1)),
+                      )),
+                      Container(
+                          child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(memories.pictures[currentImage].description,
+                            style: TextStyle(fontSize: _textSizeValue + 10)),
+                      )),
+                      Container(
+                          child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(memories.pictures[currentImage].date,
+                            style: TextStyle(
+                                fontSize: _textSizeValue + 10,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blueGrey)),
+                      )),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+  }
 
-
-  Widget getMenu(){
-
+  Widget getMenu() {
     return Container(
-      width: MediaQuery.of(context).size.height/2.2,
-
-      margin: EdgeInsets.symmetric(vertical: 30 ),
+      width: MediaQuery.of(context).size.height / 2.2,
+      margin: EdgeInsets.symmetric(vertical: 30),
       child: Column(
         children: <Widget>[
+
       GestureDetector(child:  getMenuItem(Image.asset("assets/face.png",fit: BoxFit.fill,)) , onTap: (){
 
 
@@ -193,69 +328,69 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
+
         ],
-      ),
-    ) ;
-  }
-  Widget getMenuItem(image  ){
-
-    return
-
-      Padding(
-        padding: const EdgeInsets.only(top : 20.0 ),
-        child: Container(
-          width: 600,
-          decoration: new BoxDecoration(
-
-            borderRadius: new BorderRadius.all(
-                Radius.circular(20.0)
-            )
-            ,
-           ),
-
-          child: Container(
-            child: image,
-          ),
-        ),
-      );
-
-  }
-
-  void loadPicture() async {
-
-    print("loading pictures ") ;
-    await http.get(baseUrl+"memories").then((http.Response response){
-      print(response.statusCode) ;
-      memories = Memories.fromJson(response.body);
-      images = new List();
-      for(Picture picture in memories.pictures){
-        images.add(Image.network(picture.pictureUrl).image);
-      }
-      setState(() {
-
-      });
-    });
-  }
-  Widget getCarsoulet(){
-    return images.isEmpty?Container():Container(
-      margin: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width/2.2,
-
-      child: Carousel(
-        dotColor: c2,
-        radius: Radius.circular(60),
-        borderRadius: true,
-        images: images,
-        onImageTap: (index){
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MemoryDetail(memories.pictures[index])),
-          );
-        },
       ),
     );
   }
+
+  Widget getMenuItem(image) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20.0),
+      child: Container(
+        width: 600,
+        decoration: new BoxDecoration(
+          borderRadius: new BorderRadius.all(Radius.circular(20.0)),
+        ),
+        child: Container(
+          child: image,
+        ),
+      ),
+    );
+  }
+
+  int currentImage = 0;
+
+  void loadPicture() async {
+    print("loading pictures ");
+    await http.get(baseUrl + "memories").then((http.Response response) {
+      print(response.statusCode);
+      memories = Memories.fromJson(response.body);
+      images = new List();
+      for (Picture picture in memories.pictures) {
+        images.add(Image.network(picture.pictureUrl).image);
+      }
+      setState(() {});
+    });
+  }
+
+  Widget getCarsoulet() {
+    return images.isEmpty
+        ? Container()
+        : Container(
+            height: MediaQuery.of(context).size.height / 2,
+            child: Carousel(
+              dotColor: c2,
+              autoplayDuration: Duration(seconds: 5),
+              radius: Radius.circular(40),
+              borderRadius: true,
+              images: images,
+              onImageChange: (a, b) {
+                currentImage = b;
+                setState(() {});
+              },
+              onImageTap: (index) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          MemoryDetail(memories.pictures[index])),
+                );
+              },
+            ),
+          );
+  }
+
   @override
   void initState() {
     loadPicture();
@@ -263,28 +398,23 @@ class _HomeScreenState extends State<HomeScreen> {
     _loadTextSize();
   }
 
-
-
   void sendLocation() async {
-    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator()
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     var data = {
-      "lang" : position.longitude.toString() ,
-    "lat" : position.latitude.toString()
-    } ;
-    print("sending location ") ;
-    http.get(baseUrl+"setPosition",  headers: data).then((http.Response response){
-    });
+      "lang": position.longitude.toString(),
+      "lat": position.latitude.toString()
+    };
+    print("sending location ");
+    http
+        .get(baseUrl + "setPosition", headers: data)
+        .then((http.Response response) {});
   }
 
-  dynamic _loadTextSize()async{
-
+  dynamic _loadTextSize() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    _textSizeValue = ( prefs.getDouble("textSize")??20 ) ;
-    print("loaded value = "+_textSizeValue.toString()) ;
-    setState(() {
-
-    });
-
+    _textSizeValue = (prefs.getDouble("textSize") ?? 20);
+    print("loaded value = " + _textSizeValue.toString());
+    setState(() {});
   }
-
 }
