@@ -13,9 +13,6 @@ class ContactUI extends StatefulWidget {
 
 
 
-
-
-
 class _ContactUIState extends State<ContactUI> {
 
   double headerSize = 100 ;
