@@ -129,7 +129,7 @@ class _ContactUIState extends State<ContactUI> {
             child: Image.network(contact.imageUrl,height: 200,width: 150,),
           ),
             Container(
-              width: 243,
+              width: 250,
             child:Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -149,7 +149,7 @@ class _ContactUIState extends State<ContactUI> {
                       },
                       icon: Icon(Icons.phone,color: Colors.white,size: 40,),
                       color: Colors.green ,
-                      label: Container(width: 120,
+                      label: Container(width: 122,
 
                           child: Center(
                               child: Text("Call",style: TextStyle(color: Colors.white,fontSize: _textSizeValue),))

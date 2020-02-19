@@ -61,7 +61,7 @@ class _TasksUIState extends State<TasksUI> {
   Widget _getBody() {
     return Container(
 
-        height: MediaQuery.of(context).size.height-120,
+        height: MediaQuery.of(context).size.height-155,
           child: getList(),
     );
 //         Container(
@@ -76,13 +76,13 @@ class _TasksUIState extends State<TasksUI> {
     String formatted = formatter.format(now);
 
     return Container(
-      height: 120,
+      height: 155,
       child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-      GestureDetector(child: Container(width: MediaQuery.of(context).size.width*0.1,
+      GestureDetector(child: Container(width: MediaQuery.of(context).size.width*0.08,
       height: 120,
-      child: Icon(Icons.arrow_back,color: Colors.white,size: _textSizeValue+20,),
+      child: Icon(Icons.arrow_back,color: Colors.white,size: _textSizeValue+30,),
     ),
     onTap: (){
     Navigator.pop(context);
@@ -106,7 +106,7 @@ class _TasksUIState extends State<TasksUI> {
   
   Widget getList(){
     return tasks==null?Container():Container(
-      height:MediaQuery.of(context).size.height-120 ,
+      height:MediaQuery.of(context).size.height-200 ,
         padding: EdgeInsets.symmetric(horizontal: 40,vertical: 20),
         child : new ListView.builder
           (
@@ -186,11 +186,11 @@ Widget getItem(ListByDay task)
           ),
         )),
         Container(
-          width: 100,
+          width: 180,
           child: Center(child:Text(task.time,style: TextStyle(fontSize:_textSizeValue,))),
         ),
       Container(
-       width: 800,
+       width: 850,
   child: Center(child:Text(task.title,style: TextStyle(fontSize:_textSizeValue+10,fontWeight: FontWeight.bold))),
   ),
         Container(

@@ -94,7 +94,7 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
     return Container(
       margin: EdgeInsets.only(top: 10,left: 10,right: 10),
       child: Container(
-        height: 122,
+        height: 145,
         child: Row(
           children: <Widget>[
             GestureDetector(child: Container(width: MediaQuery.of(context).size.width*0.1,
@@ -352,13 +352,13 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
       sayIt(x.question);
       tests.removeLast() ;
       content = Container(
-        height: 500,
+        height: 600,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          //mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Container(
-              height: 100,
-              margin: EdgeInsets.only(bottom: 20 ,left: 20,right: 20),
+              height: 170,
+              padding: EdgeInsets.only(bottom: 40 ,left: 20,right: 20),
               child: Center(child:Text(x.question , style: TextStyle(fontWeight: FontWeight.bold, fontSize: _textSizeValue+10 , color: Colors.black),),) ,),
             Container(
               height: 250,
@@ -366,7 +366,7 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Container(
-width: 200,
+                  width: 250,
 
                     child: GestureDetector(child:
                       x.getFirstChoice(),
@@ -375,7 +375,7 @@ width: 200,
                     },),
                   ) ,
                   Container(
-width: 200,
+                width: 250,
                     child: GestureDetector(child:
                       x.getSecondChoice(),
                     onTap: (){
