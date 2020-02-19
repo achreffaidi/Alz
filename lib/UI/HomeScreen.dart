@@ -42,9 +42,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.red,
       body: Container(
-        color: c1,
-        child:   _getBody(),
+        padding: EdgeInsets.all(0),
+         decoration :BoxDecoration(
+           image : DecorationImage(image : Image.asset("assets/background1.png",).image,fit: BoxFit.fill),
+         ) ,
+         child:   _getBody(),
       ) ,
     );
   }
@@ -53,26 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _getBody() {
     return Container(
-
-
-      decoration: new BoxDecoration(
-        color: Colors.white,
-        borderRadius: new BorderRadius.only(
-            topLeft:   Radius.circular(70.0)
-
-        )
-        ,
-        boxShadow: [
-          new BoxShadow(
-            color: Colors.grey,
-            blurRadius: 5,
-            spreadRadius:0.2,
-            offset: new Offset(-3, -2.0),
-          )
-        ],),
       child: Container(
-
-        margin: EdgeInsets.only(top: 40),
          height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: Container(
