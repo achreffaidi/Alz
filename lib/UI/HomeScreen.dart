@@ -183,13 +183,13 @@ class _HomeScreenState extends State<HomeScreen> {
               MaterialPageRoute(builder: (context) => ContactUI()),
             );
           },),
-          GestureDetector(child: Container(child: getMenuItem(Image.asset("assets/emergency.png",fit: BoxFit.fill,))) , onTap: (){
+         /* GestureDetector(child: Container(child: getMenuItem(Image.asset("assets/emergency.png",fit: BoxFit.fill,))) , onTap: (){
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => Emergency()),
             );
 
-          },),
+          },),*/
 
 
 

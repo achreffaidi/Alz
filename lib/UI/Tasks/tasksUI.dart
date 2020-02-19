@@ -19,6 +19,7 @@ class _TasksUIState extends State<TasksUI> {
 
   List<ListByDay> tasks ;
   double _textSizeValue = 20 ;
+  double checkSize=0;
 
 
   int  getDone(){
@@ -39,53 +40,34 @@ class _TasksUIState extends State<TasksUI> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: c1,
-        child:  Column(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/Group 14.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Column(
           children: <Widget>[
-            _getHeader(),
+           _getHeader(),
             _getBody()
           ],
         ),
-      ) ,
+      ),
     );
   }
 
   Widget _getBody() {
     return Container(
 
-
-      decoration: new BoxDecoration(
-        color: Colors.white,
-        borderRadius: new BorderRadius.only(
-          topLeft:   Radius.circular(70.0)
-
-        )
-        ,
-        boxShadow: [
-          new BoxShadow(
-            color: Colors.grey,
-            blurRadius: 5,
-            spreadRadius:0.2,
-            offset: new Offset(-3, -2.0),
-          )
-        ],),
-      child: Container(
-        height: MediaQuery.of(context).size.height-200,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-
-         Container(
-           margin: EdgeInsets.only(left: 20 ,top: 60),
-           child:  Text("Undone Tasks : "+getDone().toString()+(getDone()==0?"":" tasks"),style: TextStyle(fontSize: _textSizeValue+10),),
-         ),
-          getList(),
-
-
-
-        ],)
-      ),
+        height: MediaQuery.of(context).size.height-120,
+          child: getList(),
     );
+//         Container(
+//           margin: EdgeInsets.only(left: 20 ,top: 60),
+//           child:  Text("Undone Tasks : "+getDone().toString()+(getDone()==0?"":" tasks"),style: TextStyle(fontSize: _textSizeValue+10),),
+//         ),
   }
 
   Widget _getHeader(){
@@ -94,19 +76,29 @@ class _TasksUIState extends State<TasksUI> {
     String formatted = formatter.format(now);
 
     return Container(
-      height: 200,
-      child: Center(child: Text(formatted,style: TextStyle(fontSize: _textSizeValue+10 , color: Colors.white , fontWeight: FontWeight.bold), )),
+      height: 120,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+      Center(child: Text("Tasks",style: TextStyle(fontSize: _textSizeValue+10 , color: Colors.white , fontWeight: FontWeight.bold), )),
+        Center(child: Text(formatted,style: TextStyle(fontSize: _textSizeValue+10 , color: Colors.white , fontWeight: FontWeight.bold), )),
+
+      ],
+      )
     );
   }
 
   
   Widget getList(){
     return tasks==null?Container():Container(
-      height:MediaQuery.of(context).size.height-400 ,
+      height:MediaQuery.of(context).size.height-120 ,
+        padding: EdgeInsets.symmetric(horizontal: 40,vertical: 30),
         child : new ListView.builder
           (
             itemCount: tasks.length,
+            scrollDirection: Axis.vertical,
 
+            
             itemBuilder: (BuildContext ctxt, int index) {
               return  GestureDetector(
                 onTap: (){
@@ -116,7 +108,7 @@ class _TasksUIState extends State<TasksUI> {
                     }else
                       setDone(tasks.elementAt(index).id.toString());
                 },
-                child: getItem(tasks.elementAt(index).title ,tasks.elementAt(index).time ,tasks.elementAt(index).description,tasks.elementAt(index).image , tasks.elementAt(index).done,index==0),
+                child: getItem(tasks.elementAt(index)),
               );
             }
 
@@ -124,10 +116,86 @@ class _TasksUIState extends State<TasksUI> {
     ) ;
   }
 
+Widget getItem(ListByDay task)
+{
+  double x=50;
+  return Container(
+    margin: EdgeInsets.only(top: 30,right: 15,left: 15,bottom: 15),
+    height: 200,
+    decoration: BoxDecoration(
+        shape: BoxShape.rectangle,
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(30))
+    ),
+    child: Row(
 
-  Widget getItem(String name,String time , String desc , String img,bool isDone , isElevated){
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Container(
+          height: 90,
+
+
+            decoration: BoxDecoration(
+
+                shape: BoxShape.rectangle,
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(30))
+            ),
+            child:RaisedButton(
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30),
+                  side: BorderSide(color: Colors.white)
+
+              ),
+          //highlightColor: Colors.white,
+          onPressed:(){
+            if(x==0)
+              x=50;
+            else
+              x=0;
+            setState(() {
+
+            });
+
+          },
+          color: Colors.white,
+          child: Container(
+              width: 90,
+              height: 90,
+              decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                  border: Border.all(color: c1,style: BorderStyle.solid,width: 3)
+              ),
+              child: Center(
+                  child: Icon(Icons.check,color: c1,size: x,)
+              )
+          ),
+        )),
+        Container(
+          width: 100,
+          child: Center(child:Text(task.time,style: TextStyle(fontSize:_textSizeValue,))),
+        ),
+      Container(
+       width: 800,
+  child: Center(child:Text(task.title,style: TextStyle(fontSize:_textSizeValue+10,fontWeight: FontWeight.bold))),
+  ),
+        Container(
+
+          child: task.imageUrl!=null ?Image.network(task.imageUrl,width: 140,height: 200,):Container(),
+        )
+
+      ],
+
+    ),
+  );
+}
+  Widget getItem1(String name,String time , String desc , String img,bool isDone , isElevated){
     return Container(
       margin: EdgeInsets.symmetric(horizontal:isElevated? 20 : 30),
+      padding: EdgeInsets.all(10),
       child:
     Card(
 elevation: isElevated?10:2,
@@ -176,9 +244,9 @@ elevation: isElevated?10:2,
 
   void loadTask() async {
     print(baseUrl+"getbyday/"+DateTime.now().weekday.toString());
-    http.get(baseUrl+"getbyday/"+(DateTime.now().weekday-1).toString()).then((http.Response response){
+    http.get(baseUrl+"getByDay/"+(DateTime.now().weekday).toString()).then((http.Response response){
 
-      tasks = TasksByDay.fromJson(response.body).listByDay;
+      tasks = tasksByDayFromJson(response.body).listByDay;
       print(response.body) ;
       tasks.sort((ListByDay item1,ListByDay item2){
         if(item1.done==item2.done)return 0 ;

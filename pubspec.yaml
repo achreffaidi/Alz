@@ -78,7 +78,9 @@ flutter:
     - assets/contacts.png
     - assets/wrong.flr
     - assets/correct.flr
-
+    - assets/Group 12.png
+    - assets/Group 13.png
+    - assets/Group 14.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
