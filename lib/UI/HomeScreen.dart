@@ -287,71 +287,48 @@ class _HomeScreenState extends State<HomeScreen> {
       margin: EdgeInsets.symmetric(vertical: 30),
       child: Column(
         children: <Widget>[
-          GestureDetector(
-            child: getMenuItem(Image.asset(
-              "assets/face.png",
-              fit: BoxFit.fill,
-            )),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => FaceDetect()),
-              ).then((value) {
-                setState(() {});
-              });
-            },
-          ),
-          GestureDetector(
-            child: getMenuItem(Image.asset(
-              "assets/tasks.png",
-              fit: BoxFit.fill,
-            )),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => TasksUI()),
-              );
-            },
-          ),
-          GestureDetector(
-            child: Container(
-                child: getMenuItem(Image.asset(
-              "assets/storage.png",
-              fit: BoxFit.fill,
-            ))),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => DoubleChoiceGame()),
-              );
-            },
-          ),
-          GestureDetector(
-            child: Container(
-                child: getMenuItem(Image.asset(
-              "assets/contacts.png",
-              fit: BoxFit.fill,
-            ))),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ContactUI()),
-              );
-            },
-          ),
-          GestureDetector(
-            child: Container(
-                child: getMenuItem(Image.asset(
-              "assets/emergency.png",
-              fit: BoxFit.fill,
-            ))),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Emergency()),
-              );
-            },
-          ),
+
+      GestureDetector(child:  getMenuItem(Image.asset("assets/face.png",fit: BoxFit.fill,)) , onTap: (){
+
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => FaceDetect()),
+      ).then((value){
+        setState(() {
+
+        });
+      });
+      },),
+          GestureDetector(child:  getMenuItem(Image.asset("assets/tasks.png",fit: BoxFit.fill,)) , onTap: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TasksUI()),
+            );
+          },),
+          GestureDetector(child: Container( child: getMenuItem(Image.asset("assets/storage.png",fit: BoxFit.fill,))) , onTap: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DoubleChoiceGame()),
+            );
+          },),
+          GestureDetector(child: Container(child: getMenuItem(Image.asset("assets/contacts.png",fit: BoxFit.fill,))) , onTap: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ContactUI()),
+            );
+          },),
+         /* GestureDetector(child: Container(child: getMenuItem(Image.asset("assets/emergency.png",fit: BoxFit.fill,))) , onTap: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Emergency()),
+            );
+
+          },),*/
+
+
+
+
         ],
       ),
     );
