@@ -38,6 +38,9 @@ class _FaceDetectState extends State<FaceDetect> {
     mode: FaceDetectorMode.accurate,
   ));
   String name = "";
+  String infos = "";
+
+
 
 
   @override
@@ -60,60 +63,127 @@ class _FaceDetectState extends State<FaceDetect> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: c1,
-        title: Text("Live Face Recognition "),
-      ),
-      body: Row(
-        children: <Widget>[
-          SizedBox(
-            width: MediaQuery.of(context).size.width/2.2,
-            child: CameraMlVision<List<Face>>(
-              key: _scanKey,
-              cameraLensDirection: cameraLensDirection,
-              detector: detector.processImage,
-              overlayBuilder: (c) {
-                return CustomPaint(
-                  painter: FaceDetectorPainter(
-                      _scanKey.currentState.cameraValue.previewSize.flipped,
-                      _faces,
-                      reflection:
-                          cameraLensDirection == CameraLensDirection.front),
-                );
-              },
-              onResult: (faces) {
-                if (faces == null || faces.isEmpty || !mounted) {
-                  return;
-                }
+      backgroundColor: Colors.transparent,
 
-                if(canStartTheProccess)startSendingPicture(context);
-
-                setState(() {
-                  _faces = []..addAll(faces);
-                });
-              },
-              onDispose: () {
-                detector.close();
-              },
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: Image.asset(
+                "assets/background3.png",
+              ).image,
+              fit: BoxFit.fill),
+        ),
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 150 ,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).pop();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Icon(Icons.arrow_back , size: 80, color: Colors.white,),
+                      )),
+                  Text("FaceRecognition"  ,style: TextStyle(fontSize: _textSizeValue+20 , color: Colors.white , fontWeight: FontWeight.bold),),
+                  SizedBox(width: 100,)
+                ],
+              )
             ),
-          ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
-          Container(
-            margin: EdgeInsets.all(30),
-            child: Center(
-              child: Text(
-                name,
+                children: <Widget>[
 
-                style: TextStyle(fontSize: _textSizeValue+20  , fontWeight: FontWeight.bold , color: c1), textAlign: TextAlign.center,
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height-200,
+                    width: MediaQuery.of(context).size.width/2.2,
+                    child: CameraMlVision<List<Face>>(
+                      key: _scanKey,
+                      cameraLensDirection: cameraLensDirection,
+                      detector: detector.processImage,
+                      overlayBuilder: (c) {
+                        return CustomPaint(
+                          painter: FaceDetectorPainter(
+                              _scanKey.currentState.cameraValue.previewSize.flipped,
+                              _faces,
+                              reflection:
+                                  cameraLensDirection == CameraLensDirection.front),
+                        );
+                      },
+                      onResult: (faces) {
+                        if (faces == null || faces.isEmpty || !mounted) {
+                          return;
+                        }
+
+                        if(canStartTheProccess)startSendingPicture(context);
+
+                        setState(() {
+                          _faces = []..addAll(faces);
+                        });
+                      },
+                      onDispose: () {
+                        detector.close();
+                      },
+                    ),
+                  ),
+
+                  Container(
+                    height: MediaQuery.of(context).size.height-200,
+                    width: MediaQuery.of(context).size.width/2.2,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: new BorderRadius.all(
+                             Radius.circular(40.0)
+
+                      )
+                      ,
+                      boxShadow: [
+                        new BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 5,
+                          spreadRadius:0.2,
+                          offset: new Offset(-3, -2.0),
+                        )
+                      ],),
+
+                    margin: EdgeInsets.all(0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Container(
+                          child: Text(
+                            name,
+
+                            style: TextStyle(fontSize: _textSizeValue+25  , fontWeight: FontWeight.bold , color: c1), textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Container(
+                          child: Text(
+                            infos,
+
+                            style: TextStyle(fontSize: _textSizeValue+20  , fontWeight: FontWeight.bold , color: Colors.black), textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                 /* file == null
+                      ? Container(
+                          child: Text("No IMAGE"),
+                        )
+                      : Image.memory(myImage)*/
+                ],
               ),
             ),
-          ),
-         /* file == null
-              ? Container(
-                  child: Text("No IMAGE"),
-                )
-              : Image.memory(myImage)*/
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -159,11 +229,12 @@ class _FaceDetectState extends State<FaceDetect> {
         context);
     switch (response.statusCode) {
       case 200:
-        name = response.headers["name"] + "\n" +response.headers["userdata"];
+        name = response.headers["name"] ;
+        infos = response.headers["userdata"] ;
         setState(() {
 
         });
-        print(response.headers["name"] + "|" + response.headers["userdata"]);
+
 
       await  play(response.headers["voice"]);
 
