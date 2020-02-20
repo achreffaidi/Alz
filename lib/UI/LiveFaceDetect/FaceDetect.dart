@@ -93,93 +93,102 @@ class _FaceDetectState extends State<FaceDetect> {
                 ],
               )
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            Container(
+              margin : const EdgeInsets.only(top :10.0),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
 
-                children: <Widget>[
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height-200,
-                    width: MediaQuery.of(context).size.width/2.2,
-                    child: CameraMlVision<List<Face>>(
-                      key: _scanKey,
-                      cameraLensDirection: cameraLensDirection,
-                      detector: detector.processImage,
-                      overlayBuilder: (c) {
-                        return CustomPaint(
-                          painter: FaceDetectorPainter(
-                              _scanKey.currentState.cameraValue.previewSize.flipped,
-                              _faces,
-                              reflection:
-                                  cameraLensDirection == CameraLensDirection.front),
-                        );
-                      },
-                      onResult: (faces) {
-                        if (faces == null || faces.isEmpty || !mounted) {
-                          return;
-                        }
+                  children: <Widget>[
 
-                        if(canStartTheProccess)startSendingPicture(context);
+                    SizedBox(
+                      width: MediaQuery.of(context).size.height-200,
+                      height: MediaQuery.of(context).size.width/2.2,
+                      child: Transform.rotate(
+                        alignment: AlignmentDirectional(0, 0),
+                        transformHitTests: true,
+                          angle: -3.14/2,
+                          child: CameraMlVision<List<Face>>(
+                        key: _scanKey,
+                        cameraLensDirection: cameraLensDirection,
 
-                        setState(() {
-                          _faces = []..addAll(faces);
-                        });
-                      },
-                      onDispose: () {
-                        detector.close();
-                      },
+                        detector: detector.processImage,
+                        overlayBuilder: (c) {
+                          return CustomPaint(
+                            painter: FaceDetectorPainter(
+                                _scanKey.currentState.cameraValue.previewSize.flipped,
+                                _faces,
+                                reflection:
+                                    cameraLensDirection == CameraLensDirection.front),
+                          );
+                        },
+                        onResult: (faces) {
+                          if (faces == null || faces.isEmpty || !mounted) {
+                            return;
+                          }
+
+                          if(canStartTheProccess)startSendingPicture(context);
+
+                          setState(() {
+                            _faces = []..addAll(faces);
+                          });
+                        },
+                        onDispose: () {
+                          detector.close();
+                        },
+                      )),
                     ),
-                  ),
 
-                  Container(
-                    height: MediaQuery.of(context).size.height-200,
-                    width: MediaQuery.of(context).size.width/2.2,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: new BorderRadius.all(
-                             Radius.circular(40.0)
+                    Container(
+                      height: MediaQuery.of(context).size.height-200,
+                      width: MediaQuery.of(context).size.width/2.2,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.all(
+                               Radius.circular(40.0)
 
-                      )
-                      ,
-                      boxShadow: [
-                        new BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 5,
-                          spreadRadius:0.2,
-                          offset: new Offset(-3, -2.0),
                         )
-                      ],),
+                        ,
+                        boxShadow: [
+                          new BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 5,
+                            spreadRadius:0.2,
+                            offset: new Offset(-3, -2.0),
+                          )
+                        ],),
 
-                    margin: EdgeInsets.all(0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Container(
-                          child: Text(
-                            name,
+                      margin: EdgeInsets.all(0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Container(
+                            child: Text(
+                              name,
 
-                            style: TextStyle(fontSize: _textSizeValue+25  , fontWeight: FontWeight.bold , color: c1), textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: _textSizeValue+25  , fontWeight: FontWeight.bold , color: c1), textAlign: TextAlign.center,
+                            ),
                           ),
-                        ),
-                        Container(
-                          child: Text(
-                            infos,
+                          Container(
+                            child: Text(
+                              infos,
 
-                            style: TextStyle(fontSize: _textSizeValue+20  , fontWeight: FontWeight.bold , color: Colors.black), textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: _textSizeValue+20  , fontWeight: FontWeight.bold , color: Colors.black), textAlign: TextAlign.center,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                 /* file == null
-                      ? Container(
-                          child: Text("No IMAGE"),
-                        )
-                      : Image.memory(myImage)*/
-                ],
+                   /* file == null
+                        ? Container(
+                            child: Text("No IMAGE"),
+                          )
+                        : Image.memory(myImage)*/
+                  ],
+                ),
               ),
             ),
           ],
@@ -192,8 +201,10 @@ class _FaceDetectState extends State<FaceDetect> {
     print("Detecting Face");
     //  print("can take picture : " + canTakePicture.toString());
     // print("can Proccess Picture  : " + canStartTheProccess.toString());
-    if (canStartTheProccess) {
-      canTakePicture = true;
+    canTakePicture = true;
+    if (canStartTheProccess && myImage != null) {
+
+
 
       print("Proccessing the image ");
       canStartTheProccess = false;
