@@ -8,6 +8,7 @@ import 'package:alz/Game/DoubleChoiceGame/DoubleChoiceGame.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_camera_ml_vision/const.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
@@ -35,8 +36,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   double headerSize = 100;
 
+
+
   @override
   Widget build(BuildContext context) {
+
+
+
     return Scaffold(
       backgroundColor: Colors.red,
       body: Container(
@@ -200,7 +206,7 @@ mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           context,
                           MaterialPageRoute(builder: (context) => ContactUI()),
                         ).then((value) {
-                          setState(() {});
+
                         });
                       },
                       child: Container(
@@ -434,6 +440,10 @@ mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
     loadPicture();
     sendLocation();
     _loadTextSize();

@@ -6,6 +6,7 @@ import 'package:alz/tools/Images.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_camera_ml_vision/flutter_camera_ml_vision.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:http/http.dart';
@@ -42,9 +43,23 @@ class _FaceDetectState extends State<FaceDetect> {
 
 
 
+  @override
+  dispose(){
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+    super.dispose();
+  }
+
 
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     pr =new ProgressDialog(this.context,type: ProgressDialogType.Normal);
     pr.update(message:"Getting Infos ... ");
     canStartTheProccess = true ;
@@ -62,6 +77,10 @@ class _FaceDetectState extends State<FaceDetect> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return Scaffold(
       backgroundColor: Colors.transparent,
 
@@ -95,15 +114,15 @@ class _FaceDetectState extends State<FaceDetect> {
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
                 children: <Widget>[
 
                   SizedBox(
-                    height: MediaQuery.of(context).size.height-200,
-                    width: MediaQuery.of(context).size.width/2.2,
+                    width: MediaQuery.of(context).size.width-200,
+                    height: MediaQuery.of(context).size.height/2.5,
                     child: CameraMlVision<List<Face>>(
                       key: _scanKey,
                       cameraLensDirection: cameraLensDirection,
@@ -135,8 +154,8 @@ class _FaceDetectState extends State<FaceDetect> {
                   ),
 
                   Container(
-                    height: MediaQuery.of(context).size.height-200,
-                    width: MediaQuery.of(context).size.width/2.2,
+                    width: MediaQuery.of(context).size.width-200,
+                    height: MediaQuery.of(context).size.height/2.5,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: new BorderRadius.all(
