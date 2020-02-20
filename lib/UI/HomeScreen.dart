@@ -125,14 +125,21 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                         } , child :Container(
                       color: Colors.transparent,
-
+padding: EdgeInsets.all(20),
                       width: w,
                       height: h,
                       child: Center(
-                          child: Text(
+                          child: Column(
+mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              Text(
                         "Tasks",
                         style: lableStyle,
-                      )),
+                      ),
+                              Icon(Icons.format_list_bulleted,size: 100.0),
+                            ],
+                          )),
                     )),
                     GestureDetector(
                         onTap: () {
@@ -144,10 +151,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                         } , child :Container(
                       color: Colors.transparent,
-
+                      padding: EdgeInsets.all(20),
                       width: w,
                       height: h,
-                      child: Center(child: Text("Game", style: lableStyle)),
+                      child: Center(child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Text("Game", style: lableStyle),
+                          Icon(Icons.videogame_asset,size: 100.0),
+                        ],
+                      )),
                     ))
                   ],
                 ),
@@ -165,10 +179,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: Container(
                         color: Colors.transparent,
+                        padding: EdgeInsets.all(20),
 
                         width: w,
                         height: h,
-                        child: Center(child: Text("Faces", style: lableStyle)),
+                        child: Center(child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Icon(Icons.face,size: 100.0),
+                            Text("Faces", style: lableStyle),
+
+                          ],
+                        )),
                       ),
                     ),
                     GestureDetector(
@@ -182,9 +205,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: Container(
                         color: Colors.transparent,
+                        padding: EdgeInsets.all(20),
+
                         width: w,
                         height: h,
-                        child: Center(child: Text("Contacts", style: lableStyle)),
+                        child: Center(child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Icon(Icons.contact_phone,size: 100.0),
+
+                            Text("Contacts", style: lableStyle),
+                          ],
+                        )),
                       ),
                     )
                   ],
@@ -211,7 +244,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.transparent,
 
                     shape: BoxShape.circle),
-                child: Center(child: Text("HELP", style: lableStyle)),
+                child: Center(child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Text("HELP", style: lableStyle),
+                    Icon(Icons.whatshot,size: 100.0),
+
+                  ],
+                )),
               )),
             ),
           )
