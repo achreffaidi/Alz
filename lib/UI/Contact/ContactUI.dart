@@ -57,7 +57,7 @@ class _ContactUIState extends State<ContactUI> {
     return Container(
 
       child: Container(
-          height: MediaQuery.of(context).size.height-headerSize,
+          height: MediaQuery.of(context).size.height-165,
           child: getList()
       ),
     );
@@ -65,22 +65,25 @@ class _ContactUIState extends State<ContactUI> {
 
   Widget _getHeader(){
     return Container(
-      height: headerSize,
+      height: 155,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          GestureDetector(child: Container(width: MediaQuery.of(context).size.width*0.1,
-            height: headerSize,
-            child: Icon(Icons.arrow_back,color: Colors.white,size: _textSizeValue+20,),
+          GestureDetector(
+              onTap: (){
+                Navigator.of(context).pop();
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Icon(Icons.arrow_back , size: 80, color: Colors.white,),
+              )
           ),
-          onTap: (){
-          Navigator.pop(context);
-          },),
-        Container(width: MediaQuery.of(context).size.width*0.8,
+        Container(
             child: Center(
-        child :Text("Contacts",style: TextStyle(fontSize: _textSizeValue+15 , color: Colors.white , fontWeight: FontWeight.bold))
+        child :Text("Contacts",style: TextStyle(fontSize: _textSizeValue+30 , color: Colors.white , fontWeight: FontWeight.bold))
         )
-        )],
+        ),
+        SizedBox(width: 100,)],
          ),
     );
   }
@@ -89,7 +92,7 @@ class _ContactUIState extends State<ContactUI> {
 
   Widget getList(){
     return contacts==null?Container():Container(
-      margin: EdgeInsets.symmetric(horizontal: 20.5,vertical: 20),
+      margin: EdgeInsets.symmetric(horizontal: 20.5,vertical: 5),
        // height:MediaQuery.of(context).size.height-400 ,
         child :GridView.count(
           crossAxisSpacing: 30,
