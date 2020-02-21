@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:alz/Api/tasks.dart';
 import 'package:alz/Api/tasksByDay.dart';
 import 'package:alz/Constant/Strings.dart';
@@ -121,8 +123,8 @@ class _TasksUIState extends State<TasksUI> {
               return  GestureDetector(
                 onTap: (){
 
+sayIt(tasks[index].title+" . "+tasks[index].description) ;
 
-                    play(tasks.elementAt(index).voiceLink);
 
                 },
                 child: getItem(tasks.elementAt(index)),
@@ -271,6 +273,23 @@ Widget getItem(ListByDay task)
     if (result == 1) {
       // success
     }
+  }
+
+  void sayIt(String s)async{
+    var params = {
+      "text": s,
+    };
+
+    http.post(baseUrl+"speech" ,body: json.encode(params) , headers: {
+      "Content-Type":"application/json"
+    }).then((http.Response response){
+
+      print(response.statusCode);
+      print(response.headers);
+      if(response.headers.containsKey("voice")) play(response.headers["voice"]) ;
+
+    });
+
   }
 
 }
