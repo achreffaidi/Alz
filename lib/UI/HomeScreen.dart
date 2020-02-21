@@ -5,7 +5,7 @@ import 'package:alz/Constant/Strings.dart';
 import 'package:alz/Constant/colors.dart';
 import 'package:alz/Constant/images.dart';
 import 'package:alz/Game/DoubleChoiceGame/DoubleChoiceGame.dart';
-import 'package:carousel_pro/carousel_pro.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -411,31 +411,42 @@ mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     });
   }
 
+
   Widget getCarsoulet() {
+
     return images.isEmpty
         ? Container()
-        : Container(
-            height: MediaQuery.of(context).size.height / 2,
-            child: Carousel(
-              dotColor: c2,
-              autoplayDuration: Duration(seconds: 5),
-              radius: Radius.circular(40),
-              borderRadius: true,
-              images: images,
-              onImageChange: (a, b) {
-                currentImage = b;
-                setState(() {});
-              },
-              onImageTap: (index) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          MemoryDetail(memories.pictures[index])),
-                );
-              },
-            ),
-          );
+        :  Container(
+
+        margin: EdgeInsets.only(left: 0 , right : 0 , top : 30),
+        child  :
+        new CarouselSlider.builder(
+
+
+onPageChanged: (val){
+  currentImage = val;
+  setState(() {});
+  sayIt(memories.pictures[currentImage].description);
+},
+          enableInfiniteScroll: true,
+
+          itemCount: memories.pictures.length,
+          enlargeCenterPage: true,
+          itemBuilder: (BuildContext context, int itemIndex) =>
+              Container(
+
+                  child: _getPicture(memories.pictures[itemIndex].pictureUrl)),
+        ));
+
+    /*
+    autoPlay = false;
+
+
+
+     */
+
+
+
   }
 
   @override
@@ -447,6 +458,15 @@ mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     loadPicture();
     sendLocation();
     _loadTextSize();
+    AudioPlayer.logEnabled = true;
+    audioPlayer = AudioPlayer();
+
+    audioPlayer.onPlayerCompletion.listen((object){
+
+
+
+    });
+
   }
 
   void sendLocation() async {
@@ -468,4 +488,75 @@ mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     print("loaded value = " + _textSizeValue.toString());
     setState(() {});
   }
+
+
+  void sayIt(String s)async{
+    var params = {
+      "text": s,
+    };
+
+    http.post(baseUrl+"speech" ,body: json.encode(params) , headers: {
+      "Content-Type":"application/json"
+    }).then((http.Response response){
+
+      print(response.statusCode);
+      print(response.headers);
+      if(response.headers.containsKey("voice")) play(response.headers["voice"]) ;
+
+    });
+
+  }
+  AudioPlayer audioPlayer ;
+
+  play(String url ) async {
+
+    print(url);
+
+
+    int result = await audioPlayer.play(url);
+
+
+    if (result == 1) {
+      // success
+    }
+  }
+
+  Widget _getPicture(String pictureUrl) {
+
+    return Container(
+
+      margin: EdgeInsets.symmetric(horizontal: 10 , vertical: 10),
+      decoration: new BoxDecoration(
+        color: Colors.white,
+        borderRadius: new BorderRadius.all(
+          Radius.circular(20.0),
+
+        )
+        ,
+        boxShadow: [
+          new BoxShadow(
+            color: c1,
+            blurRadius: 2,
+            spreadRadius:0.2,
+            offset: new Offset(0, 0),
+          )
+        ],),
+      child:Container(
+
+        decoration: new BoxDecoration(
+          image: DecorationImage(image: Image.network(pictureUrl,fit: BoxFit.cover,).image,fit: BoxFit.cover),
+          borderRadius: new BorderRadius.all(
+               Radius.circular(20.0)
+          )
+          ),
+        child: Container(
+
+        ),
+      ),
+    );
+
+  }
+
+
+
 }
