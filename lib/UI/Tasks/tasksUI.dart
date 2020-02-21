@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 
 
@@ -120,10 +121,9 @@ class _TasksUIState extends State<TasksUI> {
               return  GestureDetector(
                 onTap: (){
 
-                    if(tasks[index].done){
-                      setUnDone(tasks.elementAt(index).id.toString());
-                    }else
-                      setDone(tasks.elementAt(index).id.toString());
+
+                    play(tasks.elementAt(index).voiceLink);
+
                 },
                 child: getItem(tasks.elementAt(index)),
               );
@@ -255,6 +255,22 @@ Widget getItem(ListByDay task)
 
     });
 
+  }
+
+  AudioPlayer audioPlayer ;
+
+  play(String url ) async {
+
+    print(url);
+    AudioPlayer.logEnabled = true;
+    audioPlayer = AudioPlayer();
+
+    int result = await audioPlayer.play(url);
+
+
+    if (result == 1) {
+      // success
+    }
   }
 
 }
