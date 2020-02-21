@@ -47,6 +47,8 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
 
   @override
   void initState() {
+    AudioPlayer.logEnabled = true;
+    audioPlayer = AudioPlayer();
     _loadTests();
     _loadTextSize();
     super.initState();
@@ -431,8 +433,7 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
   play(String url ) async {
 
     print(url);
-    AudioPlayer.logEnabled = true;
-    audioPlayer = AudioPlayer();
+
 
     int result = await audioPlayer.play(url);
 
