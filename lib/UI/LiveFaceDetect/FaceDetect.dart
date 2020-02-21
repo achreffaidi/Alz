@@ -35,8 +35,9 @@ class _FaceDetectState extends State<FaceDetect> {
   CameraLensDirection cameraLensDirection = CameraLensDirection.back;
   FaceDetector detector =
       FirebaseVision.instance.faceDetector(FaceDetectorOptions(
+        minFaceSize: 0.8,
     enableTracking: true,
-    mode: FaceDetectorMode.accurate,
+    mode: FaceDetectorMode.fast,
   ));
   String name = "";
   String infos = "";
@@ -262,6 +263,7 @@ class _FaceDetectState extends State<FaceDetect> {
       case 300:
         print("Unable To Detect Any Face| ");
         name = "Unable To Detect Any Face";
+        infos="";
         canStartTheProccess = true;
         canTakePicture = true;
         setState(() {});
@@ -269,6 +271,7 @@ class _FaceDetectState extends State<FaceDetect> {
       case 301:
         print("Unable To Recongnize The Face | ");
         name = "Unable To Recongnize The Face";
+        infos="";
         canStartTheProccess = true;
         canTakePicture = true;
         setState(() {});
