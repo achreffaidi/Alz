@@ -59,25 +59,33 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
   @override
   Widget build(BuildContext context) {
     CardHeight = MediaQuery.of(context).size.width * 0.8;
-    return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/background2.png"),
-            fit: BoxFit.fill,
+    return WillPopScope(
+        onWillPop: () {
+          if(wrong+correct !=0)
+            sendGameData(wrong+correct, correct);
+          return new Future.value(true);
+        },
+      child: Scaffold(
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/background2.png"),
+              fit: BoxFit.fill,
+            ),
           ),
-        ),
-        child: Column(
-          children: <Widget>[
-            getScoreBar(),
-            getBody(),
-            getFooter()
-          ],
+          child: Column(
+            children: <Widget>[
+              getScoreBar(),
+              getBody(),
+              getFooter()
+            ],
+          ),
         ),
       ),
     );
+   
   }
 
   Widget getBody() {
@@ -102,6 +110,8 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
           children: <Widget>[
             GestureDetector(
                 onTap: (){
+                  if(correct+wrong != 0)
+                  sendGameData(correct+wrong, correct);
                   Navigator.of(context).pop();
                 },
                 child: Padding(
@@ -216,6 +226,8 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold)))),
                     onPressed: () {
+                      if(correct+wrong != 0)
+                      sendGameData(correct+wrong,correct);
                       Navigator.pop(context);
                     },
                   ),
@@ -483,6 +495,25 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
 
       }});
     return (link==null)?null:link.links;
+  }
+
+  void sendGameData  (int number, int correct) async
+  {
+    Map data = {
+      'questionsNumber': number,
+      'correct': correct
+    };
+    //encode Map to JSON
+    var body = json.encode(data);
+
+    http.post(baseUrl+"setScore",
+        headers: {"Content-Type": "application/json"},
+        body: body
+    ).then((http.Response response){
+      print(response);
+      print("sent"+ body);
+    });
+
   }
 
 }
