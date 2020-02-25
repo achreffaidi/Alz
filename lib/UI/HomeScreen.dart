@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:alz/Api/memories.dart';
 import 'package:alz/Constant/Strings.dart';
 import 'package:alz/Constant/colors.dart';
+import 'package:alz/Constant/colors.dart';
+import 'package:alz/Constant/colors.dart';
+import 'package:alz/Constant/colors.dart';
 import 'package:alz/Constant/images.dart';
 import 'package:alz/Game/DoubleChoiceGame/DoubleChoiceGame.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -44,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
     return Scaffold(
-      backgroundColor: Colors.red,
+      backgroundColor: c1,
       body: Container(
         padding: EdgeInsets.all(0),
         decoration: BoxDecoration(

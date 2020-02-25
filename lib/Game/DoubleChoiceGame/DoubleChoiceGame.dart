@@ -187,14 +187,16 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                       size: 25,
                     ),
                     label: Container(
-                        height: 80,
+                        height: 150,
                         child: Center(
                             child: Text("RESET",
                                 style: TextStyle(
-                                    fontSize: _textSizeValue+5,
+                                    fontSize: _textSizeValue+15,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold)))),
                     onPressed: () {
+                      if(correct+wrong != 0)
+                        sendGameData(correct+wrong,correct);
                       setState(() {
                         correct = 0;
                         wrong = 0;
@@ -218,11 +220,11 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                       size: 25,
                     ),
                     label: Container(
-                        height: 80,
+                        height: 150,
                         child: Center(
                             child: Text("EXIT",
                                 style: TextStyle(
-                                    fontSize: _textSizeValue+5,
+                                    fontSize: _textSizeValue+15,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold)))),
                     onPressed: () {
@@ -246,11 +248,11 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                 size: 25,
               ),
               label: Container(
-                  height: 80,
+                  height: 150,
                   child: Center(
                       child: Text("  Start  ",
                           style: TextStyle(
-                              fontSize: _textSizeValue+5,
+                              fontSize: _textSizeValue+15,
                               color: Colors.white,
                               fontWeight: FontWeight.bold)))),
               onPressed: () {
