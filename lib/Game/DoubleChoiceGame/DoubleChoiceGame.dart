@@ -47,8 +47,8 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
 
   double _textSizeValue = 20 ;
 
-  int animationDuration = 3 ;
-  double animationSize = 200.0 ;
+  int animationDuration = 4 ;
+  double animationSize = 300.0 ;
 
   @override
   void initState() {
