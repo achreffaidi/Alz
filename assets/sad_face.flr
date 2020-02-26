@@ -1,0 +1,900 @@
+{
+	"version": 24,
+	"artboards": [
+		{
+			"name": "Artboard",
+			"translation": [
+				0,
+				0
+			],
+			"width": 554.4429931640625,
+			"height": 554.43798828125,
+			"origin": [
+				-3.3025119705598627e-7,
+				4.4033890844730195e-7
+			],
+			"clipContents": true,
+			"color": [
+				0.364705890417099,
+				0.364705890417099,
+				0.364705890417099,
+				1
+			],
+			"nodes": [
+				{
+					"name": "3",
+					"translation": [
+						0,
+						0
+					],
+					"rotation": 0,
+					"scale": [
+						1,
+						1
+					],
+					"opacity": 1,
+					"isCollapsed": false,
+					"clips": [],
+					"type": "node"
+				},
+				{
+					"name": "Group_84",
+					"parent": 0,
+					"translation": [
+						-5310.11181640625,
+						-3813.51904296875
+					],
+					"rotation": 0,
+					"scale": [
+						1,
+						1
+					],
+					"opacity": 1,
+					"isCollapsed": false,
+					"clips": [],
+					"type": "node"
+				},
+				{
+					"name": "Path_6",
+					"parent": 1,
+					"translation": [
+						5587.33349609375,
+						4090.73779296875
+					],
+					"rotation": 0,
+					"scale": [
+						1,
+						1
+					],
+					"opacity": 1,
+					"isCollapsed": false,
+					"clips": [],
+					"isVisible": true,
+					"blendMode": 3,
+					"drawOrder": 1,
+					"transformAffectsStroke": false,
+					"type": "shape"
+				},
+				{
+					"name": "Color",
+					"parent": 2,
+					"opacity": 1,
+					"color": [
+						0.9843137264251709,
+						0.8392156958580017,
+						0.43529412150382996,
+						1
+					],
+					"fillRule": 0,
+					"type": "colorFill"
+				},
+				{
+					"name": "Path",
+					"parent": 2,
+					"translation": [
+						0,
+						0
+					],
+					"rotation": 0,
+					"scale": [
+						1,
+						1
+					],
+					"opacity": 1,
+					"isCollapsed": false,
+					"clips": [],
+					"bones": [],
+					"isVisible": true,
+					"isClosed": true,
+					"points": [
+						{
+							"pointType": 2,
+							"translation": [
+								0.004496826324611902,
+								277.2190246582031
+							],
+							"in": [
+								0.004496826324611902,
+								277.2190246582031
+							],
+							"out": [
+								152.69349670410156,
+								277.2190246582031
+							]
+						},
+						{
+							"pointType": 1,
+							"translation": [
+								277.22149658203125,
+								-0.007981445640325546
+							],
+							"in": [
+								277.22149658203125,
+								152.68202209472656
+							],
+							"out": [
+								277.22149658203125,
+								-152.69798278808594
+							]
+						},
+						{
+							"pointType": 1,
+							"translation": [
+								0.004496826324611902,
+								-277.218994140625
+							],
+							"in": [
+								152.69349670410156,
+								-277.218994140625
+							],
+							"out": [
+								-152.68450927734375,
+								-277.218994140625
+							]
+						},
+						{
+							"pointType": 1,
+							"translation": [
+								-277.22149658203125,
+								-0.002981445286422968
+							],
+							"in": [
+								-277.22149658203125,
+								-152.69097900390625
+							],
+							"out": [
+								-277.22149658203125,
+								152.6850128173828
+							]
+						},
+						{
+							"pointType": 2,
+							"translation": [
+								0.004496826324611902,
+								277.2190246582031
+							],
+							"in": [
+								-152.68450927734375,
+								277.2190246582031
+							],
+							"out": [
+								0.004496826324611902,
+								277.2190246582031
+							]
+						}
+					],
+					"type": "path"
+				},
+				{
+					"name": "Group",
+					"parent": 1,
+					"translation": [
+						5571.21484375,
+						4017.359375
+					],
+					"rotation": 0,
+					"scale": [
+						1,
+						1
+					],
+					"opacity": 1,
+					"isCollapsed": false,
+					"clips": [],
+					"type": "node"
+				},
+				{
+					"name": "R I",
+					"parent": 5,
+					"translation": [
+						112.974609375,
+						-48.931396484375
+					],
+					"rotation": 0,
+					"scale": [
+						1,
+						1
+					],
+					"opacity": 1,
+					"isCollapsed": false,
+					"clips": [],
+					"isVisible": true,
+					"blendMode": 3,
+					"drawOrder": 2,
+					"transformAffectsStroke": false,
+					"type": "shape"
+				},
+				{
+					"name": "Color",
+					"parent": 6,
+					"opacity": 1,
+					"color": [
+						0.239215686917305,
+						0.24313725531101227,
+						0.239215686917305,
+						1
+					],
+					"width": 16,
+					"cap": 0,
+					"join": 0,
+					"trim": 0,
+					"type": "colorStroke"
+				},
+				{
+					"name": "Path",
+					"parent": 6,
+					"translation": [
+						0,
+						0
+					],
+					"rotation": 0,
+					"scale": [
+						1,
+						1
+					],
+					"opacity": 1,
+					"isCollapsed": false,
+					"clips": [],
+					"bones": [],
+					"isVisible": true,
+					"isClosed": false,
+					"points": [
+						{
+							"pointType": 2,
+							"translation": [
+								-42.45000457763672,
+								21.225011825561523
+							],
+							"in": [
+								-42.45000457763672,
+								21.225011825561523
+							],
+							"out": [
+								-42.45000457763672,
+								-2.219475507736206
+							]
+						},
+						{
+							"pointType": 1,
+							"translation": [
+								-0.000005801598945254227,
+								-21.224987030029297
+							],
+							"in": [
+								-23.44449234008789,
+								-21.224987030029297
+							],
+							"out": [
+								23.444480895996094,
+								-21.224987030029297
+							]
+						},
+						{
+							"pointType": 2,
+							"translation": [
+								42.44999313354492,
+								21.225011825561523
+							],
+							"in": [
+								42.44999313354492,
+								-2.219475507736206
+							],
+							"out": [
+								42.44999313354492,
+								21.225011825561523
+							]
+						}
+					],
+					"type": "path"
+				},
+				{
+					"name": "L I",
+					"parent": 5,
+					"translation": [
+						-84.73046875,
+						-48.82568359375
+					],
+					"rotation": 0,
+					"scale": [
+						1,
+						1
+					],
+					"opacity": 1,
+					"isCollapsed": false,
+					"clips": [],
+					"isVisible": true,
+					"blendMode": 3,
+					"drawOrder": 3,
+					"transformAffectsStroke": false,
+					"type": "shape"
+				},
+				{
+					"name": "Color",
+					"parent": 9,
+					"opacity": 1,
+					"color": [
+						0.239215686917305,
+						0.24313725531101227,
+						0.239215686917305,
+						1
+					],
+					"width": 16,
+					"cap": 0,
+					"join": 0,
+					"trim": 0,
+					"type": "colorStroke"
+				},
+				{
+					"name": "Path",
+					"parent": 9,
+					"translation": [
+						0,
+						0
+					],
+					"rotation": 0,
+					"scale": [
+						1,
+						1
+					],
+					"opacity": 1,
+					"isCollapsed": false,
+					"clips": [],
+					"bones": [],
+					"isVisible": true,
+					"isClosed": false,
+					"points": [
+						{
+							"pointType": 2,
+							"translation": [
+								-42.444496154785156,
+								21.119482040405273
+							],
+							"in": [
+								-42.444496154785156,
+								21.119482040405273
+							],
+							"out": [
+								-42.33110427856445,
+								-2.2415525913238525
+							]
+						},
+						{
+							"pointType": 1,
+							"translation": [
+								0.0000031127931379160145,
+								-21.119497299194336
+							],
+							"in": [
+								-23.36130714416504,
+								-21.119497299194336
+							],
+							"out": [
+								23.361312866210938,
+								-21.119497299194336
+							]
+						},
+						{
+							"pointType": 2,
+							"translation": [
+								42.44450378417969,
+								21.119482040405273
+							],
+							"in": [
+								42.331111907958984,
+								-2.2415525913238525
+							],
+							"out": [
+								42.44450378417969,
+								21.119482040405273
+							]
+						}
+					],
+					"type": "path"
+				},
+				{
+					"name": "Mouth",
+					"parent": 5,
+					"translation": [
+						14.11865234375,
+						45.590576171875
+					],
+					"rotation": 0,
+					"scale": [
+						1,
+						1
+					],
+					"opacity": 1,
+					"isCollapsed": false,
+					"clips": [],
+					"isVisible": true,
+					"blendMode": 3,
+					"drawOrder": 4,
+					"transformAffectsStroke": false,
+					"type": "shape"
+				},
+				{
+					"name": "Color",
+					"parent": 12,
+					"opacity": 1,
+					"color": [
+						0.239215686917305,
+						0.24313725531101227,
+						0.239215686917305,
+						1
+					],
+					"width": 16,
+					"cap": 0,
+					"join": 0,
+					"trim": 0,
+					"type": "colorStroke"
+				},
+				{
+					"name": "Path",
+					"parent": 12,
+					"translation": [
+						0,
+						0
+					],
+					"rotation": 0,
+					"scale": [
+						1,
+						1
+					],
+					"opacity": 1,
+					"isCollapsed": false,
+					"clips": [],
+					"bones": [],
+					"isVisible": true,
+					"isClosed": false,
+					"points": [
+						{
+							"pointType": 2,
+							"translation": [
+								-100.8554916381836,
+								0.00000610351571594947
+							],
+							"in": [
+								-100.8554916381836,
+								0.00000610351571594947
+							],
+							"out": [
+								-85.87749481201172,
+								94.60000610351562
+							]
+						},
+						{
+							"pointType": 2,
+							"translation": [
+								100.85550689697266,
+								0.00000610351571594947
+							],
+							"in": [
+								88.36650848388672,
+								93.35700988769531
+							],
+							"out": [
+								100.85550689697266,
+								0.00000610351571594947
+							]
+						}
+					],
+					"type": "path"
+				},
+				{
+					"name": "Path_10",
+					"parent": 5,
+					"translation": [
+						-139.31787109375,
+						27.701171875
+					],
+					"rotation": 0,
+					"scale": [
+						1,
+						1
+					],
+					"opacity": 1,
+					"isCollapsed": false,
+					"clips": [],
+					"isVisible": true,
+					"blendMode": 3,
+					"drawOrder": 5,
+					"transformAffectsStroke": false,
+					"type": "shape"
+				},
+				{
+					"name": "Color",
+					"parent": 15,
+					"opacity": 1,
+					"color": [
+						0.9254902005195618,
+						0.45490196347236633,
+						0.43529412150382996,
+						1
+					],
+					"fillRule": 0,
+					"type": "colorFill"
+				},
+				{
+					"name": "Path",
+					"parent": 15,
+					"translation": [
+						0,
+						0
+					],
+					"rotation": 0,
+					"scale": [
+						1,
+						1
+					],
+					"opacity": 1,
+					"isCollapsed": false,
+					"clips": [],
+					"bones": [],
+					"isVisible": true,
+					"isClosed": true,
+					"points": [
+						{
+							"pointType": 2,
+							"translation": [
+								-0.000003051757857974735,
+								12.489498138427734
+							],
+							"in": [
+								-0.000003051757857974735,
+								12.489498138427734
+							],
+							"out": [
+								14.27399730682373,
+								12.489498138427734
+							]
+						},
+						{
+							"pointType": 1,
+							"translation": [
+								25.913997650146484,
+								0.0004980468656867743
+							],
+							"in": [
+								25.913997650146484,
+								6.876498222351074
+							],
+							"out": [
+								25.913997650146484,
+								-6.875502109527588
+							]
+						},
+						{
+							"pointType": 1,
+							"translation": [
+								-0.000003051757857974735,
+								-12.489501953125
+							],
+							"in": [
+								14.27299690246582,
+								-12.489501953125
+							],
+							"out": [
+								-14.273002624511719,
+								-12.489501953125
+							]
+						},
+						{
+							"pointType": 1,
+							"translation": [
+								-25.914003372192383,
+								0.0004980468656867743
+							],
+							"in": [
+								-25.914003372192383,
+								-6.87650203704834
+							],
+							"out": [
+								-25.914003372192383,
+								6.877498149871826
+							]
+						},
+						{
+							"pointType": 2,
+							"translation": [
+								-0.000003051757857974735,
+								12.489498138427734
+							],
+							"in": [
+								-14.273002624511719,
+								12.489498138427734
+							],
+							"out": [
+								-0.000003051757857974735,
+								12.489498138427734
+							]
+						}
+					],
+					"type": "path"
+				},
+				{
+					"name": "Path_11",
+					"parent": 5,
+					"translation": [
+						167.5654296875,
+						27.701171875
+					],
+					"rotation": 0,
+					"scale": [
+						1,
+						1
+					],
+					"opacity": 1,
+					"isCollapsed": false,
+					"clips": [],
+					"isVisible": true,
+					"blendMode": 3,
+					"drawOrder": 6,
+					"transformAffectsStroke": false,
+					"type": "shape"
+				},
+				{
+					"name": "Color",
+					"parent": 18,
+					"opacity": 1,
+					"color": [
+						0.9254902005195618,
+						0.45490196347236633,
+						0.43529412150382996,
+						1
+					],
+					"fillRule": 0,
+					"type": "colorFill"
+				},
+				{
+					"name": "Path",
+					"parent": 18,
+					"translation": [
+						0,
+						0
+					],
+					"rotation": 0,
+					"scale": [
+						1,
+						1
+					],
+					"opacity": 1,
+					"isCollapsed": false,
+					"clips": [],
+					"bones": [],
+					"isVisible": true,
+					"isClosed": true,
+					"points": [
+						{
+							"pointType": 2,
+							"translation": [
+								-0.0000027465821403893642,
+								12.489498138427734
+							],
+							"in": [
+								-0.0000027465821403893642,
+								12.489498138427734
+							],
+							"out": [
+								14.27399730682373,
+								12.489498138427734
+							]
+						},
+						{
+							"pointType": 1,
+							"translation": [
+								25.913997650146484,
+								0.0004980468656867743
+							],
+							"in": [
+								25.913997650146484,
+								6.876498222351074
+							],
+							"out": [
+								25.913997650146484,
+								-6.875502109527588
+							]
+						},
+						{
+							"pointType": 1,
+							"translation": [
+								-0.0000027465821403893642,
+								-12.489501953125
+							],
+							"in": [
+								14.27299690246582,
+								-12.489501953125
+							],
+							"out": [
+								-14.273002624511719,
+								-12.489501953125
+							]
+						},
+						{
+							"pointType": 1,
+							"translation": [
+								-25.914003372192383,
+								0.0004980468656867743
+							],
+							"in": [
+								-25.914003372192383,
+								-6.87650203704834
+							],
+							"out": [
+								-25.914003372192383,
+								6.877498149871826
+							]
+						},
+						{
+							"pointType": 2,
+							"translation": [
+								-0.0000027465821403893642,
+								12.489498138427734
+							],
+							"in": [
+								-14.273002624511719,
+								12.489498138427734
+							],
+							"out": [
+								-0.0000027465821403893642,
+								12.489498138427734
+							]
+						}
+					],
+					"type": "path"
+				}
+			],
+			"animations": [
+				{
+					"name": "idle",
+					"fps": 60,
+					"duration": 2,
+					"isLooping": true,
+					"keyed": [
+						{
+							"component": 5,
+							"scaleY": [
+								[
+									{
+										"time": 0,
+										"interpolatorType": 1,
+										"value": 1
+									},
+									{
+										"time": 0.5,
+										"interpolatorType": 1,
+										"value": 1
+									},
+									{
+										"time": 1,
+										"interpolatorType": 1,
+										"value": 1
+									},
+									{
+										"time": 1.5166666666666666,
+										"interpolatorType": 1,
+										"value": 1
+									},
+									{
+										"time": 2,
+										"interpolatorType": 1,
+										"value": 1
+									}
+								]
+							],
+							"scaleX": [
+								[
+									{
+										"time": 0,
+										"interpolatorType": 1,
+										"value": 1
+									},
+									{
+										"time": 0.5,
+										"interpolatorType": 1,
+										"value": 1
+									},
+									{
+										"time": 1,
+										"interpolatorType": 1,
+										"value": 1
+									},
+									{
+										"time": 1.5166666666666666,
+										"interpolatorType": 1,
+										"value": 1
+									},
+									{
+										"time": 2,
+										"interpolatorType": 1,
+										"value": 1
+									}
+								]
+							],
+							"posY": [
+								[
+									{
+										"time": 0,
+										"interpolatorType": 1,
+										"value": 4017.359375
+									},
+									{
+										"time": 0.5,
+										"interpolatorType": 1,
+										"value": 4017.359375
+									},
+									{
+										"time": 1,
+										"interpolatorType": 1,
+										"value": 4017.359375
+									},
+									{
+										"time": 1.5166666666666666,
+										"interpolatorType": 1,
+										"value": 4017.359375
+									},
+									{
+										"time": 2,
+										"interpolatorType": 1,
+										"value": 4017.359375
+									}
+								]
+							],
+							"posX": [
+								[
+									{
+										"time": 0,
+										"interpolatorType": 1,
+										"value": 5517.21484375
+									},
+									{
+										"time": 0.5,
+										"interpolatorType": 1,
+										"value": 5571.21484375
+									},
+									{
+										"time": 1,
+										"interpolatorType": 1,
+										"value": 5627.21484375
+									},
+									{
+										"time": 1.5166666666666666,
+										"interpolatorType": 1,
+										"value": 5571.21484375
+									},
+									{
+										"time": 2,
+										"interpolatorType": 1,
+										"value": 5517.21484375
+									}
+								]
+							]
+						}
+					],
+					"animationStart": 0,
+					"animationEnd": 2,
+					"type": "animation"
+				}
+			],
+			"type": "artboard"
+		}
+	]
+}

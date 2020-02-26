@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 
 import 'package:alz/Api/ImagesLinks.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
 import '../../Constant/Strings.dart';
@@ -44,6 +46,9 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
   bool isPaying = false;
 
   double _textSizeValue = 20 ;
+
+  int animationDuration = 3 ;
+  double animationSize = 200.0 ;
 
   @override
   void initState() {
@@ -404,11 +409,15 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
  void commitAnswer(bool correct){
     if(correct){
       this.correct++ ;
+      sayIt("Correct Answer") ;
+      content = PlayPositiveAnimation() ;
     }else{
       this.wrong++ ;
+      content = PlayNegativeAnimation() ;
+      sayIt("Wrong Answer") ;
     }
-    Toast.show(correct?"True":"False", context );
-    generateTest();
+    setState(() {
+    });
     addTest(random.nextInt(categoriesList.length)) ;
  }
 
@@ -484,5 +493,41 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
       }});
     return (link==null)?null:link.links;
   }
+
+
+
+
+
+  Widget PlayPositiveAnimation(){
+    new Timer(Duration(seconds: animationDuration ),  (){
+        generateTest();
+        });
+    return   Center(
+      child: Container(
+        height: animationSize ,
+        width: animationSize ,
+        child: new FlareActor("assets/sad_face.flr", alignment:Alignment.center, fit:BoxFit.contain, animation:"idle" , callback: (value){
+          print(value) ;
+        }),
+      ),
+    );
+  }
+
+  Widget PlayNegativeAnimation(){
+    new Timer(Duration(seconds: animationDuration ),  (){
+      generateTest();
+    });
+    return   Center(
+      child: Container(
+        height: animationSize ,
+        width: animationSize ,
+        child: new FlareActor("assets/happy_face.flr", alignment:Alignment.center, fit:BoxFit.contain, animation:"idle" , callback: (value){
+          print(value) ;
+        }),
+      ),
+    );
+  }
+
+
 
 }

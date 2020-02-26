@@ -81,6 +81,8 @@ flutter:
     - assets/background3.png
     - assets/wrong.flr
     - assets/correct.flr
+    - assets/happy_face.flr
+    - assets/sad_face.flr
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
