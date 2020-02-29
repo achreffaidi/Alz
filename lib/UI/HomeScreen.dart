@@ -139,14 +139,15 @@ padding: EdgeInsets.all(20),
                       height: h,
                       child: Center(
                           child: Column(
-mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+mainAxisAlignment: MainAxisAlignment.start,
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
                               Text(
                         "Tasks",
                         style: lableStyle,
                       ),
-                              Icon(Icons.format_list_bulleted,size: 100.0),
+                            SizedBox(height: 15,),
+                            Image.asset("assets/tasksIcon.png",width: 220) //Icon(Icons.format_list_bulleted,size: 100.0),
                             ],
                           )),
                     )),
@@ -164,11 +165,12 @@ mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       width: w,
                       height: h,
                       child: Center(child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
                           Text("Game", style: lableStyle),
-                          Icon(Icons.videogame_asset,size: 100.0),
+                          SizedBox(height: 15,),
+                          Image.asset("assets/gameIcon.png",width: 178,)
                         ],
                       )),
                     ))
@@ -193,10 +195,12 @@ mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         width: w,
                         height: h,
                         child: Center(child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
-                            Icon(Icons.face,size: 100.0),
+                            SizedBox(height: 30,),
+                            Image.asset("assets/faceIcon.png",width: 200,),
+                            SizedBox(height: 10,),
                             Text("Faces", style: lableStyle),
 
                           ],
@@ -222,8 +226,9 @@ mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           mainAxisSize: MainAxisSize.max,
                           children: <Widget>[
-                            Icon(Icons.contact_phone,size: 100.0),
-
+                            SizedBox(height: 50,),
+                            Image.asset("assets/contactsIcon.png",width: 200,),
+                            SizedBox(height: 10,),
                             Text("Contacts", style: lableStyle),
                           ],
                         )),
@@ -258,7 +263,7 @@ mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     Text("HELP", style: lableStyle),
-                    Icon(Icons.whatshot,size: 100.0),
+                    Image.asset("assets/helpIcon.png",width: 130,),
 
                   ],
                 )),

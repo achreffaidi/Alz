@@ -96,7 +96,7 @@ class _FaceDetectState extends State<FaceDetect> {
         child: Column(
           children: <Widget>[
             Container(
-              height: 150 ,
+              height: 250 ,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[

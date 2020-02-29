@@ -83,6 +83,12 @@ flutter:
     - assets/correct.flr
     - assets/happy_face.flr
     - assets/sad_face.flr
+    - assets/contactsIcon.png
+    - assets/faceIcon.png
+    - assets/gameIcon.png
+    - assets/tasksIcon.png
+    - assets/helpIcon.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
