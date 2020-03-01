@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(
           image: DecorationImage(
               image: Image.asset(
-                "assets/background1.png",
+                "assets/mainScreenBackground.png",
               ).image,
               fit: BoxFit.fill),
         ),
@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: getMemories()),
                 Container(
                     width: MediaQuery.of(context).size.width / 2,
-                    child: getPanel())
+                    child: getPanel2())
               ],
             ),
           )),
@@ -104,6 +104,141 @@ class _HomeScreenState extends State<HomeScreen> {
           MaterialPageRoute(builder: (context) => SettingsUI()),
         ).then(_loadTextSize());
       },
+    );
+  }
+  Widget getPanel2()
+  {
+    var h = 314.0;
+    var w = 320.0;
+    var d = 220.0;
+    return Container(
+    margin: EdgeInsets.only(left: 35,top: 30,right: 15),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Container(
+                width: w,
+                height: h,
+
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FaceDetect()),
+                    ).then((value) {
+                      setState(() {});
+                    });
+
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.only(topLeft:  Radius.circular(68)),
+
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: 22,),
+              Container(
+                width: w+6,
+                height: h,
+                child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DoubleChoiceGame()),
+                      ).then((value) {
+                        setState(() {});
+                      });
+                    } ,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.only(topRight:  Radius.circular(64)),
+
+                    ),
+                    ),
+              ),)
+            ],
+          ),
+          SizedBox(height: 18,),
+          Row(
+            children: <Widget>[
+              Container(
+                width: w,
+                height: h-15,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TasksUI()),
+                    ).then((value) {
+                      setState(() {});
+                    });
+                  } ,
+                  child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.only(bottomLeft:  Radius.circular(71)),
+
+
+             ),
+              ),
+                ),
+
+              ),
+              SizedBox(width: 22,),
+              Container(
+                width: w+6,
+                height: h-15,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ContactUI()),
+                    ).then((value) {
+
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.only(bottomRight:  Radius.circular(66)),
+
+
+
+                    ),
+                  ),
+
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 28,),
+          Container(
+            height: 188,
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Emergency()),
+                  ).then((value) {
+                    setState(() {});
+                  });
+                },
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.all(  Radius.circular(35)),
+
+                ),
+              ),),
+          )
+        ],
+      ),
     );
   }
 

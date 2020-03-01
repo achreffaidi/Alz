@@ -88,6 +88,7 @@ flutter:
     - assets/gameIcon.png
     - assets/tasksIcon.png
     - assets/helpIcon.png
+    - assets/mainScreenBackground.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
