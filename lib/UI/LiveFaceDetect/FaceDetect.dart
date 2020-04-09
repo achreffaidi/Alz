@@ -6,6 +6,7 @@ import 'package:alz/tools/Images.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_camera_ml_vision/flutter_camera_ml_vision.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:http/http.dart';
@@ -34,14 +35,32 @@ class _FaceDetectState extends State<FaceDetect> {
   CameraLensDirection cameraLensDirection = CameraLensDirection.back;
   FaceDetector detector =
       FirebaseVision.instance.faceDetector(FaceDetectorOptions(
+        minFaceSize: 0.8,
     enableTracking: true,
-    mode: FaceDetectorMode.accurate,
+    mode: FaceDetectorMode.fast,
   ));
   String name = "";
+  String infos = "";
+
+
+
+  @override
+  dispose(){
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+    super.dispose();
+  }
 
 
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     pr =new ProgressDialog(this.context,type: ProgressDialogType.Normal);
     pr.update(message:"Getting Infos ... ");
     canStartTheProccess = true ;
@@ -59,61 +78,134 @@ class _FaceDetectState extends State<FaceDetect> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: c1,
-        title: Text("Live Face Recognition "),
-      ),
-      body: Row(
-        children: <Widget>[
-          SizedBox(
-            width: MediaQuery.of(context).size.width/2.2,
-            child: CameraMlVision<List<Face>>(
-              key: _scanKey,
-              cameraLensDirection: cameraLensDirection,
-              detector: detector.processImage,
-              overlayBuilder: (c) {
-                return CustomPaint(
-                  painter: FaceDetectorPainter(
-                      _scanKey.currentState.cameraValue.previewSize.flipped,
-                      _faces,
-                      reflection:
-                          cameraLensDirection == CameraLensDirection.front),
-                );
-              },
-              onResult: (faces) {
-                if (faces == null || faces.isEmpty || !mounted) {
-                  return;
-                }
+      backgroundColor: Colors.transparent,
 
-                if(canStartTheProccess)startSendingPicture(context);
-
-                setState(() {
-                  _faces = []..addAll(faces);
-                });
-              },
-              onDispose: () {
-                detector.close();
-              },
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: Image.asset(
+                "assets/background3.png",
+              ).image,
+              fit: BoxFit.fill),
+        ),
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: 250 ,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).pop();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Icon(Icons.arrow_back , size: 80, color: Colors.white,),
+                      )),
+                  Text("Face Recognition"  ,style: TextStyle(fontSize: _textSizeValue+20 , color: Colors.white , fontWeight: FontWeight.bold),),
+                  SizedBox(width: 100,)
+                ],
+              )
             ),
-          ),
+            Padding(
+              padding: const EdgeInsets.only(top:45.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
-          Container(
-            margin: EdgeInsets.all(30),
-            child: Center(
-              child: Text(
-                name,
+                children: <Widget>[
 
-                style: TextStyle(fontSize: _textSizeValue+20  , fontWeight: FontWeight.bold , color: c1), textAlign: TextAlign.center,
+                  SizedBox(
+
+                    width: MediaQuery.of(context).size.width-300,
+                    height: MediaQuery.of(context).size.height/3,
+                    child: CameraMlVision<List<Face>>(
+                      key: _scanKey,
+                      cameraLensDirection: cameraLensDirection,
+                      detector: detector.processImage,
+                      overlayBuilder: (c) {
+                        return CustomPaint(
+                          painter: FaceDetectorPainter(
+                              _scanKey.currentState.cameraValue.previewSize.flipped,
+                              _faces,
+                              reflection:
+                                  cameraLensDirection == CameraLensDirection.front),
+                        );
+                      },
+                      onResult: (faces) {
+                        if (faces == null || faces.isEmpty || !mounted) {
+                          return;
+                        }
+
+                        if(canStartTheProccess)startSendingPicture(context);
+
+                        setState(() {
+                          _faces = []..addAll(faces);
+                        });
+                      },
+                      onDispose: () {
+                        detector.close();
+                      },
+                    ),
+                  ),
+
+                  Container(
+
+                    width: MediaQuery.of(context).size.width-200,
+                    height: MediaQuery.of(context).size.height/2.5,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: new BorderRadius.all(
+                             Radius.circular(40.0)
+
+                      )
+                      ,
+                      boxShadow: [
+                        new BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 5,
+                          spreadRadius:0.2,
+                          offset: new Offset(-3, -2.0),
+                        )
+                      ],),
+
+                    margin: EdgeInsets.only(top: 30),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Container(
+                          child: Text(
+                            name,
+
+                            style: TextStyle(fontSize: _textSizeValue+25  , fontWeight: FontWeight.bold , color: c1), textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Container(
+                          child: Text(
+                            infos,
+
+                            style: TextStyle(fontSize: _textSizeValue+20  , fontWeight: FontWeight.bold , color: Colors.black), textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                 /* file == null
+                      ? Container(
+                          child: Text("No IMAGE"),
+                        )
+                      : Image.memory(myImage)*/
+                ],
               ),
             ),
-          ),
-         /* file == null
-              ? Container(
-                  child: Text("No IMAGE"),
-                )
-              : Image.memory(myImage)*/
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -159,11 +251,12 @@ class _FaceDetectState extends State<FaceDetect> {
         context);
     switch (response.statusCode) {
       case 200:
-        name = response.headers["name"] + "\n" +response.headers["userdata"];
+        name = response.headers["name"] ;
+        infos = response.headers["userdata"] ;
         setState(() {
 
         });
-        print(response.headers["name"] + "|" + response.headers["userdata"]);
+
 
       await  play(response.headers["voice"]);
 
@@ -172,6 +265,7 @@ class _FaceDetectState extends State<FaceDetect> {
       case 300:
         print("Unable To Detect Any Face| ");
         name = "Unable To Detect Any Face";
+        infos="";
         canStartTheProccess = true;
         canTakePicture = true;
         setState(() {});
@@ -179,6 +273,7 @@ class _FaceDetectState extends State<FaceDetect> {
       case 301:
         print("Unable To Recongnize The Face | ");
         name = "Unable To Recongnize The Face";
+        infos="";
         canStartTheProccess = true;
         canTakePicture = true;
         setState(() {});

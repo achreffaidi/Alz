@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 
 import 'package:alz/Api/ImagesLinks.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:toast/toast.dart';
 import '../../Constant/Strings.dart';
@@ -45,8 +47,13 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
 
   double _textSizeValue = 20 ;
 
+  int animationDuration = 4 ;
+  double animationSize = 300.0 ;
+
   @override
   void initState() {
+    AudioPlayer.logEnabled = true;
+    audioPlayer = AudioPlayer();
     _loadTests();
     _loadTextSize();
     super.initState();
@@ -57,25 +64,33 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
   @override
   Widget build(BuildContext context) {
     CardHeight = MediaQuery.of(context).size.width * 0.8;
-    return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/background2.png"),
-            fit: BoxFit.fill,
+    return WillPopScope(
+        onWillPop: () {
+          if(wrong+correct !=0)
+            sendGameData(wrong+correct, correct);
+          return new Future.value(true);
+        },
+      child: Scaffold(
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/background2.png"),
+              fit: BoxFit.fill,
+            ),
           ),
-        ),
-        child: Column(
-          children: <Widget>[
-            getScoreBar(),
-            getBody(),
-            getFooter()
-          ],
+          child: Column(
+            children: <Widget>[
+              getScoreBar(),
+              getBody(),
+              getFooter()
+            ],
+          ),
         ),
       ),
     );
+   
   }
 
   Widget getBody() {
@@ -94,18 +109,23 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
     return Container(
       margin: EdgeInsets.only(top: 10,left: 10,right: 10),
       child: Container(
-        height: 122,
+        height: 145,
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            GestureDetector(child: Container(width: MediaQuery.of(context).size.width*0.1,
-              height: 122,
-              child: Icon(Icons.arrow_back,color: Colors.white,size: _textSizeValue+20,),
+            GestureDetector(
+                onTap: (){
+                  if(correct+wrong != 0)
+                  sendGameData(correct+wrong, correct);
+                  Navigator.of(context).pop();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Icon(Icons.arrow_back , size: 80, color: Colors.white,),
+                )
             ),
-              onTap: (){
-                Navigator.pop(context);
-              },),
             Container(
-            width: 500,
+
             child:Column(
 
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -113,35 +133,35 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
             Text(
             "Correct",
             style: TextStyle(
-            fontSize: _textSizeValue+5,
+            fontSize: _textSizeValue+25,
             color: Colors.white,
             fontWeight: FontWeight.bold),
             ),
             Text(correct.toString(),
             style: TextStyle(
-            fontSize: _textSizeValue+5,
+            fontSize: _textSizeValue+15,
             color: Colors.white,
             fontWeight: FontWeight.bold))
             ],
             ),),
             Container(
-              width: 500,
+
                 child:Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Text("Wrong",
                     style: TextStyle(
-                        fontSize: _textSizeValue+5,
+                        fontSize: _textSizeValue+25,
                         color: Colors.white,
                         fontWeight: FontWeight.bold)),
                 Text(wrong.toString(),
                     style: TextStyle(
-                        fontSize: _textSizeValue+5,
+                        fontSize: _textSizeValue+15,
                         color: Colors.white,
                         fontWeight: FontWeight.bold))
               ],
             )),
-
+          SizedBox(width: 100,)
           ],
         ),
       )
@@ -172,14 +192,16 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                       size: 25,
                     ),
                     label: Container(
-                        height: 80,
+                        height: 150,
                         child: Center(
                             child: Text("RESET",
                                 style: TextStyle(
-                                    fontSize: _textSizeValue+5,
+                                    fontSize: _textSizeValue+15,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold)))),
                     onPressed: () {
+                      if(correct+wrong != 0)
+                        sendGameData(correct+wrong,correct);
                       setState(() {
                         correct = 0;
                         wrong = 0;
@@ -203,14 +225,16 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                       size: 25,
                     ),
                     label: Container(
-                        height: 80,
+                        height: 150,
                         child: Center(
                             child: Text("EXIT",
                                 style: TextStyle(
-                                    fontSize: _textSizeValue+5,
+                                    fontSize: _textSizeValue+15,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold)))),
                     onPressed: () {
+                      if(correct+wrong != 0)
+                      sendGameData(correct+wrong,correct);
                       Navigator.pop(context);
                     },
                   ),
@@ -229,11 +253,11 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                 size: 25,
               ),
               label: Container(
-                  height: 80,
+                  height: 150,
                   child: Center(
                       child: Text("  Start  ",
                           style: TextStyle(
-                              fontSize: _textSizeValue+5,
+                              fontSize: _textSizeValue+15,
                               color: Colors.white,
                               fontWeight: FontWeight.bold)))),
               onPressed: () {
@@ -352,21 +376,22 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
       sayIt(x.question);
       tests.removeLast() ;
       content = Container(
-        height: 500,
+        height: 700,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          //mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Container(
-              height: 100,
-              margin: EdgeInsets.only(bottom: 20 ,left: 20,right: 20),
+              height: 120,
+              margin: EdgeInsets.only(bottom: 20 ,),
               child: Center(child:Text(x.question , style: TextStyle(fontWeight: FontWeight.bold, fontSize: _textSizeValue+10 , color: Colors.black),),) ,),
             Container(
-              height: 250,
+              height: 400,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Container(
-width: 200,
+                  width: 400,
 
                     child: GestureDetector(child:
                       x.getFirstChoice(),
@@ -375,7 +400,7 @@ width: 200,
                     },),
                   ) ,
                   Container(
-width: 200,
+                width: 400,
                     child: GestureDetector(child:
                       x.getSecondChoice(),
                     onTap: (){
@@ -398,11 +423,15 @@ width: 200,
  void commitAnswer(bool correct){
     if(correct){
       this.correct++ ;
+      sayIt("Correct Answer") ;
+      content = PlayPositiveAnimation() ;
     }else{
       this.wrong++ ;
+      content = PlayNegativeAnimation() ;
+      sayIt("Wrong Answer") ;
     }
-    Toast.show(correct?"True":"False", context );
-    generateTest();
+    setState(() {
+    });
     addTest(random.nextInt(categoriesList.length)) ;
  }
 
@@ -428,8 +457,7 @@ width: 200,
   play(String url ) async {
 
     print(url);
-    AudioPlayer.logEnabled = true;
-    audioPlayer = AudioPlayer();
+
 
     int result = await audioPlayer.play(url);
 
@@ -479,5 +507,62 @@ width: 200,
       }});
     return (link==null)?null:link.links;
   }
+
+
+
+
+
+
+  Widget PlayPositiveAnimation(){
+    new Timer(Duration(seconds: animationDuration ),  (){
+        generateTest();
+        });
+    return   Center(
+      child: Container(
+        height: animationSize ,
+        width: animationSize ,
+        child: new FlareActor("assets/sad_face.flr", alignment:Alignment.center, fit:BoxFit.contain, animation:"idle" , callback: (value){
+          print(value) ;
+        }),
+      ),
+    );
+  }
+
+  Widget PlayNegativeAnimation(){
+    new Timer(Duration(seconds: animationDuration ),  (){
+      generateTest();
+    });
+    return   Center(
+      child: Container(
+        height: animationSize ,
+        width: animationSize ,
+        child: new FlareActor("assets/happy_face.flr", alignment:Alignment.center, fit:BoxFit.contain, animation:"idle" , callback: (value){
+          print(value) ;
+        }),
+      ),
+    );
+  }
+
+
+
+  void sendGameData  (int number, int correct) async
+  {
+    Map data = {
+      'questionsNumber': number,
+      'correct': correct
+    };
+    //encode Map to JSON
+    var body = json.encode(data);
+
+    http.post(baseUrl+"setScore",
+        headers: {"Content-Type": "application/json"},
+        body: body
+    ).then((http.Response response){
+      print(response);
+      print("sent"+ body);
+    });
+
+  }
+
 
 }

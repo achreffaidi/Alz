@@ -3,11 +3,15 @@ import 'dart:convert';
 import 'package:alz/Api/memories.dart';
 import 'package:alz/Constant/Strings.dart';
 import 'package:alz/Constant/colors.dart';
+import 'package:alz/Constant/colors.dart';
+import 'package:alz/Constant/colors.dart';
+import 'package:alz/Constant/colors.dart';
 import 'package:alz/Constant/images.dart';
 import 'package:alz/Game/DoubleChoiceGame/DoubleChoiceGame.dart';
-import 'package:carousel_pro/carousel_pro.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_camera_ml_vision/const.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
@@ -35,16 +39,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
   double headerSize = 100;
 
+
+
   @override
   Widget build(BuildContext context) {
+
+
+
     return Scaffold(
-      backgroundColor: Colors.red,
+      backgroundColor: c1,
       body: Container(
         padding: EdgeInsets.all(0),
         decoration: BoxDecoration(
           image: DecorationImage(
               image: Image.asset(
-                "assets/background1.png",
+                "assets/mainScreenBackground.png",
               ).image,
               fit: BoxFit.fill),
         ),
@@ -68,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: getMemories()),
                 Container(
                     width: MediaQuery.of(context).size.width / 2,
-                    child: getPanel())
+                    child: getPanel2())
               ],
             ),
           )),
@@ -95,6 +104,141 @@ class _HomeScreenState extends State<HomeScreen> {
           MaterialPageRoute(builder: (context) => SettingsUI()),
         ).then(_loadTextSize());
       },
+    );
+  }
+  Widget getPanel2()
+  {
+    var h = 314.0;
+    var w = 320.0;
+    var d = 220.0;
+    return Container(
+    margin: EdgeInsets.only(left: 35,top: 30,right: 15),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Container(
+                width: w,
+                height: h,
+
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FaceDetect()),
+                    ).then((value) {
+                      setState(() {});
+                    });
+
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.only(topLeft:  Radius.circular(68)),
+
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: 22,),
+              Container(
+                width: w+6,
+                height: h,
+                child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DoubleChoiceGame()),
+                      ).then((value) {
+                        setState(() {});
+                      });
+                    } ,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.only(topRight:  Radius.circular(64)),
+
+                    ),
+                    ),
+              ),)
+            ],
+          ),
+          SizedBox(height: 18,),
+          Row(
+            children: <Widget>[
+              Container(
+                width: w,
+                height: h-15,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TasksUI()),
+                    ).then((value) {
+                      setState(() {});
+                    });
+                  } ,
+                  child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.only(bottomLeft:  Radius.circular(71)),
+
+
+             ),
+              ),
+                ),
+
+              ),
+              SizedBox(width: 22,),
+              Container(
+                width: w+6,
+                height: h-15,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ContactUI()),
+                    ).then((value) {
+
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.only(bottomRight:  Radius.circular(66)),
+
+
+
+                    ),
+                  ),
+
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 28,),
+          Container(
+            height: 188,
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Emergency()),
+                  ).then((value) {
+                    setState(() {});
+                  });
+                },
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.all(  Radius.circular(35)),
+
+                ),
+              ),),
+          )
+        ],
+      ),
     );
   }
 
@@ -125,14 +269,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                         } , child :Container(
                       color: Colors.transparent,
-
+padding: EdgeInsets.all(20),
                       width: w,
                       height: h,
                       child: Center(
-                          child: Text(
+                          child: Column(
+mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              Text(
                         "Tasks",
                         style: lableStyle,
-                      )),
+                      ),
+                            SizedBox(height: 15,),
+                            Image.asset("assets/tasksIcon.png",width: 220) //Icon(Icons.format_list_bulleted,size: 100.0),
+                            ],
+                          )),
                     )),
                     GestureDetector(
                         onTap: () {
@@ -144,10 +296,18 @@ class _HomeScreenState extends State<HomeScreen> {
                           });
                         } , child :Container(
                       color: Colors.transparent,
-
+                      padding: EdgeInsets.all(20),
                       width: w,
                       height: h,
-                      child: Center(child: Text("Game", style: lableStyle)),
+                      child: Center(child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Text("Game", style: lableStyle),
+                          SizedBox(height: 15,),
+                          Image.asset("assets/gameIcon.png",width: 178,)
+                        ],
+                      )),
                     ))
                   ],
                 ),
@@ -165,10 +325,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: Container(
                         color: Colors.transparent,
+                        padding: EdgeInsets.all(20),
 
                         width: w,
                         height: h,
-                        child: Center(child: Text("Faces", style: lableStyle)),
+                        child: Center(child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            SizedBox(height: 30,),
+                            Image.asset("assets/faceIcon.png",width: 200,),
+                            SizedBox(height: 10,),
+                            Text("Faces", style: lableStyle),
+
+                          ],
+                        )),
                       ),
                     ),
                     GestureDetector(
@@ -177,14 +348,25 @@ class _HomeScreenState extends State<HomeScreen> {
                           context,
                           MaterialPageRoute(builder: (context) => ContactUI()),
                         ).then((value) {
-                          setState(() {});
+
                         });
                       },
                       child: Container(
                         color: Colors.transparent,
+                        padding: EdgeInsets.all(20),
+
                         width: w,
                         height: h,
-                        child: Center(child: Text("Contacts", style: lableStyle)),
+                        child: Center(child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            SizedBox(height: 50,),
+                            Image.asset("assets/contactsIcon.png",width: 200,),
+                            SizedBox(height: 10,),
+                            Text("Contacts", style: lableStyle),
+                          ],
+                        )),
                       ),
                     )
                   ],
@@ -211,7 +393,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Colors.transparent,
 
                     shape: BoxShape.circle),
-                child: Center(child: Text("HELP", style: lableStyle)),
+                child: Center(child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Text("HELP", style: lableStyle),
+                    Image.asset("assets/helpIcon.png",width: 130,),
+
+                  ],
+                )),
               )),
             ),
           )
@@ -364,38 +554,62 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+
   Widget getCarsoulet() {
+
     return images.isEmpty
         ? Container()
-        : Container(
-            height: MediaQuery.of(context).size.height / 2,
-            child: Carousel(
-              dotColor: c2,
-              autoplayDuration: Duration(seconds: 5),
-              radius: Radius.circular(40),
-              borderRadius: true,
-              images: images,
-              onImageChange: (a, b) {
-                currentImage = b;
-                setState(() {});
-              },
-              onImageTap: (index) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          MemoryDetail(memories.pictures[index])),
-                );
-              },
-            ),
-          );
+        :  Container(
+
+        margin: EdgeInsets.only(left: 0 , right : 0 , top : 30),
+        child  :
+        new CarouselSlider.builder(
+
+
+onPageChanged: (val){
+  currentImage = val;
+  setState(() {});
+  sayIt(memories.pictures[currentImage].description);
+},
+          enableInfiniteScroll: true,
+
+          itemCount: memories.pictures.length,
+          enlargeCenterPage: true,
+          itemBuilder: (BuildContext context, int itemIndex) =>
+              Container(
+
+                  child: _getPicture(memories.pictures[itemIndex].pictureUrl)),
+        ));
+
+    /*
+    autoPlay = false;
+
+
+
+     */
+
+
+
   }
 
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
     loadPicture();
     sendLocation();
     _loadTextSize();
+    AudioPlayer.logEnabled = true;
+    audioPlayer = AudioPlayer();
+
+    audioPlayer.onPlayerCompletion.listen((object){
+
+
+
+    });
+
   }
 
   void sendLocation() async {
@@ -417,4 +631,75 @@ class _HomeScreenState extends State<HomeScreen> {
     print("loaded value = " + _textSizeValue.toString());
     setState(() {});
   }
+
+
+  void sayIt(String s)async{
+    var params = {
+      "text": s,
+    };
+
+    http.post(baseUrl+"speech" ,body: json.encode(params) , headers: {
+      "Content-Type":"application/json"
+    }).then((http.Response response){
+
+      print(response.statusCode);
+      print(response.headers);
+      if(response.headers.containsKey("voice")) play(response.headers["voice"]) ;
+
+    });
+
+  }
+  AudioPlayer audioPlayer ;
+
+  play(String url ) async {
+
+    print(url);
+
+
+    int result = await audioPlayer.play(url);
+
+
+    if (result == 1) {
+      // success
+    }
+  }
+
+  Widget _getPicture(String pictureUrl) {
+
+    return Container(
+
+      margin: EdgeInsets.symmetric(horizontal: 10 , vertical: 10),
+      decoration: new BoxDecoration(
+        color: Colors.white,
+        borderRadius: new BorderRadius.all(
+          Radius.circular(20.0),
+
+        )
+        ,
+        boxShadow: [
+          new BoxShadow(
+            color: c1,
+            blurRadius: 2,
+            spreadRadius:0.2,
+            offset: new Offset(0, 0),
+          )
+        ],),
+      child:Container(
+
+        decoration: new BoxDecoration(
+          image: DecorationImage(image: Image.network(pictureUrl,fit: BoxFit.cover,).image,fit: BoxFit.cover),
+          borderRadius: new BorderRadius.all(
+               Radius.circular(20.0)
+          )
+          ),
+        child: Container(
+
+        ),
+      ),
+    );
+
+  }
+
+
+
 }

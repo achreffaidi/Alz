@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:alz/Api/tasks.dart';
 import 'package:alz/Api/tasksByDay.dart';
 import 'package:alz/Constant/Strings.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 
 
@@ -61,7 +64,7 @@ class _TasksUIState extends State<TasksUI> {
   Widget _getBody() {
     return Container(
 
-        height: MediaQuery.of(context).size.height-120,
+        height: MediaQuery.of(context).size.height-155,
           child: getList(),
     );
 //         Container(
@@ -76,27 +79,29 @@ class _TasksUIState extends State<TasksUI> {
     String formatted = formatter.format(now);
 
     return Container(
-      height: 120,
+      height: 155,
       child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-      GestureDetector(child: Container(width: MediaQuery.of(context).size.width*0.1,
-      height: 120,
-      child: Icon(Icons.arrow_back,color: Colors.white,size: _textSizeValue+20,),
-    ),
-    onTap: (){
-    Navigator.pop(context);
-    },),
+            GestureDetector(
+                onTap: (){
+                  Navigator.of(context).pop();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Icon(Icons.arrow_back , size: 80, color: Colors.white,),
+                )
+            ),
             Container(
-              width: MediaQuery.of(context).size.width-150,
                 child:Column(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: <Widget>[
-    Center(child: Text("Tasks",style: TextStyle(fontSize: _textSizeValue+10 , color: Colors.white , fontWeight: FontWeight.bold), )),
-    Center(child: Text(formatted,style: TextStyle(fontSize: _textSizeValue+10 , color: Colors.white , fontWeight: FontWeight.bold), )),
+    Center(child: Text("Tasks",style: TextStyle(fontSize: _textSizeValue+20 , color: Colors.white , fontWeight: FontWeight.bold), )),
+    Center(child: Text(formatted,style: TextStyle(fontSize: _textSizeValue+15 , color: Colors.white , fontWeight: FontWeight.bold), )),
 
     ],
-    ))
+    )),
+            SizedBox(width: 100,)
     ]
       ),
 
@@ -106,7 +111,7 @@ class _TasksUIState extends State<TasksUI> {
   
   Widget getList(){
     return tasks==null?Container():Container(
-      height:MediaQuery.of(context).size.height-120 ,
+      height:MediaQuery.of(context).size.height-200 ,
         padding: EdgeInsets.symmetric(horizontal: 40,vertical: 20),
         child : new ListView.builder
           (
@@ -118,10 +123,9 @@ class _TasksUIState extends State<TasksUI> {
               return  GestureDetector(
                 onTap: (){
 
-                    if(tasks[index].done){
-                      setUnDone(tasks.elementAt(index).id.toString());
-                    }else
-                      setDone(tasks.elementAt(index).id.toString());
+sayIt(tasks[index].title+" . "+tasks[index].description) ;
+
+
                 },
                 child: getItem(tasks.elementAt(index)),
               );
@@ -186,11 +190,11 @@ Widget getItem(ListByDay task)
           ),
         )),
         Container(
-          width: 100,
+          width: 180,
           child: Center(child:Text(task.time,style: TextStyle(fontSize:_textSizeValue,))),
         ),
       Container(
-       width: 800,
+       width: 850,
   child: Center(child:Text(task.title,style: TextStyle(fontSize:_textSizeValue+10,fontWeight: FontWeight.bold))),
   ),
         Container(
@@ -212,7 +216,7 @@ Widget getItem(ListByDay task)
 
   void loadTask() async {
     print(baseUrl+"getbyday/"+DateTime.now().weekday.toString());
-    http.get(baseUrl+"getByDay/"+(DateTime.now().weekday).toString()).then((http.Response response){
+    http.get(baseUrl+"getByDay/"+(DateTime.now().weekday-1).toString()).then((http.Response response){
 
       tasks = tasksByDayFromJson(response.body).listByDay;
       print(response.body) ;
@@ -250,6 +254,39 @@ Widget getItem(ListByDay task)
     _textSizeValue = ( prefs.getDouble("textSize")??20 ) ;
     print("loaded value = "+_textSizeValue.toString()) ;
     setState(() {
+
+    });
+
+  }
+
+  AudioPlayer audioPlayer ;
+
+  play(String url ) async {
+
+    print(url);
+    AudioPlayer.logEnabled = true;
+    audioPlayer = AudioPlayer();
+
+    int result = await audioPlayer.play(url);
+
+
+    if (result == 1) {
+      // success
+    }
+  }
+
+  void sayIt(String s)async{
+    var params = {
+      "text": s,
+    };
+
+    http.post(baseUrl+"speech" ,body: json.encode(params) , headers: {
+      "Content-Type":"application/json"
+    }).then((http.Response response){
+
+      print(response.statusCode);
+      print(response.headers);
+      if(response.headers.containsKey("voice")) play(response.headers["voice"]) ;
 
     });
 
