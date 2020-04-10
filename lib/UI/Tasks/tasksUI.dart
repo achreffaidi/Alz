@@ -42,10 +42,10 @@ class _TasksUIState extends State<TasksUI> {
   final _arrowSize = 50.0 ;
 
   //For the Animation
-  final _curve = Curves.linear ;
+  final _curve = Curves.linear ;  // Try different animations and choose the best one .
   final animationDuration = 500 ;
 
-  // Try different animations and choose the best one .
+
 
 
 
