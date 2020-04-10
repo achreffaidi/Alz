@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<ImageProvider> images = new List();
   Memories memories;
 
-  double headerSize = 100;
+  double headerSize = 150;
 
 
 
@@ -50,13 +50,13 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: c1,
       body: Container(
         padding: EdgeInsets.all(0),
-        decoration: BoxDecoration(
-          image: DecorationImage(
-              image: Image.asset(
-                "assets/mainScreenBackground.png",
-              ).image,
-              fit: BoxFit.fill),
-        ),
+//        decoration: BoxDecoration(
+//          image: DecorationImage(
+//              image: Image.asset(
+//                "assets/mainScreenBackground.png",
+//              ).image,
+//              fit: BoxFit.fill),
+//        ),
         child: _getBody(),
       ),
     );
@@ -64,39 +64,95 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _getBody() {
     return Container(
-      child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Container(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          _getHeader(),
+          Container(
+            padding: EdgeInsets.only(bottom: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
+
               children: <Widget>[
-                Container(
-                    width: MediaQuery.of(context).size.width / 2 - 20,
-                    child: getMemories()),
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery.of(context).size.width / 2 - 20,
+                      child: getMemories()
+                    ),
+                     Container(
+                       padding: EdgeInsets.only(top:20),
+                        child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => Emergency()),
+                              ).then((value) {
+                                setState(() {});
+                              });
+                            } , child :Container(
+                          width: MediaQuery.of(context).size.width / 2 - 60,
+                          height: 148,
+                            decoration: BoxDecoration(
+
+                                shape: BoxShape.rectangle,
+                                color: Colors.red,
+                                borderRadius: BorderRadius.all(Radius.circular(30))
+                            ),
+                          child: Center(child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(top:8.0,bottom: 8.0,left: 100,right: 100),
+                                child: Image.asset("assets/helpIconNew.png",width: 130,),
+                              ),
+
+                              Text("HELP", style: TextStyle(fontWeight: FontWeight.bold,fontSize: _textSizeValue+40,color: Colors.white)),
+
+
+                            ],
+                          )),
+                        )),
+                      ),
+
+                  ],
+                ),
                 Container(
                     width: MediaQuery.of(context).size.width / 2,
-                    child: getPanel2())
+                    child: getPanel3())
               ],
             ),
-          )),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _getHeader() {
     return GestureDetector(
       child: Container(
-        height: headerSize,
-        child: Center(
-            child: Text(
-          "Hello\nMr. Ben",
-          style: TextStyle(
-              fontSize: _textSizeValue + 20,
-              color: Colors.white,
-              fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-        )),
+        height: 150,
+        child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image.asset("assets/homeIconNew.png",width: 100,height: 150,),
+            Container(width: 70,),
+            Center(
+
+                child: Text(
+                  "Welcome to the App Mr. Ben",
+                  style: TextStyle(
+                      fontSize: _textSizeValue + 40,
+                      color: Colors.white,
+                      ),
+                  textAlign: TextAlign.center,
+                )),
+          ],
+        )
       ),
       onTap: () {
         Navigator.push(
@@ -106,9 +162,148 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
+
+  Widget getPanel3()
+  {
+    double contSize=147;
+    return Container(
+
+      padding: EdgeInsets.only(left:20.0,right: 20.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+      GestureDetector(
+      onTap: () {
+    Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => TasksUI()),
+    ).then((value) {
+    setState(() {});
+    });
+
+    },
+      child:Container(
+        margin: EdgeInsets.only(bottom: 20),
+        padding: EdgeInsets.only(bottom: 10,top: 10,left:20),
+        height: contSize,
+        color: Colors.white,
+        child:Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Image.asset("assets/taskIconNew.png",width: 200,),
+            Container(width: 70,),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(child: Text('Tasks',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40),)),
+            ),
+
+
+          ],
+        ),
+      ),
+    )
+,              GestureDetector(
+  onTap: () {
+  Navigator.push(
+  context,
+  MaterialPageRoute(builder: (context) => FaceDetect()),
+  ).then((value) {
+  setState(() {});
+  });
+
+  },
+                child:  Container(
+  margin: EdgeInsets.only(bottom: 20,top: 20),
+  padding: EdgeInsets.only(bottom: 10,top: 10,left:20),
+  height: contSize,
+  color: Colors.white,
+  child:Row(
+  mainAxisAlignment: MainAxisAlignment.start,
+  mainAxisSize: MainAxisSize.max,
+  children: <Widget>[
+  Image.asset("assets/faceIconNew.png",width: 200,),
+  Container(width: 70,),
+  Padding(
+  padding: const EdgeInsets.all(8.0),
+  child: Center(child: Text('Face',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40),)),
+  ),
+
+
+  ],
+  ),
+  ),
+  ),
+  GestureDetector(
+  onTap: () {
+  Navigator.push(
+  context,
+  MaterialPageRoute(builder: (context) => DoubleChoiceGame()),
+  ).then((value) {
+  setState(() {});
+  });
+
+  },
+  child:  Container(
+    margin: EdgeInsets.only(bottom: 20,top: 20),
+    padding: EdgeInsets.only(bottom: 10,top: 10,left:20),
+    height: contSize,
+    color: Colors.white,
+    child:Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        Image.asset("assets/gameIconNew.png",width: 200,),
+        Container(width: 70,),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(child: Text('Game',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40),)),
+        ),
+
+
+      ],
+    ),
+  ),
+  ),  GestureDetector(
+  onTap: () {
+  Navigator.push(
+  context,
+  MaterialPageRoute(builder: (context) => ContactUI()),
+  ).then((value) {
+  setState(() {});
+  });
+
+  },
+  child:  Container(
+    margin: EdgeInsets.only(bottom: 20,top: 20),
+    padding: EdgeInsets.only(bottom: 10,top: 10,left:20),
+    height: contSize,
+    color: Colors.white,
+    child:Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        Image.asset("assets/contactsIconNew.png",width: 200,),
+        Container(width: 70,),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(child: Text('Contacts',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40),)),
+        ),
+
+
+      ],
+    ),
+  ),
+  ),
+
+        ],
+      ),
+    );
+
+  }
   Widget getPanel2()
   {
-    var h = 314.0;
+    var h =MediaQuery.of(context).size.height - headerSize -100;
     var w = 320.0;
     var d = 220.0;
     return Container(
@@ -426,45 +621,57 @@ mainAxisAlignment: MainAxisAlignment.start,
     return images.isEmpty
         ? Container()
         : Container(
-            margin: EdgeInsets.only(left: 20, top: 30),
+      height: 520,
+      color: Colors.white,
+            margin: EdgeInsets.only(bottom: 20,left: 20,right: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Container(
-                    height: MediaQuery.of(context).size.height / 2,
+//                    height: MediaQuery.of(context).size.height / 2,
                     child: getCarsoulet()),
                 Container(
-                  height: MediaQuery.of(context).size.height / 2 - 70,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Container(
-                          child: Padding(
+//                  height: MediaQuery.of(context).size.height / 2 - 70,
+                    child: Container(
+                            child: Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Text(memories.pictures[currentImage].title,
                             style: TextStyle(
                                 fontSize: _textSizeValue + 25,
                                 fontWeight: FontWeight.bold,
-                                color: c1)),
-                      )),
-                      Container(
-                          child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(memories.pictures[currentImage].description,
-                            style: TextStyle(fontSize: _textSizeValue + 10)),
-                      )),
-                      Container(
-                          child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(memories.pictures[currentImage].date,
-                            style: TextStyle(
-                                fontSize: _textSizeValue + 10,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blueGrey)),
-                      )),
-                    ],
-                  ),
+                                color: c3)),
+                      )
+                    ),
+//                  child: Column(
+//                    mainAxisSize: MainAxisSize.max,
+//                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                    children: <Widget>[
+//                      Container(
+//                          child: Padding(
+//                        padding: const EdgeInsets.all(10.0),
+//                        child: Text(memories.pictures[currentImage].title,
+//                            style: TextStyle(
+//                                fontSize: _textSizeValue + 25,
+//                                fontWeight: FontWeight.bold,
+//                                color: c1)),
+//                      )),
+//                      Container(
+//                          child: Padding(
+//                        padding: const EdgeInsets.all(10.0),
+//                        child: Text(memories.pictures[currentImage].description,
+//                            style: TextStyle(fontSize: _textSizeValue + 10)),
+//                      )),
+//                      Container(
+//                          child: Padding(
+//                        padding: const EdgeInsets.all(10.0),
+//                        child: Text(memories.pictures[currentImage].date,
+//                            style: TextStyle(
+//                                fontSize: _textSizeValue + 10,
+//                                fontWeight: FontWeight.bold,
+//                                color: Colors.blueGrey)),
+//                      )),
+//                    ],
+//                  ),
                 ),
               ],
             ),
@@ -561,7 +768,7 @@ mainAxisAlignment: MainAxisAlignment.start,
         ? Container()
         :  Container(
 
-        margin: EdgeInsets.only(left: 0 , right : 0 , top : 30),
+        margin: EdgeInsets.only(left: 15 , right : 15 , top : 30,bottom: 20),
         child  :
         new CarouselSlider.builder(
 
