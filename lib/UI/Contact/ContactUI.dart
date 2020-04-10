@@ -6,6 +6,7 @@ import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:alz/Constant/Strings.dart';
+import 'package:url_launcher/url_launcher.dart' as url_launch;
 
 
 class ContactUI extends StatefulWidget {
@@ -147,8 +148,14 @@ class _ContactUIState extends State<ContactUI> {
                       bottomRight: Radius.circular(30)
                   ),
                   child: RaisedButton.icon(
-                      onPressed:(){
-                        _call(contact.number.toString());
+                      onPressed:() async {
+                        var url = 'tel:'+contact.number.toString();
+                        if (await url_launch.canLaunch(url)) {
+                        await url_launch.launch(url);
+                        } else {
+                        throw 'Could not launch $url';
+                        }
+
                       },
                       icon: Icon(Icons.phone,color: Colors.white,size: 40,),
                       color: Colors.green ,

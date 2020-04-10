@@ -47,8 +47,8 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
 
   double _textSizeValue = 20 ;
 
-  int animationDuration = 3 ;
-  double animationSize = 200.0 ;
+  int animationDuration = 4 ;
+  double animationSize = 300.0 ;
 
   @override
   void initState() {
@@ -64,25 +64,33 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
   @override
   Widget build(BuildContext context) {
     CardHeight = MediaQuery.of(context).size.width * 0.8;
-    return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/background2.png"),
-            fit: BoxFit.fill,
+    return WillPopScope(
+        onWillPop: () {
+          if(wrong+correct !=0)
+            sendGameData(wrong+correct, correct);
+          return new Future.value(true);
+        },
+      child: Scaffold(
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/background2.png"),
+              fit: BoxFit.fill,
+            ),
           ),
-        ),
-        child: Column(
-          children: <Widget>[
-            getScoreBar(),
-            getBody(),
-            getFooter()
-          ],
+          child: Column(
+            children: <Widget>[
+              getScoreBar(),
+              getBody(),
+              getFooter()
+            ],
+          ),
         ),
       ),
     );
+   
   }
 
   Widget getBody() {
@@ -107,6 +115,8 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
           children: <Widget>[
             GestureDetector(
                 onTap: (){
+                  if(correct+wrong != 0)
+                  sendGameData(correct+wrong, correct);
                   Navigator.of(context).pop();
                 },
                 child: Padding(
@@ -182,14 +192,16 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                       size: 25,
                     ),
                     label: Container(
-                        height: 80,
+                        height: 150,
                         child: Center(
                             child: Text("RESET",
                                 style: TextStyle(
-                                    fontSize: _textSizeValue+5,
+                                    fontSize: _textSizeValue+15,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold)))),
                     onPressed: () {
+                      if(correct+wrong != 0)
+                        sendGameData(correct+wrong,correct);
                       setState(() {
                         correct = 0;
                         wrong = 0;
@@ -213,14 +225,16 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                       size: 25,
                     ),
                     label: Container(
-                        height: 80,
+                        height: 150,
                         child: Center(
                             child: Text("EXIT",
                                 style: TextStyle(
-                                    fontSize: _textSizeValue+5,
+                                    fontSize: _textSizeValue+15,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold)))),
                     onPressed: () {
+                      if(correct+wrong != 0)
+                      sendGameData(correct+wrong,correct);
                       Navigator.pop(context);
                     },
                   ),
@@ -239,11 +253,11 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
                 size: 25,
               ),
               label: Container(
-                  height: 80,
+                  height: 150,
                   child: Center(
                       child: Text("  Start  ",
                           style: TextStyle(
-                              fontSize: _textSizeValue+5,
+                              fontSize: _textSizeValue+15,
                               color: Colors.white,
                               fontWeight: FontWeight.bold)))),
               onPressed: () {
@@ -498,6 +512,7 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
 
 
 
+
   Widget PlayPositiveAnimation(){
     new Timer(Duration(seconds: animationDuration ),  (){
         generateTest();
@@ -528,6 +543,26 @@ class _DoubleChoiceGameState extends State<DoubleChoiceGame> {
     );
   }
 
+
+
+  void sendGameData  (int number, int correct) async
+  {
+    Map data = {
+      'questionsNumber': number,
+      'correct': correct
+    };
+    //encode Map to JSON
+    var body = json.encode(data);
+
+    http.post(baseUrl+"setScore",
+        headers: {"Content-Type": "application/json"},
+        body: body
+    ).then((http.Response response){
+      print(response);
+      print("sent"+ body);
+    });
+
+  }
 
 
 }

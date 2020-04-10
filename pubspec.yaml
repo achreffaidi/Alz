@@ -42,6 +42,7 @@ dependencies:
   flutter_fluid_slider: ^1.0.2
   shared_preferences: ^0.5.4
   battery: ^0.2.2
+  url_launcher: ^5.0.3
 
 
 
@@ -83,6 +84,13 @@ flutter:
     - assets/correct.flr
     - assets/happy_face.flr
     - assets/sad_face.flr
+    - assets/contactsIcon.png
+    - assets/faceIcon.png
+    - assets/gameIcon.png
+    - assets/tasksIcon.png
+    - assets/helpIcon.png
+    - assets/mainScreenBackground.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
