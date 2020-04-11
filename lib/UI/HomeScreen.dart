@@ -3,9 +3,6 @@ import 'dart:convert';
 import 'package:alz/Api/memories.dart';
 import 'package:alz/Constant/Strings.dart';
 import 'package:alz/Constant/colors.dart';
-import 'package:alz/Constant/colors.dart';
-import 'package:alz/Constant/colors.dart';
-import 'package:alz/Constant/colors.dart';
 import 'package:alz/Constant/images.dart';
 import 'package:alz/Game/DoubleChoiceGame/DoubleChoiceGame.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -95,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               });
                             } , child :Container(
                           width: MediaQuery.of(context).size.width / 2 - 60,
-                          height: 148,
+                          height: 140,
                             decoration: BoxDecoration(
 
                                 shape: BoxShape.rectangle,
@@ -135,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _getHeader() {
     return GestureDetector(
       child: Container(
-        height: 150,
+        height: 143,
         child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -165,7 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget getPanel3()
   {
-    double contSize=147;
+    double contSize=140;
     return Container(
 
       padding: EdgeInsets.only(left:20.0,right: 20.0),
@@ -184,18 +181,18 @@ class _HomeScreenState extends State<HomeScreen> {
     },
       child:Container(
         margin: EdgeInsets.only(bottom: 20),
-        padding: EdgeInsets.only(bottom: 10,top: 10,left:20),
+        padding: EdgeInsets.only(bottom: 10,top: 10),
         height: contSize,
         color: Colors.white,
-        child:Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
+        child:Stack(
+//          mainAxisAlignment: MainAxisAlignment.start,
+//          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Image.asset("assets/taskIconNew.png",width: 200,),
-            Container(width: 70,),
+
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(child: Text('Tasks',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40),)),
+              padding: const EdgeInsets.all(0),
+              child: Center(child: Text('Tasks',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40,),textAlign: TextAlign.center,)),
             ),
 
 
@@ -215,18 +212,17 @@ class _HomeScreenState extends State<HomeScreen> {
   },
                 child:  Container(
   margin: EdgeInsets.only(bottom: 20,top: 20),
-  padding: EdgeInsets.only(bottom: 10,top: 10,left:20),
+  padding: EdgeInsets.only(bottom: 10,top: 10,),
   height: contSize,
   color: Colors.white,
-  child:Row(
-  mainAxisAlignment: MainAxisAlignment.start,
-  mainAxisSize: MainAxisSize.max,
+  child:Stack(
+//  mainAxisAlignment: MainAxisAlignment.start,
+//  mainAxisSize: MainAxisSize.max,
   children: <Widget>[
   Image.asset("assets/faceIconNew.png",width: 200,),
-  Container(width: 70,),
   Padding(
-  padding: const EdgeInsets.all(8.0),
-  child: Center(child: Text('Face',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40),)),
+  padding: const EdgeInsets.all(0),
+  child: Center(child: Text('Face',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40),textAlign: TextAlign.center)),
   ),
 
 
@@ -246,18 +242,17 @@ class _HomeScreenState extends State<HomeScreen> {
   },
   child:  Container(
     margin: EdgeInsets.only(bottom: 20,top: 20),
-    padding: EdgeInsets.only(bottom: 10,top: 10,left:20),
+    padding: EdgeInsets.only(bottom: 10,top: 10,),
     height: contSize,
     color: Colors.white,
-    child:Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
+    child:Stack(
+//      mainAxisAlignment: MainAxisAlignment.start,
+//      mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Image.asset("assets/gameIconNew.png",width: 200,),
-        Container(width: 70,),
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(child: Text('Game',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40),)),
+          padding: const EdgeInsets.all(0),
+          child: Center(child: Text('Game',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40),textAlign: TextAlign.center)),
         ),
 
 
@@ -276,18 +271,18 @@ class _HomeScreenState extends State<HomeScreen> {
   },
   child:  Container(
     margin: EdgeInsets.only(bottom: 20,top: 20),
-    padding: EdgeInsets.only(bottom: 10,top: 10,left:20),
+    padding: EdgeInsets.only(bottom: 10,top: 10,),
     height: contSize,
     color: Colors.white,
-    child:Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
+    child:Stack(
+//      mainAxisAlignment: MainAxisAlignment.start,
+//      mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        Image.asset("assets/contactsIconNew.png",width: 200,),
-        Container(width: 70,),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(child: Text('Contacts',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40),)),
+        Image.asset("assets/contactsIconNew.png",width: 185,),
+
+        Container(
+
+          child: Center(child: Text('Contacts',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40),textAlign: TextAlign.start)),
         ),
 
 
@@ -301,6 +296,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
 
   }
+  /*   OLD UI
   Widget getPanel2()
   {
     var h =MediaQuery.of(context).size.height - headerSize -100;
@@ -616,12 +612,12 @@ mainAxisAlignment: MainAxisAlignment.start,
       )),
     );
   }
-
+*/
   Widget getMemories() {
     return images.isEmpty
         ? Container()
         : Container(
-      height: 520,
+      height: 500,
       color: Colors.white,
             margin: EdgeInsets.only(bottom: 20,left: 20,right: 20),
             child: Column(
@@ -677,7 +673,7 @@ mainAxisAlignment: MainAxisAlignment.start,
             ),
           );
   }
-
+/*   OLD UI
   Widget getMenu() {
     return Container(
       width: MediaQuery.of(context).size.height / 2.2,
@@ -730,7 +726,7 @@ mainAxisAlignment: MainAxisAlignment.start,
       ),
     );
   }
-
+*/
   Widget getMenuItem(image) {
     return Padding(
       padding: const EdgeInsets.only(top: 20.0),
