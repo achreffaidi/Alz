@@ -90,6 +90,12 @@ flutter:
     - assets/tasksIcon.png
     - assets/helpIcon.png
     - assets/mainScreenBackground.png
+    - assets/contactsIconNew.png
+    - assets/helpIconNew.png
+    - assets/faceIconNew.png
+    - assets/homeIconNew.png
+    - assets/gameIconNew.png
+    - assets/taskIconNew.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
