@@ -31,15 +31,15 @@ class _TasksUIState extends State<TasksUI> {
   //For Items
   double itemWidth ;
   final itemPadding = 30.0 ;
-  final itemDefaultHeight = 250.0 ;
-  final itemAdditionalHeight = 50.0 ;
-  final _buttonTextStyle = TextStyle(fontSize: 22 , color: Colors.white);
-  final _buttonIcon = Icon(Icons.check,size: 25,color: Colors.white,) ;
+  final itemDefaultHeight = 350.0 ;
+  final itemAdditionalHeight = 80.0 ;
+  final _buttonTextStyle = TextStyle(fontSize: 35 , color: Colors.white, );
+  final _buttonIcon = Icon(Icons.check,size: 35,color: Colors.white,) ;
 
   //For <  and > buttons
   final _buttonWidth = 60.0 ;
   final _buttonRadius = 40.0  ;
-  final _arrowSize = 50.0 ;
+  final _arrowSize = 70.0 ;
 
   //For the Animation
   final _curve = Curves.linear ;  // Try different animations and choose the best one .
@@ -262,6 +262,7 @@ Widget getItem(int index, double left , double right )
           ),
           height: itemDefaultHeight + itemAdditionalHeight*fraction,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           mainAxisSize: MainAxisSize.min,
 
             //crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -281,14 +282,16 @@ Widget getItem(int index, double left , double right )
                   borderRadius: BorderRadius.all(
                       Radius.circular(40)
                   ),
-                  child: Image.network(task.imageUrl,height: 140,width: 140,),
+                  child: Image.network(task.imageUrl,height: 200,width: 200,),
                 ):Container(),
               ),
               Opacity(
                 opacity: fraction,
                 child: Container(
                     height: 50*fraction,
-                    child: RaisedButton.icon(color: Colors.greenAccent, icon : _buttonIcon ,onPressed: (){}, label: Container( width: itemWidth*0.6, child: Center(child: Text("Done" , style: _buttonTextStyle ))),)),
+                    child: RaisedButton.icon(color: Colors.greenAccent, icon : _buttonIcon ,onPressed: (){task.done? setUnDone(task.id):setDone(task.id);
+                    setState(() {
+                    });}, label: Container( width: itemWidth*0.6, child: Center(child: Text("Done" , style: _buttonTextStyle ))),)),
               )
               //TODO Remove the Comments here when the layout is ready !
               /*
@@ -360,8 +363,7 @@ Widget getItem(int index, double left , double right )
 
       tasks = tasksByDayFromJson(response.body).listByDay;
 
-      //TODO : this is just for debugging , remove it once  the code is ready
-      tasks = tasks+tasks ;
+
 
       print(response.body) ;
 //      tasks.sort((ListByDay item1,ListByDay item2){
