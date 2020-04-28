@@ -30,8 +30,8 @@ class _TasksUIState extends State<TasksUI> {
 
   //For Items
   double itemWidth ;
-  final itemPadding = 30.0 ;
-  final itemDefaultHeight = 350.0 ;
+  final itemPadding = 28.0 ;
+  final itemDefaultHeight = 380.0 ;
   final itemAdditionalHeight = 80.0 ;
   final _buttonTextStyle = TextStyle(fontSize: 35 , color: Colors.white, );
   final _buttonIcon = Icon(Icons.check,size: 35,color: Colors.white,) ;
@@ -212,22 +212,31 @@ class _TasksUIState extends State<TasksUI> {
             shrinkWrap: true,
             controller: _controller,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: tasks.length,
+            itemCount: tasks.length+2,
 
             scrollDirection: Axis.horizontal,
 
             itemBuilder: (BuildContext ctxt, int index) {
-              return  GestureDetector(
+
+              if(index!=0&&index!=tasks.length+1  )
+                return  GestureDetector(
                 onTap: (){
 
-sayIt(tasks[index].title+" . "+tasks[index].description) ;
+sayIt(tasks[index-1].title+" . "+tasks[index-1].description) ;
 
 
                 },
                 child: SizedBox(
                     height: 300,
-                    child: getItem(index,0,0)),
+                    child: getItem(index-1,0,0)),
               );
+              else
+                return SizedBox(
+                    height: 300,
+                    child: Container(
+                  width: itemWidth,
+                  margin: EdgeInsets.only(top: 30, left:itemPadding  ,right:itemPadding),
+                ));
             }
 
         )
@@ -236,7 +245,7 @@ sayIt(tasks[index].title+" . "+tasks[index].description) ;
 
 Widget getItem(int index, double left , double right )
 {
-  double x= (_controller.offset-(index-1)*(itemWidth+2*itemPadding));
+  double x= (_controller.offset-(index)*(itemWidth+2*itemPadding));
   x=x.abs();
   double fraction = 0 ;
   if(x<itemWidth+itemPadding) {
@@ -289,9 +298,11 @@ Widget getItem(int index, double left , double right )
                 opacity: fraction,
                 child: Container(
                     height: 50*fraction,
-                    child: RaisedButton.icon(color: Colors.greenAccent, icon : _buttonIcon ,onPressed: (){task.done? setUnDone(task.id):setDone(task.id);
+                    child: task.done? RaisedButton.icon(color: Colors.greenAccent, icon : _buttonIcon ,onPressed: (){task.done? setUnDone(task.id):setDone(task.id);
                     setState(() {
-                    });}, label: Container( width: itemWidth*0.6, child: Center(child: Text("Done" , style: _buttonTextStyle ))),)),
+                    });}, label: Container( width: itemWidth*0.6, child: Center(child: Text("Done" , style: _buttonTextStyle ))),) : RaisedButton.icon(color: Colors.grey, icon : Icon(Icons.clear,size: 35,color: Colors.white,) ,onPressed: (){task.done? setUnDone(task.id):setDone(task.id);
+                    setState(() {
+                    });}, label: Container( width: itemWidth*0.6, child: Center(child: Text("Undone" , style: _buttonTextStyle ))),)),
               )
               //TODO Remove the Comments here when the layout is ready !
               /*

@@ -77,44 +77,44 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     Container(
-                      width: MediaQuery.of(context).size.width / 2 - 20,
-                      child: getMemories()
+                        width: MediaQuery.of(context).size.width / 2 - 20,
+                        child: getMemories()
                     ),
-                     Container(
-                       padding: EdgeInsets.only(top:20),
-                        child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => Emergency()),
-                              ).then((value) {
-                                setState(() {});
-                              });
-                            } , child :Container(
-                          width: MediaQuery.of(context).size.width / 2 - 60,
-                          height: 140,
-                            decoration: BoxDecoration(
+                    Container(
+                      padding: EdgeInsets.only(top:20),
+                      child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Emergency()),
+                            ).then((value) {
+                              setState(() {});
+                            });
+                          } , child :Container(
+                        width: MediaQuery.of(context).size.width / 2 - 60,
+                        height: 140,
+                        decoration: BoxDecoration(
 
-                                shape: BoxShape.rectangle,
-                                color: Colors.red,
-                                borderRadius: BorderRadius.all(Radius.circular(30))
+                            shape: BoxShape.rectangle,
+                            color: Colors.red,
+                            borderRadius: BorderRadius.all(Radius.circular(30))
+                        ),
+                        child: Center(child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(top:8.0,bottom: 8.0,left: 100,right: 100),
+                              child: Image.asset("assets/helpIconNew.png",width: 130,),
                             ),
-                          child: Center(child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(top:8.0,bottom: 8.0,left: 100,right: 100),
-                                child: Image.asset("assets/helpIconNew.png",width: 130,),
-                              ),
 
-                              Text("HELP", style: TextStyle(fontWeight: FontWeight.bold,fontSize: _textSizeValue+40,color: Colors.white)),
+                            Text("HELP", style: TextStyle(fontWeight: FontWeight.bold,fontSize: _textSizeValue+40,color: Colors.white)),
 
 
-                            ],
-                          )),
+                          ],
                         )),
-                      ),
+                      )),
+                    ),
 
                   ],
                 ),
@@ -132,24 +132,24 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _getHeader() {
     return GestureDetector(
       child: Container(
-        height: 143,
-        child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset("assets/homeIconNew.png",width: 100,height: 150,),
-            Container(width: 70,),
-            Center(
+          height: 143,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.asset("assets/homeIconNew.png",width: 100,height: 150,),
+              Container(width: 70,),
+              Center(
 
-                child: Text(
-                  "Welcome to the App Mr. Ben",
-                  style: TextStyle(
+                  child: Text(
+                    "Welcome to the App Mr. Ben",
+                    style: TextStyle(
                       fontSize: _textSizeValue + 40,
                       color: Colors.white,
-                      ),
-                  textAlign: TextAlign.center,
-                )),
-          ],
-        )
+                    ),
+                    textAlign: TextAlign.center,
+                  )),
+            ],
+          )
       ),
       onTap: () {
         Navigator.push(
@@ -169,127 +169,126 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-      GestureDetector(
-      onTap: () {
-    Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => TasksUI()),
-    ).then((value) {
-    setState(() {});
-    });
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TasksUI()),
+              ).then((value) {
+                setState(() {});
+              });
 
-    },
-      child:Container(
-        margin: EdgeInsets.only(bottom: 20),
-        padding: EdgeInsets.only(bottom: 10,top: 10),
-        height: contSize,
-        color: Colors.white,
-        child:Stack(
+            },
+            child:Container(
+              margin: EdgeInsets.only(bottom: 20),
+              padding: EdgeInsets.only(bottom: 10,top: 10),
+              height: contSize,
+              color: Colors.white,
+              child:Row(
 //          mainAxisAlignment: MainAxisAlignment.start,
 //          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Image.asset("assets/taskIconNew.png",width: 200,),
+                children: <Widget>[
+                  Image.asset("assets/taskIconNew.png",width: 200,),
 
-            Padding(
-              padding: const EdgeInsets.all(0),
-              child: Center(child: Text('Tasks',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40,),textAlign: TextAlign.center,)),
+                  SizedBox(
+                    width: 480,
+                    child: Center(child: Text('Tasks',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40,),textAlign: TextAlign.center,)),
+                  ),
+
+
+                ],
+              ),
             ),
+          )
+          ,              GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FaceDetect()),
+              ).then((value) {
+                setState(() {});
+              });
+
+            },
+            child:  Container(
+              margin: EdgeInsets.only(bottom: 20,top: 20),
+              padding: EdgeInsets.only(bottom: 10,top: 10,),
+              height: contSize,
+              color: Colors.white,
+              child:Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Image.asset("assets/faceIconNew.png",width: 200,),
+                  SizedBox(
+                    width: 480,
+                    child: Center(child: Text('Face',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40),textAlign: TextAlign.center)),
+                  ),
 
 
-          ],
-        ),
-      ),
-    )
-,              GestureDetector(
-  onTap: () {
-  Navigator.push(
-  context,
-  MaterialPageRoute(builder: (context) => FaceDetect()),
-  ).then((value) {
-  setState(() {});
-  });
+                ],
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DoubleChoiceGame()),
+              ).then((value) {
+                setState(() {});
+              });
 
-  },
-                child:  Container(
-  margin: EdgeInsets.only(bottom: 20,top: 20),
-  padding: EdgeInsets.only(bottom: 10,top: 10,),
-  height: contSize,
-  color: Colors.white,
-  child:Stack(
-//  mainAxisAlignment: MainAxisAlignment.start,
-//  mainAxisSize: MainAxisSize.max,
-  children: <Widget>[
-  Image.asset("assets/faceIconNew.png",width: 200,),
-  Padding(
-  padding: const EdgeInsets.all(0),
-  child: Center(child: Text('Face',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40),textAlign: TextAlign.center)),
-  ),
-
-
-  ],
-  ),
-  ),
-  ),
-  GestureDetector(
-  onTap: () {
-  Navigator.push(
-  context,
-  MaterialPageRoute(builder: (context) => DoubleChoiceGame()),
-  ).then((value) {
-  setState(() {});
-  });
-
-  },
-  child:  Container(
-    margin: EdgeInsets.only(bottom: 20,top: 20),
-    padding: EdgeInsets.only(bottom: 10,top: 10,),
-    height: contSize,
-    color: Colors.white,
-    child:Stack(
-//      mainAxisAlignment: MainAxisAlignment.start,
-//      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        Image.asset("assets/gameIconNew.png",width: 200,),
-        Padding(
-          padding: const EdgeInsets.all(0),
-          child: Center(child: Text('Game',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40),textAlign: TextAlign.center)),
-        ),
+            },
+            child:  Container(
+              margin: EdgeInsets.only(bottom: 20,top: 20),
+              padding: EdgeInsets.only(bottom: 10,top: 10,),
+              height: contSize,
+              color: Colors.white,
+              child:Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Image.asset("assets/gameIconNew.png",width: 200,),
+                  SizedBox(
+                    width: 480,
+                    child: Center(child: Text('Game',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40),textAlign: TextAlign.center)),
+                  ),
 
 
-      ],
-    ),
-  ),
-  ),  GestureDetector(
-  onTap: () {
-  Navigator.push(
-  context,
-  MaterialPageRoute(builder: (context) => ContactUI()),
-  ).then((value) {
-  setState(() {});
-  });
+                ],
+              ),
+            ),
+          ),  GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ContactUI()),
+              ).then((value) {
+                setState(() {});
+              });
 
-  },
-  child:  Container(
-    margin: EdgeInsets.only(bottom: 20,top: 20),
-    padding: EdgeInsets.only(bottom: 10,top: 10,),
-    height: contSize,
-    color: Colors.white,
-    child:Stack(
-//      mainAxisAlignment: MainAxisAlignment.start,
-//      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        Image.asset("assets/contactsIconNew.png",width: 185,),
+            },
+            child:  Container(
+              margin: EdgeInsets.only(bottom: 20,top: 20),
+              padding: EdgeInsets.only(bottom: 10,top: 10,),
+              height: contSize,
+              color: Colors.white,
+              child:Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  Image.asset("assets/contactsIconNew.png",width: 200,),
 
-        Container(
+                  SizedBox(width: 480,
+                    child: Center(child: Text('Contacts',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40),textAlign: TextAlign.start)),
+                  ),
 
-          child: Center(child: Text('Contacts',style: TextStyle(fontWeight: FontWeight.bold,color: c3,fontSize: _textSizeValue+40),textAlign: TextAlign.start)),
-        ),
 
-
-      ],
-    ),
-  ),
-  ),
+                ],
+              ),
+            ),
+          ),
 
         ],
       ),
@@ -619,25 +618,25 @@ mainAxisAlignment: MainAxisAlignment.start,
         : Container(
       height: 500,
       color: Colors.white,
-            margin: EdgeInsets.only(bottom: 20,left: 20,right: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Container(
+      margin: EdgeInsets.only(bottom: 20,left: 20,right: 20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Container(
 //                    height: MediaQuery.of(context).size.height / 2,
-                    child: getCarsoulet()),
-                Container(
+              child: getCarsoulet()),
+          Container(
 //                  height: MediaQuery.of(context).size.height / 2 - 70,
-                    child: Container(
-                            child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(memories.pictures[currentImage].title,
-                            style: TextStyle(
-                                fontSize: _textSizeValue + 25,
-                                fontWeight: FontWeight.bold,
-                                color: c3)),
-                      )
-                    ),
+            child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(memories.pictures[currentImage].title,
+                      style: TextStyle(
+                          fontSize: _textSizeValue + 25,
+                          fontWeight: FontWeight.bold,
+                          color: c3)),
+                )
+            ),
 //                  child: Column(
 //                    mainAxisSize: MainAxisSize.max,
 //                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -668,10 +667,10 @@ mainAxisAlignment: MainAxisAlignment.start,
 //                      )),
 //                    ],
 //                  ),
-                ),
-              ],
-            ),
-          );
+          ),
+        ],
+      ),
+    );
   }
 /*   OLD UI
   Widget getMenu() {
@@ -769,11 +768,11 @@ mainAxisAlignment: MainAxisAlignment.start,
         new CarouselSlider.builder(
 
 
-onPageChanged: (val){
-  currentImage = val;
-  setState(() {});
-  sayIt(memories.pictures[currentImage].description);
-},
+          onPageChanged: (val){
+            currentImage = val;
+            setState(() {});
+            sayIt(memories.pictures[currentImage].description);
+          },
           enableInfiniteScroll: true,
 
           itemCount: memories.pictures.length,
@@ -890,11 +889,11 @@ onPageChanged: (val){
       child:Container(
 
         decoration: new BoxDecoration(
-          image: DecorationImage(image: Image.network(pictureUrl,fit: BoxFit.cover,).image,fit: BoxFit.cover),
-          borderRadius: new BorderRadius.all(
-               Radius.circular(20.0)
-          )
-          ),
+            image: DecorationImage(image: Image.network(pictureUrl,fit: BoxFit.cover,).image,fit: BoxFit.cover),
+            borderRadius: new BorderRadius.all(
+                Radius.circular(20.0)
+            )
+        ),
         child: Container(
 
         ),
