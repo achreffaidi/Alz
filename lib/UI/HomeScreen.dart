@@ -141,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Center(
 
                   child: Text(
-                    "Welcome to the App Mr. Ben",
+                    "Good evening Mrs.",
                     style: TextStyle(
                       fontSize: _textSizeValue + 40,
                       color: Colors.white,
